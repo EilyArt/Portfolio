@@ -1,0 +1,294 @@
+a {
+    color: unset;
+    text-decoration: none;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    max-width: 100%;
+    flex: 1;
+    overflow: hidden;
+}
+
+.row-res {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    max-width: 100%;
+    flex: 1;
+    overflow: hidden;
+
+    @include respond(tablet) {
+        flex-direction: column;
+    }
+}
+
+.row-res-rev {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    max-width: 100%;
+    flex: 1;
+    overflow: hidden;
+
+    @include respond(tablet) {
+        flex-direction: column-reverse;
+    }
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.col-res {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+
+    @include respond(tablet) {
+        flex-direction: row;
+    }
+}
+
+.flex-start-self {
+    align-self: flex-start;
+
+    @include respond(tablet) {
+        align-self: unset;
+    }
+}
+
+.flex-start-items {
+    align-items: baseline;
+
+    @include respond(tablet) {
+        align-items: center;
+    }
+}
+
+.flex-start-items-nonres {
+    align-items: baseline;
+}
+
+.align-strech {
+    align-items: stretch;
+
+    @include respond(tablet) {
+        align-items: center;
+    }
+}
+
+.justify-start {
+    justify-content: flex-start;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.align-start {
+    align-items: flex-start;
+}
+
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.m-1 {
+    margin: 10px;
+}
+
+.m-2 {
+    margin: 10px;
+}
+
+.m-right-1 {
+    margin-right: 10px;
+}
+
+.m-right-2 {
+    margin-right: 20px;
+}
+
+.pad-1 {
+    padding: 5px;
+}
+
+.pad-2 {
+    padding: 10px;
+}
+
+.pad-top-2 {
+    padding-top: 10px;
+}
+
+.pad-bottom-0 {
+    padding-bottom: 0px !important;
+}
+
+.pad-horizontal-1 {
+    padding: 0 5px;
+}
+
+.pad-horizontal-2 {
+    padding: 0 10px;
+}
+
+.pad-vertical-1 {
+    padding: 5px 0;
+}
+
+.pad-vertical-2 {
+    padding: 10px 0;
+}
+
+.m-bottom-1 {
+    margin-bottom: 5px;
+}
+
+.m-bottom-2 {
+    margin-bottom: 10px;
+}
+
+.m-top-1 {
+    margin-top: 5px;
+}
+
+.m-top-2 {
+    margin-top: 10px;
+}
+
+.m-top-auto {
+    margin-top: auto;
+}
+
+.m-horizontal-1 {
+    margin: 0 5px;
+}
+
+.m-horizontal-2 {
+    margin: 0 10px;
+}
+
+.img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.b-radius {
+    border-radius: 30px;
+}
+
+.txt-center {
+    text-align: center;
+}
+
+.txt-justify {
+    text-align: justify;
+    text-justify: inter-word;
+    word-spacing: 1px;
+    line-height: 1.4em;
+}
+
+.linkActive {
+    color: var(--color-primary-dark);
+}
+
+.pad-default {
+    padding: 80px 10% 80px 10%;
+
+    @include respond(sm-desktop) {
+        padding: 30px 55px 30px 55px;
+    }
+
+    @include respond(tablet) {
+        padding: 30px 15px 30px 15px;
+    }
+
+    @include respond(phone) {
+        padding: 30px 15px 30px 15px;
+    }
+}
+
+.pad-default-horizontal {
+    padding: 0 10% 0 10%;
+
+    @include respond(sm-desktop) {
+        padding: 0 55px 0 55px;
+    }
+
+    @include respond(tablet) {
+        padding: 0 15px 0 15px;
+    }
+
+    @include respond(phone) {
+        padding: 0 15px 0 15px;
+    }
+}
+
+.width-fit {
+    max-width: fit-content !important;
+}
+
+.align-end {
+    align-items: flex-end;
+}
+
+.justify-end {
+    justify-content: flex-end;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+
+.flex {
+    flex: 1;
+}
+
+.width-max {
+    width: 100%;
+}
+
+.show {
+    display: block !important;
+}
+
+.separation-1 {
+    background: var(--color-border);
+    margin: 1rem 0;
+    height: 1px;
+    width: 100%;
+}
+
+.separation-2 {
+    background: var(--color-border);
+    margin: 2rem 0;
+    height: 1px;
+    width: 100%;
+}
+
+#nprogress .bar  {
+    background-color: var(--color-accent) !important;
+}
+
+.svgColor {
+    filter: var(--svg-color);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.show {
+    display: block !important;
+}

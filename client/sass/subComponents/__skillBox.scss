@@ -1,0 +1,71 @@
+.skillBox {
+    &-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-auto-flow: row dense;
+        
+        @include respond(phone) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    background: var(--color-gradient-border);
+    border-radius: var(--radius-12);
+    overflow: hidden;
+    min-width: 20rem;
+    max-width: 30rem;
+    margin: 10px;
+
+    span {
+        grid-column-start: 1;
+    }
+
+
+
+    &-box {
+        border-radius: var(--radius-12);
+        font-size: 1.125rem;
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: flex-start;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-shadow: var(--box-shadow-30);
+        box-shadow: var(--box-shadow-30);
+        line-height: 1;
+        height: 100%;
+        min-width: 100%;
+        position: relative;
+        z-index: 0;
+        padding: 10px;
+        background: var(--color-gradient-soft);
+        margin: 1px;
+        padding: 1rem;
+    }
+
+    &-img {
+        width: 20%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1rem;
+        filter: var(--svg-color);
+        margin-right: 1rem;
+    }
+
+    &-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 1.2rem;
+        width: 80%;
+
+        h4 {
+            line-height: 2;
+        }
+    }
+}

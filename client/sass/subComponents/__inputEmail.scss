@@ -1,0 +1,31 @@
+.JoinNewsLetter {
+    padding: 1px;
+    background: var(--color-gradient);
+    width: fit-content;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    input {
+        border-radius: 2px;
+        padding: 15px;
+        background-color: var(--color-surface-1);
+        color: var(--color-paragraph);
+        font-size: 15px;
+        border: none;
+        width: 100%;
+        outline: none;
+    }
+
+    button {
+        border-radius: 2px;
+        border: none;
+        padding: 0;
+        margin: 0;
+        background: var(--color-gradient);
+        padding: 15px 18px;
+        cursor: pointer;
+    }
+
+}

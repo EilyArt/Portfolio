@@ -1,0 +1,49 @@
+.blog {
+    background-color: var(--color-surface-1);
+    height: fit-content;
+    
+    &-hero {
+        // position: relative;
+        height: 70vh;
+
+        &-img {
+            z-index: 0;
+            position: absolute;
+        }
+
+        &-overlay {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background: var(--blog-gradient);
+        }
+
+        &-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            z-index: 2;
+            top: 40%;
+
+            h1 {
+                font-size: 3rem;
+            }
+            
+            p {
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    &-posts{
+        // transform: translateY(-20rem);
+        
+    }
+    &-tags{
+        max-width: 30rem;
+    }
+}

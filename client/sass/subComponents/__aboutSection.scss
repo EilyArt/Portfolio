@@ -1,0 +1,150 @@
+.aboutSection {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+
+    h2 {
+        text-transform: capitalize;
+        margin-left: 60px;
+        line-height: 2.5rem;
+        
+        @include respond(tablet) {
+            margin-left: 50px;
+            line-height: 3rem;
+        }
+
+        span {
+            position: absolute;
+            font-size: 1.125rem;
+            display: -webkit-inline-box;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            border-radius: var(--radius-12);
+            -webkit-box-shadow: var(--box-shadow-30);
+            box-shadow: var(--box-shadow-30);
+            height: 48px;
+            width: 48px;
+            background: var(--color-gradient-border);
+            padding: 30px;
+            z-index: 2;
+            padding: 1px;
+            left: 0;
+            top: 0;
+            background-color: var(--color-surface-3);
+            
+            @include respond(sm-desktop) {
+                border-radius: var(--radius-8);
+                height: 38px;
+                width: 38px;
+                margin-left: 5px;
+            }
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 1px;
+                right: 1px;
+                bottom: 1px;
+                left: 1px;
+                background: var(--color-gradient-icon);
+                border-radius: inherit;
+                z-index: -1;
+            }
+
+            i {
+                filter: var(--svg-color);
+
+                &::before {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: var(--color-gradient-icon);
+                    height: 100%;
+                    width: 100%;
+                    border-radius: var(--radius-12);
+                }
+            }
+        }
+    }
+
+    &-items {
+        &>* {
+            margin-top: 3rem;
+
+
+            &::after {
+                left: 5px;
+                content: '';
+                position: absolute;
+                width: 1px;
+                height: 300%;
+                bottom: 100%;
+                z-index: 1;
+                border-left-color: var(--color-border);
+                margin-left: 20px;
+                border-left-color: var(--color-border);
+                border-left-width: 1px;
+                border-left-style: solid;
+            }
+
+            &::before {
+                content: '';
+                margin-left: 21px;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-origin: content-box;
+                left: 0px;
+                position: absolute;
+                border-radius: 50%;
+                z-index: 2;
+                background-color: var(--color-accent);
+                background: var(--color-gradient-text);
+                -webkit-box-shadow: 0 0 0 0.25rem rgb(255 219 110 / 10%);
+                box-shadow: 0 0 0 0.25rem rgb(255 219 110 / 10%);
+                border-radius: 50%;
+                top: 0.1625rem;
+                height: 0.5625rem;
+                width: 0.5625rem;
+
+                @include respond(tablet) {
+                    // margin-left: 2px;
+                }
+            }
+        }
+    }
+}
+
+.timeline {
+    position: relative;
+    max-width: 100%;
+
+    &>*{
+        margin-left: 60px;
+        @include respond(tablet) {
+            margin-left: 50px;
+        }
+    }
+
+    time {
+        background: var(--color-gradient-text);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 400;
+    }
+
+    h4 {
+        margin-bottom: .25rem;
+    }
+
+    p {
+        margin-top: .25rem;
+        margin-bottom: 1rem;
+    }
+}

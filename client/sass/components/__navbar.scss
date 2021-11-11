@@ -1,0 +1,40 @@
+.navbar {
+    background-color: var(--color-surface-1);
+    color: var(--black);
+    width: 100%;
+    margin: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    justify-content: space-between;
+    position: relative;
+    z-index: 10;
+    flex-direction: row-reverse;
+    
+
+    &-logo {
+        justify-items: flex-start;
+        transform: scale(2);
+    }
+
+    &-links {
+        @include respond(tablet) {
+            display: none;
+        }
+
+        &>* {
+            margin-right: 30px;
+            transition: color .3s ease-in-out;
+            &:hover {
+                color: var(--color-primary-dark);
+            }
+        }
+    }
+
+    &-menu {
+        display: none;
+
+        @include respond(tablet) {
+            display: block;
+        }
+    }
+}
