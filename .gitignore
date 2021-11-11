@@ -1,2 +1,10 @@
+#backend
 .env.dev
 .env.prod
+
+
+# frontend
+node_modules/
+.next
+
+
