@@ -3,3 +3,7 @@
 * Create New Admin$ docker-compose -f docker-compose.prod.yml exec web python manage.py createsuperuser 
 
 * Create New App$ django-admin startapp app-name
+
+* Migrations $ docker-compose -f docker-compose.prod.yml exec web python manage.py makemigrations
+
+* Migrations $ docker-compose -f docker-compose.prod.yml exec web python manage.py migrate

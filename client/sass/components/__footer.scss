@@ -2,11 +2,10 @@ footer {
     align-items: center;
     max-width: 100%;
     display: flex;
-    justify-content: flex-end;
+    // justify-content: center;
     flex-direction: column;
     overflow: hidden;
     background-color: var(--color-surface-1);
-    min-height: 100vh;
 
     .container {
         width: 100%;

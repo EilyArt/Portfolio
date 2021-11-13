@@ -1,11 +1,24 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  backend:
+  postgres:
+    image: postgres:13.0-alpine
+    container_name: Database
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=access
+      - POSTGRES_DB=PostgresSQL
+      
+  web:
     restart: always
     build: ./app
     container_name: Django
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "python manage.py makemigrations &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./app/:/app/api
     ports:
@@ -13,21 +26,11 @@ services:
     env_file:
       - ./.env.dev
     depends_on:
-      - db
-
-  db:
-    image: postgres:13.0-alpine
-    container_name: Database
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER=backend
-      - POSTGRES_PASSWORD=backend
-      - POSTGRES_DB=backend_dev
+      - postgres
 
   nextjs:
     restart: always
-    command : npm run dev
+    command: npm run dev
     container_name: Nextjs
     build:
       context: ./client/
@@ -35,7 +38,18 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - backend
+      - web
+  
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    volumes:
+      - ./nginx/static/
+    ports:
+      - 8008:80
+    depends_on:
+      - web
+    
 
 volumes:
   postgres_data:
