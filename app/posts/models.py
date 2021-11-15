@@ -29,11 +29,13 @@ class Post(models.Model):
         unique=True,
     )
     slug = models.SlugField(verbose_name=_("Post safe URL"), max_length=255, unique=True)
-    tag = models.ForeignKey(Tag)
+    # tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
+    # created_at = models.DateTimeField(auto_now=True)
+    # updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ("-created_at",)
+        # ordering = ("-created_at",)
         verbose_name = _("Post")
         verbose_name_plural = _("Posts")
 
