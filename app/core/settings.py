@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'graphene_django',
+
+    'posts'
 ]
 
 MIDDLEWARE = [
@@ -132,5 +135,5 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 GRAPHENE = {
-    'SCHEMA': 'graph.schema.schema'
+    "SCHEMA": "posts.schema.schema",
 }
