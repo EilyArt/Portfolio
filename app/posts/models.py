@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User
 
 class Tag(models.Model):
     name = models.CharField(max_length=285)
@@ -25,10 +26,10 @@ class Tag(models.Model):
 
 class Post(models.Model):
     # TODO: author should be a foregin key to users table
-    # author = models.ForeignKey(Users)
+    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=285, blank=True, null=True)
     description = models.TextField()
-    slug = models.SlugField(verbose_name=_("Post safe URL"), max_length=255, unique=True)
+    slug = models.SlugField(verbose_name=_("Post URL"), max_length=255, unique=True)
     tag = models.ManyToManyField(Tag)
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

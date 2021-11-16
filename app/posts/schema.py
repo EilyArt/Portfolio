@@ -28,17 +28,13 @@ class Query(graphene.ObjectType):
     post = graphene.Field(PostType, id=graphene.Int())
     comment = graphene.Field(CommentType, id=graphene.Int())
 
-    # get all the blog post
+    # get all the blog posts
     def resolve_allposts(self, info, **kwargs):
         return Post.objects.all()
 
-    # get all the blog post
-    def resolve_allposts(self, info, **kwargs):
-        return Post.objects.all()
-
-    # get all the blog post
-    def resolve_allposts(self, info, **kwargs):
-        return Post.objects.all()
+    # get all the blog tags
+    def resolve_alltags(self, info, **kwargs):
+        return Tag.objects.all()
 
     # Get the blog post by Blog ID
     def resolve_blogs(self, info, id):
@@ -53,24 +49,24 @@ class Query(graphene.ObjectType):
 #  ------------------------
 
 # Create New blog post
-class CreateblogMutation(graphene.Mutation):
-    createblogpost = graphene.Field(PostType)
+class CreatePost(graphene.Mutation):
+    Post = graphene.Field(PostType)
 
     class Arguments:
         title = graphene.String()
         description = graphene.String()
         author = graphene.String()
-        published_date = graphene.DateTime(default_value=timezone.now())
+        slug = graphene.String()
 
-    def mutate(self, info, title, description, author, published_date):
-        blog = Post.objects.create(title=title, description=description, author=author, published_date=timezone.now())
-        blog.save()
-        return CreateblogMutation(createblogpost=blog)
+    def mutate(self, info, request, title, description, slug):
+        post = Post.objects.create(title=title, description=description, author=request.user, slug=slug)
+        post.save()
+        return CreatePost(Post=post)
 
 
 # Update existing blog post using blog ID..
-class BlogupdateMutation(graphene.Mutation):
-    blogupdate = graphene.Field(PostType)
+class UpdatePost(graphene.Mutation):
+    Post = graphene.Field(PostType)
 
     class Arguments:
         blog_id = graphene.Int(required=True)
@@ -88,7 +84,7 @@ class BlogupdateMutation(graphene.Mutation):
 
         updated_blogs.save()
 
-        return BlogupdateMutation(blogupdate=updated_blogs)
+        return UpdatePost(Post=updated_blogs)
 
 
 # Create New Comment for Blog post
@@ -103,7 +99,7 @@ class CreatecommentMutation(graphene.Mutation):
         author = Post.objects.get(author=author)
         comments_create = Comment.objects.create(comment=comment, author=author)
         comments_create.save()
-        return CreateblogMutation(comments_create)
+        return CreatePost(comments_create)
 
 
 # Delete Comments based on Comment ID..
@@ -120,8 +116,8 @@ class DeletecommentMutation(graphene.Mutation):
 
 
 class Mutation(graphene.ObjectType):
-    createBlog = CreateblogMutation.Field()
-    updateblog = BlogupdateMutation.Field()
+    createPost = CreatePost.Field()
+    updatePost = UpdatePost.Field()
     createcomment = CreatecommentMutation.Field()
     deletecomment = DeletecommentMutation.Field()
 
