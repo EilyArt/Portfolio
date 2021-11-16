@@ -1,6 +1,6 @@
 from django.urls import path
 from graphene_django.views import GraphQLView
-from app.core.apps.posts.schema import schema
+from app.posts.schema import schema
 
 urlpatterns = [
     # Only a single URL to access GraphQL

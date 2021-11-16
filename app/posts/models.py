@@ -13,10 +13,6 @@ class Tag(models.Model):
     )
     slug = models.SlugField(verbose_name=_("Post safe URL"), max_length=255, unique=True)
 
-    class Meta:
-        verbose_name = _("Tag")
-        verbose_name_plural = _("Tags")
-
     def __str__(self):
         return self.name
 
@@ -29,11 +25,11 @@ class Post(models.Model):
         unique=True,
     )
     slug = models.SlugField(verbose_name=_("Post safe URL"), max_length=255, unique=True)
-    tag = models.ForeignKey(Tag)
+    # tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 
     class Meta:
-        ordering = ("-created_at",)
+        # ordering = ("-created_at",)
         verbose_name = _("Post")
         verbose_name_plural = _("Posts")
 
