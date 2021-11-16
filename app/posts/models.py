@@ -1,38 +1,53 @@
 from django.db import models
-from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-# Create your models here.
 
 class Tag(models.Model):
+    name = models.CharField(max_length=285)
+    value = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
-    name = models.CharField(
-        verbose_name=_("Post Title"),
-        help_text=_("Required and unique"),
-        max_length=255,
-        unique=True,
-    )
-    slug = models.SlugField(verbose_name=_("Post safe URL"), max_length=255, unique=True)
+    def __str__(self):
+        return self.name
+
+class Image(models.Model):
+    src = models.CharField(max_length=512, blank=False, null=False)
+    alt = models.CharField(max_length=285, blank=True, null=True)
+
+    def __str__(self):
+        return self.alt
+
+class Tag(models.Model):
+    name = models.CharField(max_length=285)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
 class Post(models.Model):
-
-    title = models.CharField(
-        verbose_name=_("Post Title"),
-        help_text=_("Required and unique"),
-        max_length=255,
-        unique=True,
-    )
+    # TODO: author should be a foregin key to users table
+    # author = models.ForeignKey(Users)
+    title = models.CharField(max_length=285, blank=True, null=True)
+    description = models.TextField()
     slug = models.SlugField(verbose_name=_("Post safe URL"), max_length=255, unique=True)
-    # tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
-    is_active = models.BooleanField(default=True)
-
-    class Meta:
-        # ordering = ("-created_at",)
-        verbose_name = _("Post")
-        verbose_name_plural = _("Posts")
+    tag = models.ManyToManyField(Tag)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True)
+    deleted_on = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.title
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, null=True, blank=True, on_delete=models.SET_NULL)
+    author = models.CharField(max_length=128)
+    comment = models.CharField(max_length=1024, blank=True, null=True)
+    ip_address = models.GenericIPAddressField()
+    is_approved = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True)
+    deleted_on = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return self.comment
 
