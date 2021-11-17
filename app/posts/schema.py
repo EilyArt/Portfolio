@@ -37,7 +37,7 @@ class Query(graphene.ObjectType):
         return Tag.objects.all()
 
     # Get the blog post by Blog ID
-    def resolve_blogs(self, info, id):
+    def resolve_posts(self, info, id):
         return Post.objects.get(pk=id)
 
     # Get the comments by Comment ID
@@ -51,15 +51,19 @@ class Query(graphene.ObjectType):
 # Create New blog post
 class CreatePost(graphene.Mutation):
     Post = graphene.Field(PostType)
+    Image = graphene.Field(ImageType)
 
     class Arguments:
         title = graphene.String()
         description = graphene.String()
         author = graphene.String()
         slug = graphene.String()
+        alt = graphene.String()
 
-    def mutate(self, info, request, title, description, slug):
-        post = Post.objects.create(title=title, description=description, author=request.user, slug=slug)
+    def mutate(self, info, request, title, description, slug, alt, src):
+        image = Image.objects.create(alt=alt, src=src)
+        image.save()
+        post = Post.objects.create(title=title, description=description, author=request.user, slug=slug, image=image.id)
         post.save()
         return CreatePost(Post=post)
 

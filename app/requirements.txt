@@ -3,3 +3,5 @@ gunicorn==20.1.0
 psycopg2-binary==2.9.1
 graphene-django==2.14.0
 django-filter==21.1
+Pillow>=2.6
+django-ckeditor==3.6.2.1

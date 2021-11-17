@@ -11,27 +11,19 @@ class Tag(models.Model):
         return self.name
 
 class Image(models.Model):
-    src = models.CharField(max_length=512, blank=False, null=False)
-    alt = models.CharField(max_length=285, blank=True, null=True)
+    alt = models.CharField(max_length=20)
+    src = models.ImageField(upload_to="images/", default=None)
 
     def __str__(self):
         return self.alt
 
-class Tag(models.Model):
-    name = models.CharField(max_length=285)
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
 class Post(models.Model):
-    # TODO: author should be a foregin key to users table
     author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=285, blank=True, null=True)
     description = models.TextField()
     slug = models.SlugField(verbose_name=_("Post URL"), max_length=255, unique=True)
     tag = models.ManyToManyField(Tag)
-    image = models.ForeignKey(Image, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="images/", default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True)
     deleted_on = models.DateTimeField(null=True, blank=True)
@@ -40,7 +32,7 @@ class Post(models.Model):
         return self.title
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, null=True, blank=True, on_delete=models.SET_NULL)
+    post = models.ForeignKey(Post, null=True, blank=True, on_delete=models.CASCADE)
     author = models.CharField(max_length=128)
     comment = models.CharField(max_length=1024, blank=True, null=True)
     ip_address = models.GenericIPAddressField()
