@@ -1,6 +1,6 @@
 import graphene
 from graphene_django.types import DjangoObjectType, ObjectType
-from .models import Post, Comment, Tag, Image
+from .models import *
 from datetime import datetime
 from django.utils import timezone
 
@@ -17,14 +17,9 @@ class TagType(DjangoObjectType):
     class Meta:
         model = Tag
 
-class ImageType(DjangoObjectType):
-    class Meta:
-        model = Image
-
 class Query(graphene.ObjectType):
     allposts = graphene.List(PostType)
     alltags = graphene.List(TagType)
-    allimages = graphene.List(ImageType)
     post = graphene.Field(PostType, id=graphene.Int())
     comment = graphene.Field(CommentType, id=graphene.Int())
 
@@ -51,7 +46,6 @@ class Query(graphene.ObjectType):
 # Create New blog post
 class CreatePost(graphene.Mutation):
     Post = graphene.Field(PostType)
-    Image = graphene.Field(ImageType)
 
     class Arguments:
         title = graphene.String()
@@ -61,8 +55,6 @@ class CreatePost(graphene.Mutation):
         alt = graphene.String()
 
     def mutate(self, info, request, title, description, slug, alt, src):
-        image = Image.objects.create(alt=alt, src=src)
-        image.save()
         post = Post.objects.create(title=title, description=description, author=request.user, slug=slug, image=image.id)
         post.save()
         return CreatePost(Post=post)

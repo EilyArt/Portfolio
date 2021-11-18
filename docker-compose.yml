@@ -44,7 +44,7 @@ services:
     build: ./nginx
     container_name: nginx
     volumes:
-      - ./nginx/static/
+      - ./app/:/nginx/nginx.conf
     ports:
       - 8008:80
     depends_on:
