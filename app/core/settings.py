@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'graphene_django',
 
-    'posts'
+    'posts',
+    
+    'django_cleanup'
 ]
 
 MIDDLEWARE = [
@@ -136,3 +138,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 GRAPHENE = {
     "SCHEMA": "posts.schema.schema",
 }
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+]
