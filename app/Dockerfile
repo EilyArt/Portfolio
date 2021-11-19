@@ -28,4 +28,4 @@ COPY . .
 # run entrypoint.sh
 ENTRYPOINT ["/app/api/entrypoint.sh"]
 
-CMD [ "python", "manage.py", "makemigrations", "&&", "python", "manage.py", "migrate"]
+# CMD [ "python", "manage.py", "makemigrations", "&&", "python", "manage.py", "migrate", "&&", "./manage.py", "collectstatic"]

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
 
     'posts',
+    'pages',
     
     'django_cleanup'
 ]
