@@ -46,7 +46,10 @@ INSTALLED_APPS = [
 
     'posts',
     'about',
-    
+    'clients',
+    'pages',
+    'projects',
+
     'django_cleanup'
 ]
 

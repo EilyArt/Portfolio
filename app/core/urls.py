@@ -16,17 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from graphene_django.views import GraphQLView
-from posts.schema import schema as posts
-from about.schema import schema as about
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path("posts/", GraphQLView.as_view(graphiql=True, schema=posts)),
-    path("about/", GraphQLView.as_view(graphiql=True, schema=about)),
 ]
 
 if settings.DEBUG:
