@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'graphene_django',
-
     'ckeditor',
     'ckeditor_uploader',
 
@@ -49,7 +48,8 @@ INSTALLED_APPS = [
     'clients',
     'pages',
     'projects',
-
+    'phonenumber_field',
+    'django_seed',
     'django_cleanup'
 ]
 

@@ -5,7 +5,7 @@ from .models import *
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ("title", "Thumbnail", "published", "id", "author",  "slug", "short_description", "created_at", "updated_at", "deleted_on")
-    list_filter = ['tag', "published", "deleted", "created_at", "updated_at", "deleted_on"]
+    list_filter = ["published", "deleted", "created_at", "updated_at", "deleted_on", 'tag']
     list_select_related = ('author', )
     readonly_fields= ('Thumbnail', "deleted", )
 
