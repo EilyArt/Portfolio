@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from graphene_django.views import GraphQLView
 from posts.schema import schema as posts
-from pages.schema import schema as pages
+from about.schema import schema as about
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.conf.urls.static import static
@@ -26,7 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path("posts/", GraphQLView.as_view(graphiql=True, schema=posts)),
-    path("pages/", GraphQLView.as_view(graphiql=True, schema=pages)),
+    path("about/", GraphQLView.as_view(graphiql=True, schema=about)),
 ]
 
 if settings.DEBUG:
