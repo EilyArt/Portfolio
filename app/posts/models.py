@@ -85,14 +85,14 @@ class Post(TimeStampMixin):
         post.save(update_fields=["deleted_on", "deleted", "published"])
 
     # delete old image on updating the image field
-    def save(self, *args, **kwargs):
-        try:
-            this = Post.objects.get(id=self.id)
-            if this.thumbnail != self.thumbnail:
-                this.thumbnail.delete()
-        except:
-            pass
-        super(Post, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     try:
+    #         this = Post.objects.get(id=self.id)
+    #         if this.thumbnail != self.thumbnail:
+    #             this.thumbnail.delete()
+    #     except:
+    #         pass
+    #     super(Post, self).save(*args, **kwargs)
 
 #Post_meta model
 class PostMeta(models.Model):
