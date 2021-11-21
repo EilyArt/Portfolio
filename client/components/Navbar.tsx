@@ -17,8 +17,6 @@ const Navbar = () => {
                 <div className="row">
                     <div className="navbar-links">
                         <Link href="/"><a className={`${router.pathname.toString() === "/" && "linkActive"}  pad-2`}>Home</a></Link>
-                        <Link href="/portfolio"><a className={`${router.pathname.includes("Portfolio") && "linkActive"}  pad-2`}>Portfolio</a></Link>
-                        <Link href="/blog"><a className={`${router.pathname.includes("blog") && "linkActive"}  pad-2`}>Blog</a></Link>
                         <Link href="/resume">
                             <a
                                 className={`${(router.pathname.includes("expertise") ||
@@ -29,6 +27,8 @@ const Navbar = () => {
                                 About
                             </a>
                         </Link>
+                        <Link href="/blog"><a className={`${router.pathname.includes("blog") && "linkActive"}  pad-2`}>Blog</a></Link>
+                        <Link href="/portfolio"><a className={`${router.pathname.includes("Portfolio") && "linkActive"}  pad-2`}>Portfolio</a></Link>
                         <Link href="/contact"><a className={`${router.pathname.includes("contact") && "linkActive"}  pad-2`}>Contact</a></Link>
                     </div>
                 </div>

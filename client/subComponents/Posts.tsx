@@ -19,7 +19,7 @@ const Posts = () => {
     return (
         <div className="col">
             <div className="posts">
-                {[...Array(3)].map(post => {
+                {[...Array(16)].map(post => {
                     return (
                         <Link href="/slug">
                             <a className="posts-post">

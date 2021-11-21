@@ -5,6 +5,7 @@ import hero from "@/images/blog-dark.jpeg"
 import Posts from '../subComponents/Posts';
 import Title from '@/subComponents/Title';
 import Tag from '@/subComponents/Tag';
+import Header from '@/subComponents/Header'
 
 interface Props {
 }
@@ -13,13 +14,8 @@ const blog: NextPage<Props> = () => {
   return (
     <Layout>
       <div className="blog">
-        <div className="blog-hero">
-          <Image src={hero} objectFit="cover" layout="fill" className="blog-hero-img" />
-          <div className="blog-hero-overlay" />
-          <div className="blog-hero-content">
-            <h1>EILYA's</h1>
-            <p>Thoughts, stories and ideas.</p>
-          </div>
+        <div className="pad-default">
+          <Header span="EILYA's Thoughts, stories and ideas." header="Blog" />
         </div>
         <div className="blog-posts pad-default">
           <Posts />
