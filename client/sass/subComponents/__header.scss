@@ -1,0 +1,60 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    h1 {
+        line-height: 4rem;
+        font-size: 46px;
+    }
+
+    div {
+        display: block;
+        width: 80px;
+        height: 4px;
+        background: var(--color-gradient) !important;
+        position: relative;
+        overflow: hidden;
+        transition: all ease-in .2s;
+        margin-top: 2rem;
+
+        &::after {
+            background-color: var(--color-surface-1);
+            content: '';
+            display: inline-block;
+            height: 4px;
+            left: 0;
+            position: absolute;
+            left: 0;
+            width: 5px;
+            z-index: 2;
+            transform: translateX(10px);
+            animation: movingLine 3s infinite;
+        }
+
+        &::before {
+            background-color: var(--color-surface-1);
+            content: '';
+            display: inline-block;
+            height: 4px;
+            left: 0;
+            position: absolute;
+            left: 0;
+            width: 5px;
+            z-index: 2;
+            animation: movingLine 3s infinite;
+        }
+    }
+}
+
+@keyframes movingLine {
+    from {
+        margin-left: 0%;
+    }
+
+    to {
+        margin-left: 100%;
+    }
+}
