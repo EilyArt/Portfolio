@@ -74,12 +74,12 @@ body {
     font-weight: 400;
     font-style: normal;
     line-height: 1.5;
-    background-color: #fff;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
     color: var(--color-paragraph);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    background-color: var(--color-surface-1);
 }
 
 

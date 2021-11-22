@@ -17,7 +17,7 @@ const blog: NextPage<Props> = () => {
         <div className="pad-default">
           <Header span="EILYA's Thoughts, stories and ideas." header="Blog" />
         </div>
-        <div className="blog-posts pad-default">
+        <div className="blog-posts pad-default-horizontal">
           <Posts />
         </div>
         <div className="pad-default">
