@@ -47,17 +47,20 @@ const contact: NextPage<Props> = () => {
                     </div>
                 </div>
                 <form className='contact-form'>
-                    <input className="contact-form-input" placeholder="Your Name" />
-                    <input className="contact-form-input" placeholder="Your email" />
-                    <input className="contact-form-input" placeholder="your subject" />
-                    <textarea className="contact-form-input" placeholder="your message" />
-                    <div className="contact-form-submitForm">
-                        <div />
-                        <span className="contact-form-submitForm-span">
+                    <h2>Free Consultaion</h2>
+                    <div className="contact-form-info">
+                        <input className="contact-form-input" placeholder="Your Name" required/>
+                        <input className="contact-form-input" placeholder="Your email" required/>
+                    </div>
+                    <input className="contact-form-input" placeholder="your subject" required/>
+                    <textarea className="contact-form-input" placeholder="your message" required/>
+                    <div onClick={() => document.getElementById("contactSubmitButton")?.click()} id="contactButton" className="contact-form-submitFormButton">
+                        <div id="cover" className="contact-form-submitFormButton-cover"/>
+                        <span className="contact-form-submitFormButton-span">
                             <h4>Send Message</h4>
                             </span>
-                        <button type="submit" className="contact-form-submitForm-button">
-                            <span className="contact-form-submitForm-button-span">
+                        <button id="contactSubmitButton" type="submit" className="contact-form-submitFormButton-button">
+                            <span className="contact-form-submitFormButton-button-span">
                                 <FaPaperPlane />
                             </span>
                         </button>

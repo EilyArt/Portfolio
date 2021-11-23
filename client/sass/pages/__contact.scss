@@ -32,20 +32,32 @@
     }
 
     &-form {
-        width: 65%;
-
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        
+        &-info {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            & > * {
+                max-width: 49% !important;
+            }
+        }
+        
         &-input {
-            margin: 1rem;
+            margin: .6rem 0;
             width: 100%;
             background: var(--color-surface-2);
             padding: 1rem;
             border: none;
             border-radius: var(--radius-32);
-            min-width: 100%;
             max-width: 100%;
             font-family: var(--font-family);
             color: white;
-
+            text-indent: .6rem;
+            font-size: 15px;
+            
             &::placeholder {
                 text-transform: uppercase;
                 font-weight: 600;
@@ -53,10 +65,12 @@
                 text-indent: .6rem;
             }
         }
-
+        
         textarea {
+            min-width: 100%;
             min-height: 10rem;
             height: max-content;
+            
 
             &::-webkit-scrollbar {
                 width: 10px;
@@ -81,7 +95,7 @@
             }
         }
 
-        &-submitForm {
+        &-submitFormButton {
             border: 2px solid var(--color-accent);
             border-radius: var(--radius-32);
             max-width: 15rem;
@@ -93,23 +107,24 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            
-            &::after {
-                content: "";
+            margin-top: 1rem;
+
+            &-cover {
                 height: 100%;
                 width: 100%;
                 position: absolute;
-                background-color: var(--color-accent);
+                background: var(--color-accent);
                 z-index: -1;
                 left: 0;
-                animation: 1s out forwards;
-            }
-            
-            &:hover {
-                &::after {
-                    animation: 1s in forwards;
+                transform: translateX(100%);
+                -webkit-transition: transform .7s;
+
+                &:hover {
+                    animation: .7s in forwards;
                 }
             }
+
+
 
             &-button {
                 border-radius: 2px;
@@ -130,21 +145,6 @@
     }
 }
 
-@keyframes in {
-    from {
-        transform: translateX(100%);
-    } 
-    to {
-        transform: translateX(0%);
-    }
+#contactButton:hover>#cover {
+    transform: translateX(0%);
 }
-
-@keyframes out {
-    from {
-        transform: translateX(0%);
-    } 
-    to {
-        transform: translateX(100%);
-    }
-}
-
