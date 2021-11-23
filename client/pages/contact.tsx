@@ -57,7 +57,7 @@ const contact: NextPage<Props> = () => {
                     <div onClick={() => document.getElementById("contactSubmitButton")?.click()} id="contactButton" className="contact-form-submitFormButton">
                         <div id="cover" className="contact-form-submitFormButton-cover"/>
                         <span className="contact-form-submitFormButton-span">
-                            <h4>Send Message</h4>
+                            <h4>Send Message</h4> 
                             </span>
                         <button id="contactSubmitButton" type="submit" className="contact-form-submitFormButton-button">
                             <span className="contact-form-submitFormButton-button-span">
