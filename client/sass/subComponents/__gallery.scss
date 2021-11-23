@@ -1,0 +1,79 @@
+.gallery {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+
+  .arrow {
+    position: absolute;
+    z-index: 2;
+    cursor: pointer;
+    box-shadow: var(--box-shadow-24);
+    transform: scale(1.5);
+    color: var(--color-accent);
+  }
+
+  &-arrowLeft {
+    @extend .arrow;
+    // transform: translateX(-1rem);
+  }
+  &-arrowRight {
+    @extend .arrow;
+    right: 0;
+    // transform: translateX(1rem);
+  }
+
+  &-images {
+    display: flex;
+    flex-direction: row;
+    max-width: fit-content;
+    background-color: transparent;
+
+    div {
+      display: none;
+    }
+
+    div:nth-child(-n + 3) {
+      display: block;
+    }
+
+    & > div:nth-child(2) {
+      animation: x 0.4s forwards;
+      z-index: 1;
+    }
+
+    transition: all 0.2s ease;
+
+    &-image {
+      margin: 0.2rem;
+      display: block;
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-18);
+      min-height: fit-content;
+      width: 9rem;
+      height: 9rem;
+    }
+  }
+}
+
+@keyframes smootheProjectsEffect {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes x {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.35);
+  }
+}
+
+.animation {
+  animation: smootheProjectsEffect 0.3s ease-in-out;
+}

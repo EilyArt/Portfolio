@@ -50,7 +50,7 @@ const contact: NextPage<Props> = () => {
                     <h2>Free Consultaion</h2>
                     <div className="contact-form-info">
                         <input className="contact-form-input" placeholder="Your Name" required/>
-                        <input className="contact-form-input" placeholder="Your email" required/>
+                        <input className="contact-form-input" placeholder="Your email@example.com" type="email" required/>
                     </div>
                     <input className="contact-form-input" placeholder="your subject" required/>
                     <textarea className="contact-form-input" placeholder="your message" required/>
