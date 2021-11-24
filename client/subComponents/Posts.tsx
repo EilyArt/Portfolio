@@ -6,7 +6,7 @@ import Link from "next/link"
 import Tag from "./Tag"
 import Button from "./Button"
 
-const Posts = () => {
+const Posts = ({ star }: any) => {
 
     const LoadMore = () => {
         document.getElementById("load-more-button")?.classList.add("hidden");
@@ -19,10 +19,10 @@ const Posts = () => {
     return (
         <div className="col">
             <div className="posts">
-                {[...Array(16)].map(post => {
+                {[...Array(3)].map((post, index) => {
                     return (
                         <Link href="/slug">
-                            <a className="posts-post">
+                            <a className={`posts-post ${index < 3 && star && "star"}`}>
                                 <div>
                                     <Image objectFit="cover" layout="fill" src={img} />
                                     <div className="posts-post-content">
@@ -50,9 +50,9 @@ const Posts = () => {
                                                 </div>
                                                 <h6 className="posts-post-content-bottom-writer-name">Eilya Amin in</h6>
                                             </div>
-                                            <Tag size="sm-tag"/>
-                                            <Tag size="sm-tag"/>
-                                            <Tag size="sm-tag"/>
+                                            <Tag size="sm-tag" />
+                                            <Tag size="sm-tag" />
+                                            <Tag size="sm-tag" />
                                         </div>
                                     </div>
                                 </div>
@@ -71,6 +71,10 @@ const Posts = () => {
             </div>}
         </div>
     )
+}
+
+Posts.defaultProps = {
+    star: false
 }
 
 export default Posts

@@ -4,6 +4,9 @@ import Title from "@/subComponents/Title"
 import img from "@/images/sample3.jpeg"
 import Image from "next/dist/client/image"
 import Tag from "@/subComponents/Tag"
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import MediaIcon from "@/subComponents/MediaIcon"
+import DiscussionForm from "@/subComponents/DiscussionForm"
 
 const post = () => {
     return (
@@ -11,7 +14,7 @@ const post = () => {
             <div className="post pad-default">
                 <div className="post-content">
                     <div className="post-content-wrapper">
-                        <Image objectFit="cover"  className="post-content-wrapper-img" src={img} />
+                        <Image objectFit="cover" className="post-content-wrapper-img" src={img} />
                     </div>
                     <div className="post-content-thumbnail">
                         <div className="post-content-thumbnail-meta">
@@ -41,8 +44,41 @@ const post = () => {
                         </div>
                     </div>
                 </div>
+                <div className="row">
+                    <div className="post-socialMedia">
+                        <MediaIcon media="linkedin" />
+                        <MediaIcon media="twitter" />
+                        <MediaIcon media="youtube" />
+                        <MediaIcon media="github" />
+                    </div>
+                </div>
+                <div className="post-prevNext">
+                    <a className="post-prevNext-container previusPost">
+                        <div className="post-prevNext-container-wrapper">
+                            <Image objectFit="cover" layout="fill"  src={img} />
+                        </div>
+                        <div className="post-prevNext-container-info">
+                            <span><FaAngleLeft /> Previus Post</span>
+                            <h2 className="posts-post-content-title">
+                                Believe and act as if it were impossible to fail
+                            </h2>
+                        </div>
+                    </a>
+                    <a className="post-prevNext-container nextPost">
+                        <div className="post-prevNext-container-wrapper">
+                            <Image objectFit="cover" layout="fill" src={img} />
+                        </div>
+                        <div className="post-prevNext-container-info">
+                            <span id="nextPost">Next Post <FaAngleRight /></span>
+                            <h2 className="posts-post-content-title">
+                                Believe and act as if it were impossible to fail
+                            </h2>
+                        </div>
+                    </a>
+                </div>
                 <Title title="You may also like" />
                 <Posts />
+                <DiscussionForm />
             </div>
         </Layout>
     )

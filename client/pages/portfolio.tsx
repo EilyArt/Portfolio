@@ -14,7 +14,7 @@ const portfolio: NextPage<Props> = () => {
                 <Header span="Showcasing some of my best work" header="Portfolio" />
             </div>
             <div className="portfolio pad-default-horizontal">
-                {[...Array(3)].map((project, index) => {
+                {[...Array(8)].map((project, index) => {
                     return (
                         <div className="portfolio-project">
                             <Gallery id={index} />
