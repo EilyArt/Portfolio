@@ -11,16 +11,15 @@
     box-shadow: var(--box-shadow-24);
     transform: scale(1.5);
     color: var(--color-accent);
+    display: none;
   }
 
   &-arrowLeft {
     @extend .arrow;
-    // transform: translateX(-1rem);
   }
   &-arrowRight {
     @extend .arrow;
     right: 0;
-    // transform: translateX(1rem);
   }
 
   &-images {
@@ -57,6 +56,24 @@
   }
 }
 
+.animation {
+  animation: smootheProjectsEffect 0.3s ease-in-out;
+}
+
+.gallery:hover > .arrow {
+  display: block;
+  animation: showArrows 0.2s ease-in-out;
+}
+
+@keyframes showArrows {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes smootheProjectsEffect {
   from {
     transform: scale(0.9);
@@ -72,8 +89,4 @@
   to {
     transform: scale(1.35);
   }
-}
-
-.animation {
-  animation: smootheProjectsEffect 0.3s ease-in-out;
 }

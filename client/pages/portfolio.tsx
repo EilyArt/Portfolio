@@ -12,11 +12,41 @@ const portfolio: NextPage<Props> = () => {
             <div className="portfolio pad-default">
                 <Header span="Showcasing some of my best work" header="Portfolio" />
             </div>
-            <div className="portfolio-projects pad-default-horizontal">
+            <div className="portfolio pad-default-horizontal">
                 {[...Array(3)].map((project, index) => {
                     return (
-                        <div className="portfolio-projects-project">
-                            <Gallery id={index}/>
+                        <div className="portfolio-project">
+                            <Gallery id={index} />
+                            <div className="portfolio-project-info">
+                                <dl className="portfolio-project-info-container">
+                                    <dt className="portfolio-project-info-container-dt"><h4>Project Name:</h4></dt>
+                                    <dd className="portfolio-project-info-container-dd">Elithair</dd>
+                                    <dt className="portfolio-project-info-container-dt"><h4>Price:</h4></dt>
+                                    <dd className="portfolio-project-info-container-dd">1399$</dd>
+                                    <dt className="portfolio-project-info-container-dt"><h4>Label:</h4></dt>
+                                    <dd className="portfolio-project-info-container-dd">For Sell</dd>
+                                    <dt className="portfolio-project-info-container-dt"><h4>Project Link:</h4> <dd className="portfolio-project-info-container-dd">
+                                        <a href='https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-wrap'>
+                                            Open
+                                        </a>
+                                    </dd></dt>
+                                </dl>
+                                <div className="portfolio-project-info-container">
+                                    <dt className="portfolio-project-info-container-dt"><h4>Features:</h4></dt>
+                                    <ul>
+                                        <li className="portfolio-project-info-container-li">SEO Friendly</li>
+                                        <li className="portfolio-project-info-container-li">Admin Dashboard</li>
+                                        <li className="portfolio-project-info-container-li">Auto Posting</li>
+                                        <li className="portfolio-project-info-container-li">Email Service</li>
+                                        <li className="portfolio-project-info-container-li">Security</li>
+                                        <li className="portfolio-project-info-container-li">Great Design</li>
+                                    </ul>
+                                </div>
+                                <dl className="portfolio-project-info-container" id='project-description'>
+                                    <dt className="portfolio-project-info-container-dt"><h4>Short Description:</h4></dt>
+                                    <p className="portfolio-project-info-container-p">Praesent dapibus, neque id cursus faucibus, tortor neque egestas auguae, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
+                                </dl>
+                            </div>
                         </div>
                     );
                 })}
