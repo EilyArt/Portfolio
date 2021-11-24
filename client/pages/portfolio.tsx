@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Layout from '@/components/Layout'
 import Header from '@/subComponents/Header'
 import Gallery from '@/subComponents/Gallery'
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 interface Props {
 }
@@ -26,8 +27,8 @@ const portfolio: NextPage<Props> = () => {
                                     <dt className="portfolio-project-info-container-dt"><h4>Label:</h4></dt>
                                     <dd className="portfolio-project-info-container-dd">For Sell</dd>
                                     <dt className="portfolio-project-info-container-dt"><h4>Project Link:</h4> <dd className="portfolio-project-info-container-dd">
-                                        <a href='https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-wrap'>
-                                            Open
+                                        <a href='/contact' target="_blank">
+                                            Open <FaExternalLinkAlt />
                                         </a>
                                     </dd></dt>
                                 </dl>

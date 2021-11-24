@@ -8,10 +8,14 @@
     position: absolute;
     z-index: 2;
     cursor: pointer;
-    box-shadow: var(--box-shadow-24);
+    box-shadow: var(--box-shadow-32);
     transform: scale(1.5);
     color: var(--color-accent);
     display: none;
+
+    @include respond(tablet) {
+      display: block;
+    }
   }
 
   &-arrowLeft {
