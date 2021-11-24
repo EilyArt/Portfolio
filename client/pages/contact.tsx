@@ -1,14 +1,33 @@
 import { NextPage } from 'next'
 import Layout from '@/components/Layout'
 import Header from '@/subComponents/Header'
-import email from '@/svgs/email.svg'
 import StickyBarItem from '@/subComponents/StickyBarItem'
 import MediaIcon from '@/subComponents/MediaIcon'
 import { FaPaperPlane } from "react-icons/fa";
+import React, { useState } from 'react'
+import boxLogo from "@/images/star.png"
 
 interface Props { }
 
 const contact: NextPage<Props> = () => {
+
+    const initialState = {
+        name: '',
+        email: '',
+        subject: '',
+        content: ''
+    };
+
+
+    const [formData, setFormData] = useState(initialState);
+
+    const { name, email, subject, content } = formData
+
+    const onChange = (event: any) => {
+        event.preventDefault();
+        setFormData({ ...formData, [event.target.name]: event.target.value });
+    }
+
     return (
         <Layout>
             <div className='pad-default'>
@@ -24,17 +43,17 @@ const contact: NextPage<Props> = () => {
                     </p>
                     <div className='contact-info-items'>
                         <StickyBarItem
-                            src={email}
+                            src={boxLogo}
                             title='ADDRESS POINT'
                             content='123 Stree New York City '
                         />
                         <StickyBarItem
-                            src={email}
+                            src={boxLogo}
                             title='MAIL ME'
                             content='eilya@mail.com'
                         />
                         <StickyBarItem
-                            src={email}
+                            src={boxLogo}
                             title='CALL ME'
                             content='+90 533 838 0450'
                         />
@@ -49,16 +68,44 @@ const contact: NextPage<Props> = () => {
                 <form className='contact-form'>
                     <h2>Free Consultaion</h2>
                     <div className="contact-form-info">
-                        <input className="contact-form-input" placeholder="Your Name" required/>
-                        <input className="contact-form-input" placeholder="Your email@example.com" type="email" required/>
+                        <input
+                            type="text"
+                            name="name"
+                            minLength={3}
+                            value={name}
+                            onChange={(event) => onChange(event)}
+                            className="contact-form-input"
+                            placeholder="Your Name"
+                            required />
+                        <input
+                            name="email"
+                            type="email"
+                            value={email}
+                            onChange={(event) => onChange(event)}
+                            className="contact-form-input"
+                            placeholder="Your email@example.com"
+                            required />
                     </div>
-                    <input className="contact-form-input" placeholder="your subject" required/>
-                    <textarea className="contact-form-input" placeholder="your message" required/>
+                    <input
+                        name="subject"
+                        type="text"
+                        value={subject}
+                        onChange={(event) => onChange(event)}
+                        className="contact-form-input"
+                        placeholder="your subject"
+                        required />
+                    <textarea
+                        name="content"
+                        value={content}
+                        onChange={(event) => onChange(event)}
+                        className="contact-form-input"
+                        placeholder="your message"
+                        required />
                     <div onClick={() => document.getElementById("contactSubmitButton")?.click()} id="contactButton" className="contact-form-submitFormButton">
-                        <div id="cover" className="contact-form-submitFormButton-cover"/>
+                        <div id="cover" className="contact-form-submitFormButton-cover" />
                         <span className="contact-form-submitFormButton-span">
-                            <h4>Send Message</h4> 
-                            </span>
+                            <h4>Send Message</h4>
+                        </span>
                         <button id="contactSubmitButton" type="submit" className="contact-form-submitFormButton-button">
                             <span className="contact-form-submitFormButton-button-span">
                                 <FaPaperPlane />
