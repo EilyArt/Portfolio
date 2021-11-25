@@ -4,9 +4,11 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 1.5rem;
+
   & > * {
     flex: 1;
   }
+
   &-socialLinks {
     display: flex;
     flex-direction: row;
@@ -21,6 +23,7 @@
       display: none;
     }
   }
+
   &-links {
     display: flex;
     flex-direction: row;
@@ -29,16 +32,21 @@
     background: var(--color-paragraph);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-weight: 600;
+
     @include respond(tablet) {
       justify-content: flex-start;
     }
+
     @include respond(phone) {
       justify-content: space-between;
     }
   }
+
   &-logo {
     display: flex;
     justify-content: flex-end;
+
     @include respond(phone) {
       display: none;
     }

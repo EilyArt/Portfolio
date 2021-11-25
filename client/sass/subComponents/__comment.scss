@@ -1,0 +1,102 @@
+.comment {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 1rem;
+  user-select: unset;
+  animation: openComment 0.2s ease;
+  width: 100%;
+
+  &-user {
+    transform: scale(2);
+    margin: 1rem;
+  }
+
+  &::before {
+    content: "";
+    min-width: 3px;
+    height: 90px;
+    background: var(--color-gradient);
+    border-radius: 1rem 5rem;
+  }
+
+  &-info {
+    h4 {
+      font-weight: 400;
+    }
+
+    time {
+      font-size: 12px;
+    }
+
+    p {
+      padding: 0.2rem 0;
+      line-height: 1.45;
+    }
+
+    &-actions {
+      display: flex;
+      flex-direction: row;
+      margin-top: 0.4rem;
+
+      button {
+        border: 1px solid var(--color-border);
+        padding: 0.5rem;
+        background-color: unset;
+        cursor: pointer;
+        color: var(--color-paragraph);
+      }
+
+      &-emotion {
+        button {
+          border: 1px solid var(--color-border);
+          padding: 0.5rem 0.7rem;
+          background-color: unset;
+          cursor: pointer;
+          color: var(--color-paragraph);
+        }
+      }
+
+      &-comment {
+        margin-left: 0.5rem;
+      }
+    }
+  }
+}
+
+.replies {
+  margin-left: 3rem;
+
+  small {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    color: var(--color-accent);
+    font-size: 12px;
+    background: var(--color-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    & > :nth-child(2) {
+      margin-left: 1rem;
+    }
+  }
+}
+
+@keyframes openComment {
+  from {
+    transform: scale(0.9);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}

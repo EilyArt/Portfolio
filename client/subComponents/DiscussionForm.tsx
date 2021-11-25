@@ -1,7 +1,10 @@
+import Comment from "./Comment"
+
 const DiscussionForm = () => {
     return (
         <div className="discussion">
-            DiscussionForm
+            <Comment />
+            <Comment />
         </div>
     )
 }

@@ -19,7 +19,7 @@ const Posts = ({ star }: any) => {
     return (
         <div className="col">
             <div className="posts">
-                {[...Array(16)].map((post, index) => {
+                {[...Array(3)].map((post, index) => {
                     return (
                         <Link href="/slug">
                             <a className={`posts-post ${index < 3 && star && "star"}`}>
@@ -61,7 +61,7 @@ const Posts = ({ star }: any) => {
                     )
                 })}
             </div>
-            {[...Array(16)].length >= 12 && <div id="load-more-button" className="loadMore">
+            {[...Array(3)].length >= 12 && <div id="load-more-button" className="loadMore">
                 <button onClick={() => LoadMore()}
                     className="button">
                     <span className="button-span" >

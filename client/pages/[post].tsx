@@ -7,6 +7,7 @@ import Tag from "@/subComponents/Tag"
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import MediaIcon from "@/subComponents/MediaIcon"
 import DiscussionForm from "@/subComponents/DiscussionForm"
+import Link from "next/dist/client/link"
 
 const post = () => {
     return (
@@ -53,28 +54,32 @@ const post = () => {
                     </div>
                 </div>
                 <div className="post-prevNext">
-                    <a className="post-prevNext-container previusPost">
-                        <div className="post-prevNext-container-wrapper">
-                            <Image objectFit="cover" layout="fill"  src={img} />
-                        </div>
-                        <div className="post-prevNext-container-info">
-                            <span><FaAngleLeft /> Previus Post</span>
-                            <h2 className="posts-post-content-title">
-                                Believe and act as if it were impossible to fail
-                            </h2>
-                        </div>
-                    </a>
-                    <a className="post-prevNext-container nextPost">
-                        <div className="post-prevNext-container-wrapper">
-                            <Image objectFit="cover" layout="fill" src={img} />
-                        </div>
-                        <div className="post-prevNext-container-info">
-                            <span id="nextPost">Next Post <FaAngleRight /></span>
-                            <h2 className="posts-post-content-title">
-                                Believe and act as if it were impossible to fail
-                            </h2>
-                        </div>
-                    </a>
+                    <Link href="/slug">
+                        <a className="post-prevNext-container previusPost">
+                            <div className="post-prevNext-container-wrapper">
+                                <Image objectFit="cover" layout="fill" src={img} />
+                            </div>
+                            <div className="post-prevNext-container-info">
+                                <span><FaAngleLeft /> Previus Post</span>
+                                <h2 className="posts-post-content-title">
+                                    Believe and act as if it were impossible to fail
+                                </h2>
+                            </div>
+                        </a>
+                    </Link>
+                    <Link href="/slug">
+                        <a className="post-prevNext-container nextPost">
+                            <div className="post-prevNext-container-wrapper">
+                                <Image objectFit="cover" layout="fill" src={img} />
+                            </div>
+                            <div className="post-prevNext-container-info">
+                                <span id="nextPost">Next Post <FaAngleRight /></span>
+                                <h2 className="posts-post-content-title">
+                                    Believe and act as if it were impossible to fail
+                                </h2>
+                            </div>
+                        </a>
+                    </Link>
                 </div>
                 <Title title="You may also like" />
                 <Posts />
