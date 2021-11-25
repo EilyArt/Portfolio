@@ -5,5 +5,5 @@ from .models import *
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ("id", "created_at", "name", "surname", "email", "phone", "description", "appointment_date", "budeget")
-    list_filter = ["created_at", "appointment_date", ]
+    list_display = ("id", "created_at", "name", "email", "description", "subject")
+    list_filter = ["created_at", ]
