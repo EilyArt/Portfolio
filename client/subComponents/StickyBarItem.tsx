@@ -12,7 +12,7 @@ const StickyBarItem = ({src, title, content}: any) => {
                 <small className="stickyBarItem-info-label">{title}</small>
                 <a
                     className="stickyBarItem-info-content"
-                    href={content && content.includes(".com") && `mailto:${content}`}>
+                    href={content && content.includes(".com") ? `mailto:${content}` : ""}>
                     {content}
                 </a>
             </div>

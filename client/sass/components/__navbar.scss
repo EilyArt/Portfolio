@@ -1,40 +1,57 @@
 .navbar {
-    background-color: var(--color-surface-1);
-    color: var(--black);
-    width: 100%;
-    margin: 0;
-    padding-top: 15px;
-    padding-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  & > * {
+    flex: 1;
+  }
+  &-socialLinks {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    & > :first-child {
+      margin-left: 0;
+      padding-left: 0;
+    }
+
+    @include respond(tablet) {
+      display: none;
+    }
+  }
+  &-links {
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    position: relative;
-    z-index: 10;
-    flex-direction: row-reverse;
-    
-
-    &-logo {
-        justify-items: flex-start;
-        transform: scale(2);
+    font-size: 16px;
+    background: var(--color-paragraph);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    @include respond(tablet) {
+      justify-content: flex-start;
+    }
+    @include respond(phone) {
+      justify-content: space-between;
+    }
+  }
+  &-logo {
+    display: flex;
+    justify-content: flex-end;
+    @include respond(phone) {
+      display: none;
     }
 
-    &-links {
-        @include respond(tablet) {
-            display: none;
-        }
-
-        &>* {
-            margin-right: 30px;
-            transition: color .3s ease-in-out;
-            &:hover {
-                color: var(--color-primary-dark);
-            }
-        }
+    & > * {
+      transform: scale(2);
     }
+  }
 
-    &-menu {
-        display: none;
-
-        @include respond(tablet) {
-            display: block;
-        }
-    }
+  .linkActive {
+    font-size: 16px;
+    background: var(--color-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
