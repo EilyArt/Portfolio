@@ -14,6 +14,7 @@ const LatestNewsBox = ({ src, alt }: any) => {
                         layout="fixed"
                         height="80px"
                         width="80px"
+                        className="b-radius"
                     />
                 </div>
                 <div className="latestNewsBox-text">

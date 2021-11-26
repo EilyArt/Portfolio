@@ -10,6 +10,7 @@
   &-user {
     transform: scale(2);
     margin: 1rem;
+    min-width: 2rem;
   }
 
   &::before {
@@ -32,33 +33,65 @@
     p {
       padding: 0.2rem 0;
       line-height: 1.45;
+      text-indent: 0.5rem;
     }
 
     &-actions {
       display: flex;
       flex-direction: row;
+      align-items: flex-start;
       margin-top: 0.4rem;
 
-      button {
+      &-comment {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         border: 1px solid var(--color-border);
         padding: 0.5rem;
         background-color: unset;
         cursor: pointer;
         color: var(--color-paragraph);
+        margin-left: 2rem;
+        border-radius: var(--radius-8);
+        font-family: var(--font-family);
+
+        &> :first-child {
+          margin-right: 0.5rem;
+        }
       }
 
       &-emotion {
+        div {
+          display: inline-flex;
+          flex-direction: row;
+          align-items: center;
+        }
+
         button {
-          border: 1px solid var(--color-border);
+          align-items: center;
+          border: none;
           padding: 0.5rem 0.7rem;
           background-color: unset;
           cursor: pointer;
           color: var(--color-paragraph);
+          margin: 0 0.1rem;
         }
-      }
 
-      &-comment {
-        margin-left: 0.5rem;
+        small {
+          font-weight: 400;
+        }
+
+        &-proportion {
+          height: 2px;
+          width: 110%;
+          background-color: var(--color-paragraph-2);
+
+          &-bar {
+            height: 2px;
+            width: 110%;
+            background-color: var(--color-heading);
+          }
+        }
       }
     }
   }
@@ -67,25 +100,24 @@
 .replies {
   margin-left: 3rem;
 
-  small {
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    user-select: none;
-    color: var(--color-accent);
-    font-size: 12px;
-    background: var(--color-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
   &-actions {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
 
-    & > :nth-child(2) {
+    small {
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      font-size: 12px;
+      background: var(--color-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    &> :nth-child(2) {
       margin-left: 1rem;
     }
   }

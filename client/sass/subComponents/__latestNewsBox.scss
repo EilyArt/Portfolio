@@ -5,8 +5,10 @@
     
     &-image {
         margin-right: 10px;
+        
+        border-radius: var(--radius-32);
     }
-
+    
     &-text {
         display: flex;
         flex-direction: column;

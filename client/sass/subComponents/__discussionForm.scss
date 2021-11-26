@@ -1,6 +1,32 @@
-.discussion{
-    width: 100%;
-    background-color: var(--color-surface-3);
-    margin: 3rem 0 0 0;
-    padding: 0 15rem;
+.discussion {
+  width: 100%;
+  background-color: var(--color-surface-3);
+  border-radius: var(--radius-12);
+  padding: 5rem 15rem;
+
+  @include respond(tablet) {
+    padding: 1rem;
+  }
+
+  &-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    & > :nth-child(2) {
+      margin-left: 1rem;
+    }
+    &-small {
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      color: var(--color-accent);
+      font-size: 14px;
+      background: var(--color-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
 }

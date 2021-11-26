@@ -13,6 +13,7 @@ const BestSellerProject = ({ src, alt, title }: any) => {
                     layout="intrinsic"
                     height="180px"
                     width="300px"
+                    className="b-radius"
                 />
             </div>
             <div className="pad-vertical-2" dangerouslySetInnerHTML={{ __html: title }} />

@@ -1,9 +1,14 @@
-import { FaUserAlt, FaThumbsUp, FaThumbsDown, FaCaretDown, FaCaretUp } from "react-icons/fa"
+import { FaUserAlt, FaThumbsUp, FaThumbsDown, FaCaretDown, FaCaretUp, FaReply, FaTimes } from "react-icons/fa"
 import { useState } from "react";
+import ReplyComment from "./ReplyComment";
 
-const Comment = () => {
+type Comment = {
+    id: number;
+};
 
-    const replies = [...Array(8)];
+const Comment = ({ id }: Comment) => {
+
+    const replies = [...Array(4 + 1)];
 
     const initialState = {
         repliesLength: replies.length - 1,
@@ -21,7 +26,7 @@ const Comment = () => {
         }
         setReply(newState);
         console.log(newState);
-        
+
     }
 
     const collapseReplies = () => {
@@ -41,7 +46,7 @@ const Comment = () => {
     }
 
     return (
-        <div className="commentContainer">
+        <div>
             <div className="comment">
                 <FaUserAlt className="comment-user" />
                 <div className="comment-info">
@@ -49,13 +54,28 @@ const Comment = () => {
                     <time>11 min ago</time>
                     <p>consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
                     <div className="comment-info-actions">
-                        <div className="comment-info-actions-emotion">
-                            <button><FaThumbsUp /></button>
-                            <button><FaThumbsDown /></button>
+                        <div>
+                            <div className="comment-info-actions-emotion">
+                                <div>
+                                    <button><FaThumbsUp /></button>
+                                    <small>121</small>
+                                </div>
+                                <div>
+                                    <button><FaThumbsDown /></button>
+                                    <small>19</small>
+                                </div>
+                            </div>
+                            <div className="comment-info-actions-emotion-proportion">
+                                <div className="comment-info-actions-emotion-proportion-bar" style={{ width: "45%" }}></div>
+                            </div>
                         </div>
-                        <button className="comment-info-actions-comment">Reply</button>
+                        <button className="comment-info-actions-comment" onClick={() => document.getElementById(`reply${id}`)?.classList.remove("hidden")}><FaReply />Reply</button>
                     </div>
                 </div>
+            </div>
+            <div id={`reply${id}`} className="hidden">
+                <button className="comment-info-actions-comment" onClick={() => document.getElementById(`reply${id}`)?.classList.add("hidden")}><FaTimes />Cancel</button>
+                <ReplyComment />
             </div>
             <div className="replies">
                 {replies.map((post, index) => {
@@ -68,11 +88,22 @@ const Comment = () => {
                             <div className="comment-info">
                                 <h4>Eilya Amin</h4>
                                 <time>11 min ago</time>
-                                <p>consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+                                <p>consectetuer adipiscing elit</p>
                                 <div className="comment-info-actions">
-                                    <div className="comment-info-actions-emotion">
-                                        <button><FaThumbsUp /></button>
-                                        <button><FaThumbsDown /></button>
+                                    <div>
+                                        <div className="comment-info-actions-emotion">
+                                            <div>
+                                                <button><FaThumbsUp /></button>
+                                                <small>121</small>
+                                            </div>
+                                            <div>
+                                                <button><FaThumbsDown /></button>
+                                                <small>19</small>
+                                            </div>
+                                        </div>
+                                        <div className="comment-info-actions-emotion-proportion">
+                                            <div className="comment-info-actions-emotion-proportion-bar" style={{ width: "45%" }}></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +111,7 @@ const Comment = () => {
                     )
                 })}
                 <div className="replies-actions">
-                    {repliesLength > 1 && viewIndex <= repliesLength && <small onClick={() => viewMoreReplies()}>view more replies<FaCaretDown /></small>}
+                    {(repliesLength >= 1 && viewIndex < repliesLength) && <small onClick={() => viewMoreReplies()}>view more replies<FaCaretDown /></small>}
                     {viewIndex > 0 && <small onClick={() => collapseReplies()}>collapse replies<FaCaretUp /></small>}
                 </div>
             </div>

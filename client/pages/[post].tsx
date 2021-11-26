@@ -83,7 +83,9 @@ const post = () => {
                 </div>
                 <Title title="You may also like" />
                 <Posts />
-                <DiscussionForm />
+                <div className="pad-default">
+                    <DiscussionForm />
+                </div>
             </div>
         </Layout>
     )

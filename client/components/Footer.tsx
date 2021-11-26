@@ -60,9 +60,10 @@ const Footer = () => {
                         src={photo}
                         alt="photo"
                         objectFit="cover"
-                        layout="intrinsic"
+                        layout="fixed"
                         height="250px"
                         width="300px"
+                        className="b-radius"
                     />
                 </div>
             </div>
