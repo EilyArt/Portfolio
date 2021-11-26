@@ -6,11 +6,15 @@ import Posts from '../subComponents/Posts';
 import Title from '@/subComponents/Title';
 import Tag from '@/subComponents/Tag';
 import Header from '@/subComponents/Header'
+import { gql } from "@apollo/client"
+import client from "./api/appolo-client"
 
 interface Props {
 }
 
-const blog: NextPage<Props> = () => {
+const blog: NextPage<Props> = (posts) => {
+  // console.log(posts.posts.allposts);
+
   return (
     <Layout>
       <div className="blog">
@@ -18,7 +22,7 @@ const blog: NextPage<Props> = () => {
           <Header span="EILYA's Thoughts, stories and ideas." header="Blog" />
         </div>
         <div className="blog-posts pad-default-horizontal">
-          <Posts />
+          {posts && posts.posts && <Posts posts={posts.posts.allposts} />}
         </div>
         <div className="pad-default">
           <Title title="Explore Tags" />
@@ -43,6 +47,30 @@ const blog: NextPage<Props> = () => {
       </div>
     </Layout>
   )
+}
+
+export async function getServerSideProps(context: any) {
+
+
+  const { data } = await client.query({
+    query: gql`
+    {
+      allposts {
+        title
+        description
+		    slug
+        thumbnail
+      }
+    }
+    
+    `
+  })
+
+  return {
+    props: {
+      posts: data
+    }
+  }
 }
 
 export default blog

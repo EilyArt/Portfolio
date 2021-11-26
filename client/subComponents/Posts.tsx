@@ -5,8 +5,15 @@ import Image from "next/dist/client/image"
 import Link from "next/link"
 import Tag from "./Tag"
 import Button from "./Button"
+// title
+// description
+// slug
+// tag
+// thumbnail
 
-const Posts = ({ star }: any) => {
+
+const Posts = ({ star, posts }: any) => {
+    console.log(posts);
 
     const LoadMore = () => {
         document.getElementById("load-more-button")?.classList.add("hidden");
@@ -19,7 +26,8 @@ const Posts = ({ star }: any) => {
     return (
         <div className="col">
             <div className="posts">
-                {[...Array(3)].map((post, index) => {
+                {posts && posts.map(({post, index}: any) => {
+                    
                     return (
                         <Link href="/slug">
                             <a className={`posts-post ${index < 3 && star && "star"}`}>
@@ -33,7 +41,7 @@ const Posts = ({ star }: any) => {
                                             <time className="posts-post-content-meta-date" dateTime="2020-11-12"> Nov 12, 2020</time>
                                         </div>
                                         <h2 className="posts-post-content-title">
-                                            Believe and act as if it were impossible to fail
+                                            {post}
                                         </h2>
                                         <p className="posts-post-content-excerpt">
                                             Sin tantum modo ad indicia veteris memoriae cognoscenda, curiosorum. Haec et tu ita posuisti, et verba vestra sunt. Idemne potest esse dies sa
@@ -74,7 +82,8 @@ const Posts = ({ star }: any) => {
 }
 
 Posts.defaultProps = {
-    star: false
+    star: false,
+    posts: []
 }
 
 export default Posts
