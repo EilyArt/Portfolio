@@ -5,15 +5,8 @@ import Image from "next/dist/client/image"
 import Link from "next/link"
 import Tag from "./Tag"
 import Button from "./Button"
-// title
-// description
-// slug
-// tag
-// thumbnail
-
 
 const Posts = ({ star, posts }: any) => {
-    console.log(posts);
 
     const LoadMore = () => {
         document.getElementById("load-more-button")?.classList.add("hidden");
@@ -26,10 +19,9 @@ const Posts = ({ star, posts }: any) => {
     return (
         <div className="col">
             <div className="posts">
-                {posts && posts.map(({post, index}: any) => {
-                    
+                {posts && posts.map((post: object, index: number) => {
                     return (
-                        <Link href="/slug">
+                        <Link href={post.slug}>
                             <a className={`posts-post ${index < 3 && star && "star"}`}>
                                 <div>
                                     <Image objectFit="cover" layout="fill" src={img} />
@@ -41,10 +33,10 @@ const Posts = ({ star, posts }: any) => {
                                             <time className="posts-post-content-meta-date" dateTime="2020-11-12"> Nov 12, 2020</time>
                                         </div>
                                         <h2 className="posts-post-content-title">
-                                            {post}
+                                            {post.title}
                                         </h2>
                                         <p className="posts-post-content-excerpt">
-                                            Sin tantum modo ad indicia veteris memoriae cognoscenda, curiosorum. Haec et tu ita posuisti, et verba vestra sunt. Idemne potest esse dies sa
+                                            {post.description.slice(0, 250)}...
                                         </p>
                                         <div className="posts-post-content-bottom">
                                             <div className="posts-post-content-bottom-writer">
@@ -58,9 +50,11 @@ const Posts = ({ star, posts }: any) => {
                                                 </div>
                                                 <h6 className="posts-post-content-bottom-writer-name">Eilya Amin in</h6>
                                             </div>
-                                            <Tag size="sm-tag" />
-                                            <Tag size="sm-tag" />
-                                            <Tag size="sm-tag" />
+                                            {post.tag.map((tag:string) => {
+                                                return(
+                                                    <Tag size="sm-tag" name={tag.name}/>
+                                                )
+                                            })}
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +63,7 @@ const Posts = ({ star, posts }: any) => {
                     )
                 })}
             </div>
-            {[...Array(3)].length >= 12 && <div id="load-more-button" className="loadMore">
+            {posts.length >= 12 && <div id="load-more-button" className="loadMore">
                 <button onClick={() => LoadMore()}
                     className="button">
                     <span className="button-span" >

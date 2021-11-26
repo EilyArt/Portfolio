@@ -8,7 +8,9 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 # MIXINS ----------
 
-#Timestamp
+# Timestamp
+
+
 class TimeStampMixin(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -18,9 +20,11 @@ class TimeStampMixin(models.Model):
     class Meta:
         abstract = True
 
-#QUERY SETS ----------
+# QUERY SETS ----------
 
-#Post query
+# Post query
+
+
 class PostQuerySet(models.QuerySet):
     def delete(self, *args, **kwargs):
         for post in self:
@@ -31,7 +35,9 @@ class PostQuerySet(models.QuerySet):
             post.save(update_fields=["deleted_on", "deleted", "published"])
         super(PostQuerySet, self).update()
 
-#Comment query
+# Comment query
+
+
 class CommentQuerySet(models.QuerySet):
     def delete(self, *args, **kwargs):
         for comment in self:
@@ -40,25 +46,33 @@ class CommentQuerySet(models.QuerySet):
             comment.save(update_fields=["deleted_on", "deleted"])
         super(CommentQuerySet, self).update()
 
-#MODELS ----------
+# MODELS ----------
 
-#Tag model
+# Tag model
+
+
 class Tag(models.Model):
     name = models.CharField(max_length=54)
 
     def __str__(self):
         return self.name
 
-#Post model
+# Post model
+
+
 class Post(TimeStampMixin):
     objects = PostQuerySet.as_manager()
     published = models.BooleanField(default=False, verbose_name="publish")
-    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, editable=False)
-    title = models.CharField(max_length=285, blank=True, null=True, unique=True)
+    author = models.ForeignKey(
+        User, null=True, blank=True, on_delete=models.SET_NULL, editable=False)
+    title = models.CharField(
+        max_length=285, blank=True, null=True, unique=True)
     description = RichTextUploadingField()
-    slug = models.SlugField(verbose_name=_("Post URL"), max_length=256, unique=True)
+    slug = models.SlugField(verbose_name=_("Post URL"),
+                            max_length=256, unique=True)
     tag = models.ManyToManyField(Tag)
-    thumbnail = models.ImageField(upload_to="media/static/images/", default=None)
+    thumbnail = models.ImageField(
+        upload_to="media/static/images/", default=None)
 
     def __str__(self):
         return self.title
@@ -94,18 +108,25 @@ class Post(TimeStampMixin):
     #         pass
     #     super(Post, self).save(*args, **kwargs)
 
-#Post_meta model
+# Post_meta model
+
+
 class PostMeta(models.Model):
-    post = models.ForeignKey(Post, null=False, blank=False, on_delete = models.CASCADE)
+    post = models.ForeignKey(
+        Post, null=False, blank=False, on_delete=models.CASCADE)
     name = models.CharField(max_length=54)
     content = models.TextField()
+
     def __str__(self):
         return self.name
 
-#Comment model
+# Comment model
+
+
 class Comment(TimeStampMixin):
     objects = CommentQuerySet.as_manager()
-    post = models.ForeignKey(Post, null=False, blank=False, on_delete=models.CASCADE)
+    post = models.ForeignKey(
+        Post, null=False, blank=False, on_delete=models.CASCADE)
     username = models.CharField(max_length=128)
     comment = models.CharField(max_length=1024, blank=True, null=True)
     ip_address = models.GenericIPAddressField(editable=False)

@@ -3,9 +3,11 @@ from graphene_django.types import DjangoObjectType, ObjectType
 from .models import *
 from datetime import datetime
 from django.utils import timezone
-
+from graphene.types.generic import GenericScalar 
 
 class PostType(DjangoObjectType):
+    meta = GenericScalar() 
+
     class Meta:
         model = Post
 
@@ -13,9 +15,11 @@ class PostType(DjangoObjectType):
 #     class Meta:
 #         model = Comment
 
-# class TagType(DjangoObjectType):
-#     class Meta:
-#         model = Tag
+class TagType(DjangoObjectType):
+    meta = GenericScalar() 
+    
+    class Meta:
+        model = Tag
 
 class Query(graphene.ObjectType):
     allposts = graphene.List(PostType)
@@ -32,9 +36,9 @@ class Query(graphene.ObjectType):
         return Post.objects.get(pk=id)
 
 
-    # # get all the blog tags
-    # def resolve_alltags(self, info, **kwargs):
-    #     return Tag.objects.all()
+    # get all the blog tags
+    def resolve_alltags(self, info, **kwargs):
+        return Tag.objects.all()
 
     # # Get the comments by Comment ID
     # def resolve_comments(self, info, id):

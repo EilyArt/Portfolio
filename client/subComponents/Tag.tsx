@@ -1,10 +1,10 @@
 import Link from "next/dist/client/link"
 
-const Tag = ({size}: any) => {
+const Tag = ({size, name}: any) => {
     return (
         <Link href="/tag/slug">
             <a className={`${size}`}>
-             #NextJs 
+             {name} 
             </a>
         </Link>
     )
@@ -12,7 +12,8 @@ const Tag = ({size}: any) => {
 
 
 Tag.defaultProps = {
-    size: "tag"
+    size: "tag",
+    name: ""
 }
 
 export default Tag

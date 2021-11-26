@@ -10,10 +10,11 @@ import { gql } from "@apollo/client"
 import client from "./api/appolo-client"
 
 interface Props {
+  posts: any
 }
 
-const blog: NextPage<Props> = (posts) => {
-  // console.log(posts.posts.allposts);
+const blog: NextPage<Props> = ({posts}: Props) => {
+  // console.log(posts.allposts[0].title);
 
   return (
     <Layout>
@@ -22,7 +23,7 @@ const blog: NextPage<Props> = (posts) => {
           <Header span="EILYA's Thoughts, stories and ideas." header="Blog" />
         </div>
         <div className="blog-posts pad-default-horizontal">
-          {posts && posts.posts && <Posts posts={posts.posts.allposts} />}
+          {posts && <Posts posts={posts.allposts} />}
         </div>
         <div className="pad-default">
           <Title title="Explore Tags" />
@@ -57,12 +58,14 @@ export async function getServerSideProps(context: any) {
     {
       allposts {
         title
-        description
-		    slug
-        thumbnail
+    description
+    slug
+    thumbnail
+    tag {
+      name
+    }
       }
     }
-    
     `
   })
 
