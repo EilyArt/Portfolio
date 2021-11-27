@@ -13,7 +13,7 @@ interface Props {
   posts: any
 }
 
-const blog: NextPage<Props> = ({posts}: Props) => {
+const blog: NextPage<Props> = ({ posts }: Props) => {
   // console.log(posts.allposts[0].title);
 
   return (
@@ -28,21 +28,11 @@ const blog: NextPage<Props> = ({posts}: Props) => {
         <div className="pad-default">
           <Title title="Explore Tags" />
           <div className="blog-tags">
-            <Tag />
-            <Tag />
-            <Tag />
-            <Tag />
-            <Tag />
-            <Tag />
-            <Tag />
-            <Tag />
-            <Tag />
-            <Tag />
-            <Tag />
-            <Tag />
-            <Tag />
-            <Tag />
-            <Tag />
+            {posts.alltags.slice(0, 30).map((tag: { name: string }, index: number) => {
+              return (
+                <Tag name={tag.name} />
+              )
+            })}
           </div>
         </div>
       </div>
@@ -58,12 +48,17 @@ export async function getServerSideProps(context: any) {
     {
       allposts {
         title
-    description
-    slug
-    thumbnail
-    tag {
-      name
-    }
+        slug
+        thumbnail
+        excerpt
+        duration
+        createdAt
+        tag {
+           name
+        }
+      }
+      alltags {
+        name
       }
     }
     `

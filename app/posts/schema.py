@@ -24,7 +24,7 @@ class TagType(DjangoObjectType):
 class Query(graphene.ObjectType):
     allposts = graphene.List(PostType)
     post = graphene.Field(PostType, id=graphene.Int())
-    # alltags = graphene.List(TagType)
+    alltags = graphene.List(TagType)
     # comment = graphene.Field(CommentType, id=graphene.Int())
 
     # get all the blog posts

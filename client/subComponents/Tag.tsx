@@ -1,10 +1,15 @@
 import Link from "next/dist/client/link"
 
-const Tag = ({size, name}: any) => {
+interface Props {
+    size: string,
+    name: string
+}
+
+const Tag = ({size, name}: Props) => {
     return (
         <Link href="/tag/slug">
             <a className={`${size}`}>
-             {name} 
+             #{name} 
             </a>
         </Link>
     )

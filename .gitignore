@@ -1,11 +1,11 @@
 #backend
 .env.dev
 .env.prod
+migrations
+media
 
 
 # frontend
 node_modules/
 .next
-
-migrations
-media
+.env
