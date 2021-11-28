@@ -23,7 +23,7 @@ class TagType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     allposts = graphene.List(PostType)
-    post = graphene.Field(PostType, id=graphene.Int())
+    post = graphene.Field(PostType, slug=graphene.String())
     alltags = graphene.List(TagType)
     # comment = graphene.Field(CommentType, id=graphene.Int())
 
@@ -32,8 +32,8 @@ class Query(graphene.ObjectType):
         return Post.objects.all()
 
     # Get the blog post by Blog ID
-    def resolve_posts(self, info, id):
-        return Post.objects.get(pk=id)
+    def resolve_post(self, info, slug):
+        return Post.objects.get(slug=slug)
 
 
     # get all the blog tags

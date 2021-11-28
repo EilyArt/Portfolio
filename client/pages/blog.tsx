@@ -14,8 +14,6 @@ interface Props {
 }
 
 const blog: NextPage<Props> = ({ posts }: Props) => {
-  // console.log(posts.allposts[0].title);
-
   return (
     <Layout>
       <div className="blog">

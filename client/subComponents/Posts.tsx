@@ -14,14 +14,6 @@ interface Props {
 
 const Posts = ({ star, posts }: Props) => {
 
-    // const LoadMore = () => {
-    //     document.getElementById("load-more-button")?.classList.add("hidden");
-    //     const hiddenPosts = document.getElementsByClassName("posts-post");
-    //     for (let i = 0; i < hiddenPosts.length; i++) {
-    //         hiddenPosts[i].classList.add("show");
-    //     }
-    // }
-
     const initialState = {
         postsLength: posts.length - 1,
         viewIndex: 16
@@ -43,9 +35,7 @@ const Posts = ({ star, posts }: Props) => {
         <div className="col">
             <div className="posts">
                 {posts && posts.slice(0, viewIndex).map((post: any, index: number) => {
-                    console.log(post.createdAt)
                         return (
-                            
                             <Link href={post.slug}>
                                 <a className={`posts-post ${index < 3 && star && "star"}`}>
                                     <div>

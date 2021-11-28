@@ -8,24 +8,39 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import MediaIcon from "@/subComponents/MediaIcon"
 import DiscussionForm from "@/subComponents/DiscussionForm"
 import Link from "next/dist/client/link"
+import { gql } from "@apollo/client"
+import client from "./api/appolo-client"
 
-const post = () => {
+interface Props {
+    post: any
+}
+
+const post = ({ post }: Props) => {
+    console.log(post);
+
     return (
         <Layout>
             <div className="post pad-default">
                 <div className="post-content">
                     <div className="post-content-wrapper">
-                        <Image objectFit="cover" className="post-content-wrapper-img" src={img} />
+                        <Image
+                            objectFit="cover"
+                            height={450}
+                            width={700}
+                            className="post-content-wrapper-img"
+                            loader={() => `${process.env.NEXT_PUBLIC_API}media/${post.thumbnail}`}
+                            src={`${process.env.NEXT_PUBLIC_API}media/${post.thumbnail}`}
+                        />
                     </div>
                     <div className="post-content-thumbnail">
                         <div className="post-content-thumbnail-meta">
                             <span className="post-content-thumbnail-meta-minutes">
-                                2 min read
+                                {post.duration} min read
                             </span>
-                            <time className="post-content-thumbnail-meta-date" dateTime="2020-11-12"> Nov 12, 2020</time>
+                            <time className="post-content-thumbnail-meta-date" dateTime="2020-11-12"> {new Date(post.createdAt).toDateString()}</time>
                         </div>
                         <h2 className="post-content-thumbnail-title">
-                            Believe and act as if it were impossible to fail
+                            {post.title}
                         </h2>
                         <div className="post-content-thumbnail-bottom">
                             <div className="post-content-thumbnail-bottom-writer">
@@ -39,11 +54,16 @@ const post = () => {
                                 </div>
                                 <h6 className="post-content-thumbnail-bottom-writer-name">Eilya Amin in</h6>
                             </div>
-                            <Tag />
-                            <Tag />
-                            <Tag />
+                            {post.tag.map((tag: { name: string }, index: number) => {
+                                return (
+                                    <Tag size="sm-tag" name={tag.name} />
+                                    )
+                                })}
                         </div>
                     </div>
+                </div>
+                <div className="pad-default-horizontal">
+                    <div className="posts-post-content-excerpt" dangerouslySetInnerHTML={{ __html: post.description }} />
                 </div>
                 <div className="row">
                     <div className="post-socialMedia">
@@ -89,6 +109,35 @@ const post = () => {
             </div>
         </Layout>
     )
+}
+
+
+export async function getServerSideProps(context: any) {
+
+
+    const { data } = await client.query({
+        query: gql`
+      {
+        post(slug: "${context.resolvedUrl.substring(1)}") {
+            title
+            slug
+            thumbnail
+            description
+            duration
+            createdAt
+            tag {
+               name
+            }
+        }
+      }
+      `
+    })
+
+    return {
+        props: {
+            post: data.post
+        }
+    }
 }
 
 export default post
