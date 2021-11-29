@@ -1,13 +1,15 @@
 from django.contrib import admin
 from .models import *
 
-
+#SECTION - ADMIN PANEL SETTINGS
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ("title", "Thumbnail", "published", "id", "author",  "slug", "short_description", "created_at", "updated_at", "deleted_on")
-    list_filter = ["published", "deleted", "created_at", "updated_at", "deleted_on", 'tag']
+    list_filter = ["published", "created_at", "updated_at", "deleted_on", 'tag']
     list_select_related = ('author', )
-    readonly_fields= ('Thumbnail', "deleted", )
+    search_fields = ['title']
+    readonly_fields= ('Thumbnail', )
+    ordering = ('id', )
 
     def save_model(self, request, post, form, change):
         if post.deleted_on != None:
@@ -28,7 +30,7 @@ class CommentAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ("post", "is_approved", "username", "short_comment", "ip_address", "created_at", "updated_at", "deleted_on")
-    list_filter = ['post', 'is_approved', "ip_address", "deleted", "created_at"]
+    list_filter = ['post', 'is_approved', "ip_address", "created_at"]
 
     def save_model(self, request, comment, form, change):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')

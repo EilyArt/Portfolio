@@ -23,9 +23,9 @@ class Project(models.Model):
 
 
 class ProjectImage(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="project_image")
     image = models.ImageField(upload_to="media/static/images/", default=None)
     alt = models.CharField(max_length=54)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.alt

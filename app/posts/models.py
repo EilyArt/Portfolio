@@ -6,38 +6,36 @@ from django.utils.html import mark_safe
 from django.template.defaultfilters import truncatechars
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.core.validators import MinValueValidator, MaxValueValidator
-# MIXINS ----------
 
-# Timestamp
+# SECTION - MIXINS
 
-
+# ANCHOR - TIMESTAMPS
 class TimeStampMixin(models.Model):
+    
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    deleted = models.BooleanField(default=False, editable=False)
+    
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+    
     deleted_on = models.DateTimeField(blank=True, null=True, editable=False)
 
     class Meta:
         abstract = True
 
-# QUERY SETS ----------
 
-# Post query
+# SECTION -  QUERYIES
 
-
+# ANCHOR - POST
 class PostQuerySet(models.QuerySet):
     def delete(self, *args, **kwargs):
         for post in self:
             post.published = False
             post.thumbnail.delete()
             post.deleted_on = datetime.datetime.now()
-            post.deleted = True
             post.save(update_fields=["deleted_on", "deleted", "published"])
         super(PostQuerySet, self).update()
 
-# Comment query
 
-
+# ANCHOR - COMMENT
 class CommentQuerySet(models.QuerySet):
     def delete(self, *args, **kwargs):
         for comment in self:
@@ -46,51 +44,47 @@ class CommentQuerySet(models.QuerySet):
             comment.save(update_fields=["deleted_on", "deleted"])
         super(CommentQuerySet, self).update()
 
-# MODELS ----------
 
-# Tag model
+# SECTION - MODELS 
 
-
-class Tag(models.Model):
-    name = models.SlugField(verbose_name=_("Post URL"), max_length=20, unique=True)
-
-    def __str__(self):
-        return self.name
-
-# Post model
-
-
+# ANCHOR -  POST
 PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
-
-
 class Post(TimeStampMixin):
+    
     objects = PostQuerySet.as_manager()
+    
     published = models.BooleanField(default=False, verbose_name="publish")
+    
     author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, editable=False)
+    
     title = models.CharField(max_length=285, blank=True, null=True, unique=True)
+    
     excerpt = models.TextField(max_length=350, verbose_name="tiny description")
+    
     duration = models.DecimalField(max_digits=2, decimal_places=1, default=3, validators=PERCENTAGE_VALIDATOR)
+    
     description = RichTextUploadingField()
+    
     slug = models.SlugField(verbose_name=_("Post URL"), max_length=256, unique=True)
-    tag = models.ManyToManyField(Tag)
+    
     thumbnail = models.ImageField(upload_to="static/images/", default=None)
 
     def __str__(self):
         return self.title
 
-    # Show Thumbnail image in admin panel
+    # ANCHOR - DISPLAY THUMBNAIL IN ADMIN PANEL
     def Thumbnail(self):
         if self.thumbnail:
             return mark_safe('<img src="{}" height="35" width="35" />'.format(self.thumbnail.url))
         else:
             return ''
 
-    # description overflow ...
+    # ANCHOR - REMOVE DESCRIPTION OVERFLOW
     @property
     def short_description(self):
         return truncatechars(self.description, 35)
 
-    # delete constraint for direct deleting a post
+    # ANCHOR - SOFT DELETE POST
     def delete(self, *args, **kwargs):
         post = Post.objects.get(id=self.id)
         post.published = False
@@ -99,47 +93,64 @@ class Post(TimeStampMixin):
         post.deleted = True
         post.save(update_fields=["deleted_on", "deleted", "published"])
 
-    # delete old image on updating the image field
-    # def save(self, *args, **kwargs):
-    #     try:
-    #         this = Post.objects.get(id=self.id)
-    #         if this.thumbnail != self.thumbnail:
-    #             this.thumbnail.delete()
-    #     except:
-    #         pass
-    #     super(Post, self).save(*args, **kwargs)
 
-# Post_meta model
+    # FIXME - REPLACE OLD IMAGE
+    def save(self, *args, **kwargs):
+        try:
+            this = Post.objects.get(id=self.id)
+            if this.thumbnail != self.thumbnail:
+                this.thumbnail.delete()
+        except:
+            pass
+        super(Post, self).save(*args, **kwargs)
 
 
+# ANCHOR - TAG 
+class Tag(models.Model):
+    
+    name = models.SlugField(verbose_name=_("Post Tag"), max_length=20, unique=True)
+    
+    post = models.ForeignKey(Post, null=True, blank=True, on_delete=models.SET_NULL, editable=False)
+    
+    def __str__(self):
+        return self.name
+
+# ANCHOR - POST_META
 class PostMeta(models.Model):
+    
     post = models.ForeignKey(Post, null=False, blank=False, on_delete=models.CASCADE)
+    
     name = models.CharField(max_length=54)
+    
     content = models.TextField()
 
     def __str__(self):
         return self.name
 
-# Comment model
-
-
+# ANCHOR - COMMENT
 class Comment(TimeStampMixin):
+    
     objects = CommentQuerySet.as_manager()
+    
     post = models.ForeignKey(Post, null=False, blank=False, on_delete=models.CASCADE)
+    
     username = models.CharField(max_length=128)
+    
     comment = models.CharField(max_length=1024, blank=True, null=True)
+    
     ip_address = models.GenericIPAddressField(editable=False)
+    
     is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return self.comment
 
-    # comment overflow ...
+    # ANCHOR - REMOVE COMMENT OVERFLOW
     @property
     def short_comment(self):
         return truncatechars(self.comment, 35)
 
-    # delete constraint for direct deleting a comment
+    # ANCHOR - SOFT DELETE COMMENT
     def delete(self, *args, **kwargs):
         comment = Comment.objects.get(id=self.id)
         comment.deleted_on = datetime.datetime.now()
