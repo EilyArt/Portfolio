@@ -2,6 +2,8 @@ import Comment from "./Comment"
 import { useState } from "react";
 import { FaUserAlt, FaThumbsUp, FaThumbsDown, FaCaretDown, FaCaretUp, FaReply } from "react-icons/fa"
 import ReplyComment from "./ReplyComment";
+import Title from "./Title";
+
 
 const DiscussionForm = () => {
 
@@ -44,6 +46,7 @@ const DiscussionForm = () => {
 
     return (
         <div className="discussion">
+            <Title title={`View ${comments.length} Comments`} />
             {comments.map((post, index: number) => {
                 if (index > viewIndex)
                     return;

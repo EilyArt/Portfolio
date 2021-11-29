@@ -25,6 +25,7 @@ class Query(graphene.ObjectType):
     allposts = graphene.List(PostType)
     post = graphene.Field(PostType, slug=graphene.String())
     alltags = graphene.List(TagType)
+    tag = graphene.Field(TagType, name=graphene.String())
     # comment = graphene.Field(CommentType, id=graphene.Int())
 
     # get all the blog posts
@@ -35,10 +36,13 @@ class Query(graphene.ObjectType):
     def resolve_post(self, info, slug):
         return Post.objects.get(slug=slug)
 
-
     # get all the blog tags
     def resolve_alltags(self, info, **kwargs):
         return Tag.objects.all()
+
+    # get all the blog tags
+    def resolve_tag(self, info, name):
+        return Tag.objects.get(name=name)
 
     # # Get the comments by Comment ID
     # def resolve_comments(self, info, id):

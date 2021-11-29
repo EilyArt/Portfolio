@@ -165,6 +165,13 @@
     }
   }
 
+  &-discussion{
+    @extend .pad-default;
+    @include respond(tablet) {
+      padding: 0;
+    }
+  }
+
   &-socialMedia {
       display: flex;
       flex-direction: row;

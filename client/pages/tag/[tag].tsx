@@ -6,13 +6,16 @@ import { gql } from "@apollo/client"
 import client from "../api/appolo-client"
 
 interface Props {
+    tag: any
 }
 
-const tag: NextPage<Props> = () => {
+const tag: NextPage<Props> = ({ tag }: Props) => {
+    console.log(tag);
+    
     return (
         <Layout>
             <div className="contact pad-default">
-                <Header span="you can view posts related to " header="NextJs" />
+                <Header span="you can view posts related to " header={`#${tag.name}`} />
             </div>
             <div className="blog-posts pad-default-horizontal">
                 <Posts />
@@ -27,24 +30,16 @@ export async function getServerSideProps(context: any) {
     const { data } = await client.query({
         query: gql`
       {
-        post(slug: "${context.resolvedUrl.substring(1)}") {
-            title
-            slug
-            thumbnail
-            description
-            duration
-            createdAt
-            tag {
-               name
-            }
-        }
+        tag(name: "${context.resolvedUrl.substring(5)}") {
+            name
+          }
       }
       `
     })
 
     return {
         props: {
-            post: data.post
+            tag: data.tag
         }
     }
 }

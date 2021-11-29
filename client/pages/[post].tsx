@@ -103,7 +103,7 @@ const post = ({ post }: Props) => {
                 </div>
                 <Title title="You may also like" />
                 <Posts />
-                <div className="pad-default">
+                <div className="post-discussion">
                     <DiscussionForm />
                 </div>
             </div>

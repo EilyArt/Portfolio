@@ -52,8 +52,7 @@ class CommentQuerySet(models.QuerySet):
 
 
 class Tag(models.Model):
-    name = models.SlugField(verbose_name=_("Post URL"),
-                            max_length=20, unique=True)
+    name = models.SlugField(verbose_name=_("Post URL"), max_length=20, unique=True)
 
     def __str__(self):
         return self.name
@@ -67,19 +66,14 @@ PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
 class Post(TimeStampMixin):
     objects = PostQuerySet.as_manager()
     published = models.BooleanField(default=False, verbose_name="publish")
-    author = models.ForeignKey(
-        User, null=True, blank=True, on_delete=models.SET_NULL, editable=False)
-    title = models.CharField(
-        max_length=285, blank=True, null=True, unique=True)
+    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, editable=False)
+    title = models.CharField(max_length=285, blank=True, null=True, unique=True)
     excerpt = models.TextField(max_length=350, verbose_name="tiny description")
-    duration = models.DecimalField(
-        max_digits=2, decimal_places=1, default=3, validators=PERCENTAGE_VALIDATOR)
+    duration = models.DecimalField(max_digits=2, decimal_places=1, default=3, validators=PERCENTAGE_VALIDATOR)
     description = RichTextUploadingField()
-    slug = models.SlugField(verbose_name=_("Post URL"),
-                            max_length=256, unique=True)
+    slug = models.SlugField(verbose_name=_("Post URL"), max_length=256, unique=True)
     tag = models.ManyToManyField(Tag)
-    thumbnail = models.ImageField(
-        upload_to="static/images/", default=None)
+    thumbnail = models.ImageField(upload_to="static/images/", default=None)
 
     def __str__(self):
         return self.title
@@ -119,8 +113,7 @@ class Post(TimeStampMixin):
 
 
 class PostMeta(models.Model):
-    post = models.ForeignKey(
-        Post, null=False, blank=False, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, null=False, blank=False, on_delete=models.CASCADE)
     name = models.CharField(max_length=54)
     content = models.TextField()
 
@@ -132,8 +125,7 @@ class PostMeta(models.Model):
 
 class Comment(TimeStampMixin):
     objects = CommentQuerySet.as_manager()
-    post = models.ForeignKey(
-        Post, null=False, blank=False, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, null=False, blank=False, on_delete=models.CASCADE)
     username = models.CharField(max_length=128)
     comment = models.CharField(max_length=1024, blank=True, null=True)
     ip_address = models.GenericIPAddressField(editable=False)

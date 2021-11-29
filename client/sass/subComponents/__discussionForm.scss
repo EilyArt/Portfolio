@@ -3,15 +3,18 @@
   background-color: var(--color-surface-3);
   border-radius: var(--radius-12);
   padding: 5rem 15rem;
-
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  
   @include respond(tablet) {
-    padding: 1rem;
+    padding: 2rem 1rem;
   }
 
   &-actions {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    margin-top: 1rem;
 
     & > :nth-child(2) {
       margin-left: 1rem;

@@ -7,7 +7,7 @@ interface Props {
 
 const Tag = ({size, name}: Props) => {
     return (
-        <Link href="/tag/slug">
+        <Link href={`/tag/${name}`}>
             <a className={`${size}`}>
              #{name} 
             </a>
