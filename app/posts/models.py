@@ -131,7 +131,8 @@ class Post(TimeStampMixin):
 # ANCHOR - POST_META
 class PostMeta(models.Model):
 
-    post = models.ForeignKey(Post, null=False, blank=False, on_delete=models.CASCADE)
+    post = models.ForeignKey(
+        Post, null=False, blank=False, on_delete=models.CASCADE)
 
     name = models.CharField(max_length=54)
 
@@ -140,14 +141,14 @@ class PostMeta(models.Model):
     def __str__(self):
         return self.name
 
+
 # ANCHOR - COMMENT
-
-
 class Comment(TimeStampMixin):
 
     objects = CommentQuerySet.as_manager()
 
-    post = models.ForeignKey(Post, null=False, blank=False, on_delete=models.CASCADE)
+    post = models.ForeignKey(
+        Post, null=False, blank=False, on_delete=models.CASCADE)
 
     username = models.CharField(max_length=128)
 
@@ -157,11 +158,12 @@ class Comment(TimeStampMixin):
 
     is_approved = models.BooleanField(default=False)
 
-    parent = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
+    parent = models.ForeignKey(
+        'self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
 
     class Meta:
         ordering = ('-id',)
-    
+
     # ANCHOR - REMOVE DESCRIPTION OVERFLOW
     @property
     def short_comment(self):
