@@ -3,13 +3,17 @@ import Layout from '@/components/Layout'
 import Header from '@/subComponents/Header'
 import Gallery from '@/subComponents/Gallery'
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { gql } from "@apollo/client"
+import client from "./api/appolo-client"
 
 interface Props {
+    lastThreePosts: Array<object>
 }
 
-const portfolio: NextPage<Props> = () => {
+const portfolio: NextPage<Props> = ({ lastThreePosts }: Props) => {
+
     return (
-        <Layout>
+        <Layout lastThreePosts={lastThreePosts}>
             <div className="portfolio pad-default">
                 <Header span="Showcasing some of my best work" header="Portfolio" />
             </div>
@@ -54,6 +58,29 @@ const portfolio: NextPage<Props> = () => {
             </div>
         </Layout>
     )
+}
+
+export async function getServerSideProps(context: any) {
+
+    const { data } = await client.query({
+        query: gql`
+      {
+        lastNPosts(N: 3) {
+            id
+            title
+            slug
+            thumbnail
+            createdAt
+        }
+      }
+      `
+    })
+
+    return {
+        props: {
+            lastThreePosts: data.lastNPosts
+        }
+    }
 }
 
 export default portfolio

@@ -1,12 +1,17 @@
 import { FaMapMarkerAlt, FaWhatsapp, FaPaperPlane } from "react-icons/fa";
-import photo from "@/images/sample3.jpeg"
+import photo from "@/images/avatar.png"
 import Image from "next/dist/client/image";
 import InputEmail from "../subComponents/InputEmail";
 import LatestNewsBox from "../subComponents/LatestNewsBox";
 import BestSellerProject from "../subComponents/BestSellerProject";
 import MediaIcon from '../subComponents/MediaIcon';
 
-const Footer = () => {
+
+interface Props {
+    lastThreePosts: Array<object>,
+}
+
+const Footer = ({ lastThreePosts }: Props) => {
     return (
         <footer className="pad-default pad-bottom-0">
             <div className="container container-top">
@@ -38,7 +43,7 @@ const Footer = () => {
                     </div>
                     <div className="pad-vertical-2">
                         <h3 className="pad-vertical-2">My Newsletter</h3>
-                        <p className="pad-vertical-2">Please join my newsletter to get notifications for new posts and projects.<br/> It can make my day ;)</p>
+                        <p className="pad-vertical-2">Please join my newsletter to get notifications for new posts and projects.<br /> It can make my day ;)</p>
                         <div className="pad-vertical-2">
                             <InputEmail />
                         </div>
@@ -46,9 +51,18 @@ const Footer = () => {
                 </div>
                 <div className="col m-right-2">
                     <h3 className="m-bottom-2">Latest Posts</h3>
-                    <LatestNewsBox src={photo} alt="photo" />
-                    <LatestNewsBox src={photo} alt="photo" />
-                    <LatestNewsBox src={photo} alt="photo" />
+                    {lastThreePosts.map((post: any) => {
+                        return (
+                            <LatestNewsBox
+                                src={post.thumbnail}
+                                title={post.title}
+                                slug={post.slug}
+                                alt="photo"
+                                date={post.createdAt}
+                                id={post.id}
+                            />
+                        )
+                    })}
                 </div>
                 <div className="col m-right-2">
                     <h3 className="m-bottom-2">Best Projects</h3>

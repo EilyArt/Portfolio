@@ -5,12 +5,14 @@ import StickyBar from "@/subComponents/StickyBar";
 import Header from "@/subComponents/Header"
 
 interface Props {
+    lastThreePosts: Array<object>,
+    children: any
 }
 
 
-const About: NextPage<Props> = ({ children }) => {
+const About: NextPage<Props> = ({ lastThreePosts, children }) => {
     return (
-        <Layout>
+        <Layout lastThreePosts={lastThreePosts}>
             <div className="pad-default">
           <Header span="EILYA's Thoughts, stories and ideas." header="About" />
         </div>

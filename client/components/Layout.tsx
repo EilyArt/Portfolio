@@ -2,8 +2,12 @@ import Footer from "./Footer"
 import Navbar from "./Navbar"
 import Head from 'next/head'
 
+interface Props {
+    lastThreePosts: Array<object>,
+    children: any
+}
 
-const Layout = ({ children }: any) => {
+const Layout = ({ lastThreePosts, children }: Props) => {
     return (
         <div>
             <Head>
@@ -14,7 +18,7 @@ const Layout = ({ children }: any) => {
 
             <Navbar />
             {children}
-            <Footer />
+            <Footer lastThreePosts={lastThreePosts}/>
         </div>
     )
 }

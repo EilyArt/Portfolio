@@ -13,12 +13,13 @@ import client from "./api/appolo-client"
 
 interface Props {
     post: any,
-    comments: any
+    comments: any,
+    lastThreePosts: Array<object>
 }
 
-const post = ({ post, comments }: Props) => {
+const post = ({ post, comments, lastThreePosts }: Props) => {
     return (
-        <Layout>
+        <Layout lastThreePosts={lastThreePosts}>
             <div className="post pad-default">
                 <div className="post-content">
                     <div className="post-content-wrapper">
@@ -113,7 +114,7 @@ const post = ({ post, comments }: Props) => {
 
 export async function getServerSideProps(context: any) {
 
-    
+
     const { data } = await client.query({
         query: gql`
         {
@@ -138,14 +139,22 @@ export async function getServerSideProps(context: any) {
                 name
               }
             }
-          }
+            lastNPosts(N: 3) {
+                id
+                title
+                slug
+                thumbnail
+                createdAt
+            }
+        }
       `
     })
 
     return {
         props: {
             post: data.post,
-            comments: data.allComments
+            comments: data.allComments,
+            lastThreePosts: data.lastNPosts
         }
     }
 }

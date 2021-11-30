@@ -1,15 +1,25 @@
 import Image from "next/dist/client/image"
 import Link from "next/link"
 
-const LatestNewsBox = ({ src, alt }: any) => {
+interface Props {
+    src: any, 
+    alt: string, 
+    title: string, 
+    slug: string, 
+    date: string, 
+    id: string 
+}
+
+const LatestNewsBox = ({ src, alt, title, slug, date, id }: Props) => {
     return (
-        <Link href="/slug">
+        <Link href={`/${slug}`}>
             <a className="latestNewsBox">
                 <div className="latestNewsBox-image">
                     <Image
-                        src={src}
+                        loader={() => `${process.env.NEXT_PUBLIC_API}media/${src}`} 
+                        src={`${process.env.NEXT_PUBLIC_API}media/${src}`}
                         alt={alt}
-                        id={alt}
+                        id={id}
                         objectFit="cover"
                         layout="fixed"
                         height="80px"
@@ -18,8 +28,8 @@ const LatestNewsBox = ({ src, alt }: any) => {
                     />
                 </div>
                 <div className="latestNewsBox-text">
-                    <span className="latestNewsBox-text-title">Even the all-powerful Pointing has no control about</span>
-                    <small><time className="latestNewsBox-text-date">Oct. 16, 2019</time></small>
+                    <span className="latestNewsBox-text-title">{title}</span>
+                    <small><time className="latestNewsBox-text-date">{new Date(date).toDateString()}</time></small>
                 </div>
             </a>
         </Link>

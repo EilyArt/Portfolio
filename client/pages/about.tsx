@@ -4,13 +4,17 @@ import Title from '@/subComponents/Title'
 import AboutSection from '@/subComponents/AboutSection';
 import SkillBox from "@/subComponents/SkillBox";
 import ProgressTableVertical from '../subComponents/ProgressTableVertical';
+import { gql } from "@apollo/client"
+import client from "./api/appolo-client"
 
 interface Props {
+    lastThreePosts: Array<object>
 }
 
-const about: NextPage<Props> = () => {
+const about: NextPage<Props> = ({ lastThreePosts }: Props) => {
+
     return (
-        <About>
+        <About lastThreePosts={lastThreePosts}>
             <Title title="about me" />
             <p>
                 I'm Creative Director and UI/UX Designer from Sydney, Australia,
@@ -32,6 +36,29 @@ const about: NextPage<Props> = () => {
             </div>
         </About>
     )
+}
+
+export async function getServerSideProps(context: any) {
+
+    const { data } = await client.query({
+        query: gql`
+      {
+        lastNPosts(N: 3) {
+            id
+            title
+            slug
+            thumbnail
+            createdAt
+        }
+      }
+      `
+    })
+
+    return {
+        props: {
+            lastThreePosts: data.lastNPosts
+        }
+    }
 }
 
 export default about

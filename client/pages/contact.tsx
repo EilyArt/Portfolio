@@ -6,10 +6,14 @@ import MediaIcon from '@/subComponents/MediaIcon'
 import { FaPaperPlane } from "react-icons/fa";
 import React, { useState } from 'react'
 import boxLogo from "@/images/star.png"
+import { gql } from "@apollo/client"
+import client from "./api/appolo-client"
 
-interface Props { }
+interface Props {
+    lastThreePosts: Array<object>
+}
 
-const contact: NextPage<Props> = () => {
+const contact: NextPage<Props> = ({ lastThreePosts }: Props) => {
 
     const initialState = {
         name: '',
@@ -29,7 +33,7 @@ const contact: NextPage<Props> = () => {
     }
 
     return (
-        <Layout>
+        <Layout lastThreePosts={lastThreePosts}>
             <div className='pad-default'>
                 <Header span='Showcasing some of my best work' header='Contact' />
             </div>
@@ -117,5 +121,29 @@ const contact: NextPage<Props> = () => {
         </Layout>
     )
 }
+
+export async function getServerSideProps(context: any) {
+
+    const { data } = await client.query({
+        query: gql`
+      {
+        lastNPosts(N: 3) {
+            id
+            title
+            slug
+            thumbnail
+            createdAt
+        }
+      }
+      `
+    })
+
+    return {
+        props: {
+            lastThreePosts: data.lastNPosts
+        }
+    }
+}
+
 
 export default contact

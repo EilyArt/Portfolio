@@ -4,13 +4,17 @@ import Title from '@/subComponents/Title'
 import AboutSection from '@/subComponents/AboutSection';
 import pin from "@/svgs/pin.svg"
 import ProgressTable from '@/subComponents/ProgressTable';
+import { gql } from "@apollo/client"
+import client from "./api/appolo-client"
 
 interface Props {
+    lastThreePosts: Array<object>
 }
 
-const resume: NextPage<Props> = () => {
+const resume: NextPage<Props> = ({ lastThreePosts }: Props) => {
+
     return (
-        <About>
+        <About lastThreePosts={lastThreePosts}>
             <Title title="Resume" />
             <div className="m-top-2 pad-vertical-2">
                 <AboutSection src={pin} title="education"
@@ -60,6 +64,29 @@ const resume: NextPage<Props> = () => {
             </div>
         </About>
     )
+}
+
+export async function getServerSideProps(context: any) {
+
+    const { data } = await client.query({
+        query: gql`
+      {
+        lastNPosts(N: 3) {
+            id
+            title
+            slug
+            thumbnail
+            createdAt
+        }
+      }
+      `
+    })
+
+    return {
+        props: {
+            lastThreePosts: data.lastNPosts
+        }
+    }
 }
 
 export default resume

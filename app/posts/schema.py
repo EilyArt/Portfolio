@@ -28,6 +28,7 @@ class CommentType(DjangoObjectType):
 class Query(graphene.ObjectType):
     allPosts = graphene.List(PostType)
     post = graphene.Field(PostType, slug=graphene.String())
+    lastNPosts = graphene.List(PostType, N=graphene.Int())
     allTaggedPosts = graphene.List(PostType, tag=graphene.String())
     allTags = graphene.List(TagType)
     tag = graphene.Field(TagType, name=graphene.String())
@@ -40,6 +41,10 @@ class Query(graphene.ObjectType):
     # ANCHOR -  GET POST BY SLUG
     def resolve_post(self, info, slug):
         return Post.objects.get(slug=slug)
+
+    # ANCHOR -  GET POST BY SLUG
+    def resolve_lastNPosts(self, info, N):
+        return Post.objects.order_by('-id')[:N]
 
     # ANCHOR -  GET ALL POSTS OF A TAG
     def resolve_allTaggedPosts(self, info, tag):
