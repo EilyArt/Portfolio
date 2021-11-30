@@ -6,19 +6,19 @@ import { gql } from "@apollo/client"
 import client from "../api/appolo-client"
 
 interface Props {
-    tag: any
+    tag: any,
+    posts: Array<object>
 }
 
-const tag: NextPage<Props> = ({ tag }: Props) => {
-    console.log(tag);
+const tag: NextPage<Props> = ({ tag, posts }: Props) => {
     
     return (
         <Layout>
             <div className="contact pad-default">
-                <Header span="you can view posts related to " header={`#${tag.name}`} />
+                <Header span="you can view posts related to " header={`#${tag}`} />
             </div>
             <div className="blog-posts pad-default-horizontal">
-                <Posts />
+                <Posts posts={posts}/>
             </div>
         </Layout>
     )
@@ -30,8 +30,16 @@ export async function getServerSideProps(context: any) {
     const { data } = await client.query({
         query: gql`
       {
-        tag(name: "${context.resolvedUrl.substring(5)}") {
-            name
+        allTaggedPosts(tag: "${context.resolvedUrl.substring(5)}") {
+            title
+            slug
+            thumbnail
+            excerpt
+            duration
+            createdAt
+            tags {
+                name
+            }
           }
       }
       `
@@ -39,7 +47,8 @@ export async function getServerSideProps(context: any) {
 
     return {
         props: {
-            tag: data.tag
+            tag: context.resolvedUrl.substring(5),
+            posts: data.allTaggedPosts
         }
     }
 }

@@ -11,44 +11,57 @@ class PostType(DjangoObjectType):
     class Meta:
         model = Post
 
-# class CommentType(DjangoObjectType):
-#     class Meta:
-#         model = Comment
-
 class TagType(DjangoObjectType):
     meta = GenericScalar() 
     
     class Meta:
         model = Tag
 
-class Query(graphene.ObjectType):
-    allposts = graphene.List(PostType)
-    post = graphene.Field(PostType, slug=graphene.String())
-    alltags = graphene.List(TagType)
-    tag = graphene.Field(TagType, name=graphene.String())
-    # comment = graphene.Field(CommentType, id=graphene.Int())
+class CommentType(DjangoObjectType):
+    meta = GenericScalar() 
+    
+    class Meta:
+        model = Comment
 
-    # get all the blog posts
-    def resolve_allposts(self, info, **kwargs):
+    
+
+class Query(graphene.ObjectType):
+    allPosts = graphene.List(PostType)
+    post = graphene.Field(PostType, slug=graphene.String())
+    allTaggedPosts = graphene.List(PostType, tag=graphene.String())
+    allTags = graphene.List(TagType)
+    tag = graphene.Field(TagType, name=graphene.String())
+    allComments = graphene.List(CommentType, slug=graphene.String())
+
+    # ANCHOR -  GET ALL POSTS
+    def resolve_allPosts(self, info, **kwargs):
         return Post.objects.all()
 
-    # Get the blog post by Blog ID
+    # ANCHOR -  GET POST BY SLUG
     def resolve_post(self, info, slug):
         return Post.objects.get(slug=slug)
 
-    # get all the blog tags
-    def resolve_alltags(self, info, **kwargs):
+    # ANCHOR -  GET ALL POSTS OF A TAG
+    def resolve_allTaggedPosts(self, info, tag):
+        tagObject = Tag.objects.get(name=tag)
+        return Post.objects.all().filter(tags__in=[tagObject.id])
+
+    # ANCHOR -  GET ALL TAGS
+    def resolve_allTags(self, info, **kwargs):
         return Tag.objects.all()
 
-    # get all the blog tags
-    def resolve_tag(self, info, name):
-        return Tag.objects.get(name=name)
+    # ANCHOR -  GET POST BY SLUG
+    def resolve_tag(self, info, slug):
+        return Post.objects.get(slug=slug)
 
-    # # Get the comments by Comment ID
-    # def resolve_comments(self, info, id):
-    #     return Comment.objects.get(pk=id)
+    # ANCHOR -  GET ALL POSTS
+    def resolve_allComments(self, info, slug):
+        post = Post.objects.get(slug=slug)
+        return Comment.objects.all().filter(parent__isnull=True, post = post.id)
 
 schema = graphene.Schema(query=Query)
+
+
 # Mutations
 #  ------------------------
 

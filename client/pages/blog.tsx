@@ -21,12 +21,12 @@ const blog: NextPage<Props> = ({ posts }: Props) => {
           <Header span="EILYA's Thoughts, stories and ideas." header="Blog" />
         </div>
         <div className="blog-posts pad-default-horizontal">
-          {posts && <Posts posts={posts.allposts} />}
+          {posts && <Posts posts={posts.allPosts} />}
         </div>
         <div className="pad-default">
           <Title title="Explore Tags" />
           <div className="blog-tags">
-            {posts.alltags.slice(0, 30).map((tag: { name: string }, index: number) => {
+            {posts.allTags.slice(0, 30).map((tag: { name: string }, index: number) => {
               return (
                 <Tag name={tag.name} />
               )
@@ -44,18 +44,18 @@ export async function getServerSideProps(context: any) {
   const { data } = await client.query({
     query: gql`
     {
-      allposts {
+      allPosts {
         title
         slug
         thumbnail
         excerpt
         duration
         createdAt
-        tag {
-           name
+        tags {
+          name
         }
       }
-      alltags {
+      allTags {
         name
       }
     }

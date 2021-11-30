@@ -5,9 +5,7 @@ import ReplyComment from "./ReplyComment";
 import Title from "./Title";
 
 
-const DiscussionForm = () => {
-
-    const comments = [...Array(4 + 1)];
+const DiscussionForm = ({ comments }: any) => {
 
     const initialState = {
         commentsLength: comments.length - 1,
@@ -24,7 +22,6 @@ const DiscussionForm = () => {
             viewIndex: viewIndex + 2
         }
         setComment(newState);
-        console.log(newState);
 
     }
 
@@ -47,12 +44,12 @@ const DiscussionForm = () => {
     return (
         <div className="discussion">
             <Title title={`View ${comments.length} Comments`} />
-            {comments.map((post, index: number) => {
+            {comments.map((comment: any, index: number) => {
                 if (index > viewIndex)
                     return;
                 (index: number) => updateViewIndex(index);
                 return (
-                    <Comment id={index}/>
+                    <Comment id={index} comment={comment} replies={comment.replies} />
                 )
             })}
             <div className="discussion-actions">

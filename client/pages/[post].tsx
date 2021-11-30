@@ -12,12 +12,11 @@ import { gql } from "@apollo/client"
 import client from "./api/appolo-client"
 
 interface Props {
-    post: any
+    post: any,
+    comments: any
 }
 
-const post = ({ post }: Props) => {
-    console.log(post);
-
+const post = ({ post, comments }: Props) => {
     return (
         <Layout>
             <div className="post pad-default">
@@ -54,11 +53,11 @@ const post = ({ post }: Props) => {
                                 </div>
                                 <h6 className="post-content-thumbnail-bottom-writer-name">Eilya Amin in</h6>
                             </div>
-                            {post.tag.map((tag: { name: string }, index: number) => {
+                            {post.tags.map((tag: { name: string }, index: number) => {
                                 return (
                                     <Tag size="sm-tag" name={tag.name} />
-                                    )
-                                })}
+                                )
+                            })}
                         </div>
                     </div>
                 </div>
@@ -104,7 +103,7 @@ const post = ({ post }: Props) => {
                 <Title title="You may also like" />
                 <Posts />
                 <div className="post-discussion">
-                    <DiscussionForm />
+                    <DiscussionForm comments={comments} />
                 </div>
             </div>
         </Layout>
@@ -114,28 +113,39 @@ const post = ({ post }: Props) => {
 
 export async function getServerSideProps(context: any) {
 
-
+    
     const { data } = await client.query({
         query: gql`
-      {
-        post(slug: "${context.resolvedUrl.substring(1)}") {
-            title
-            slug
-            thumbnail
-            description
-            duration
-            createdAt
-            tag {
-               name
+        {
+            allComments(slug: "${context.resolvedUrl.substring(1)}") {
+              username
+              comment
+              createdAt
+              replies {
+                comment
+                createdAt
+                username
+              }
             }
-        }
-      }
+            post(slug: "${context.resolvedUrl.substring(1)}") {
+              title
+              slug
+              thumbnail
+              description
+              duration
+              createdAt
+              tags {
+                name
+              }
+            }
+          }
       `
     })
 
     return {
         props: {
-            post: data.post
+            post: data.post,
+            comments: data.allComments
         }
     }
 }

@@ -3,13 +3,13 @@ import { useState } from "react";
 import ReplyComment from "./ReplyComment";
 
 type Comment = {
-    id: number;
+    id: number,
+    comment: any,
+    replies: Array<object>
 };
 
-const Comment = ({ id }: Comment) => {
-
-    const replies = [...Array(4 + 1)];
-
+const Comment = ({ id, comment, replies }: Comment) => {
+    
     const initialState = {
         repliesLength: replies.length - 1,
         viewIndex: 0
@@ -25,7 +25,6 @@ const Comment = ({ id }: Comment) => {
             viewIndex: viewIndex + 2
         }
         setReply(newState);
-        console.log(newState);
 
     }
 
@@ -50,9 +49,9 @@ const Comment = ({ id }: Comment) => {
             <div className="comment">
                 <FaUserAlt className="comment-user" />
                 <div className="comment-info">
-                    <h4>Eilya Amin</h4>
-                    <time>11 min ago</time>
-                    <p>consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+                    <h4>{comment.username}</h4>
+                    <time>{new Date(comment.createdAt).toDateString()}</time>
+                    <p>{comment.comment}</p>
                     <div className="comment-info-actions">
                         <div>
                             <div className="comment-info-actions-emotion">
@@ -78,7 +77,7 @@ const Comment = ({ id }: Comment) => {
                 <ReplyComment />
             </div>
             <div className="replies">
-                {replies.map((post, index) => {
+                {replies.map((reply: any, index: number) => {
                     if (index > viewIndex)
                         return;
                     (index: number) => updateViewIndex(index);
@@ -86,9 +85,9 @@ const Comment = ({ id }: Comment) => {
                         <div className="comment">
                             <FaUserAlt className="comment-user" />
                             <div className="comment-info">
-                                <h4>Eilya Amin</h4>
-                                <time>11 min ago</time>
-                                <p>consectetuer adipiscing elit</p>
+                                <h4>{reply.username}</h4>
+                                <time>{new Date(reply.createdAt).toDateString()}</time>
+                                <p>{reply.comment}</p>
                                 <div className="comment-info-actions">
                                     <div>
                                         <div className="comment-info-actions-emotion">

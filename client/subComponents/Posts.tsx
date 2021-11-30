@@ -36,7 +36,7 @@ const Posts = ({ star, posts }: Props) => {
             <div className="posts">
                 {posts && posts.slice(0, viewIndex).map((post: any, index: number) => {
                         return (
-                            <Link href={post.slug}>
+                            <Link href={`/${post.slug}`}>
                                 <a className={`posts-post ${index < 3 && star && "star"}`}>
                                     <div>
                                         <Image objectFit="cover" layout="fill" 
@@ -65,7 +65,7 @@ const Posts = ({ star, posts }: Props) => {
                                                     </div>
                                                     <h6 className="posts-post-content-bottom-writer-name">Eilya Amin in</h6>
                                                 </div>
-                                                {post.tag.slice(0, 5).map((tag: { name: string }, index: number) => {
+                                                {post.tags.slice(0, 5).map((tag: { name: string }, index: number) => {
                                                     return (
                                                         <Tag size="sm-tag" name={tag.name} />
                                                     )
