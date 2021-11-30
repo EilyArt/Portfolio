@@ -65,7 +65,7 @@ const Footer = ({ lastThreePosts }: Props) => {
                     })}
                 </div>
                 <div className="col m-right-2">
-                    <h3 className="m-bottom-2">Best Projects</h3>
+                    <h3 className="m-bottom-2">Projects</h3>
                     <BestSellerProject src={photo} alt="photo" title="Grilled Beef with potatoes" />
                 </div>
                 <div className="col m-right-2">

@@ -115,7 +115,7 @@ class Post(TimeStampMixin):
 
     # FIXME - GET ALL TAGS OF A POST
     def get_tags(self):
-        return "\n".join([p.tags for p in self.tags.all()])
+        return "\n".join([p.tags.id for p in self.tags.all()])
 
     # FIXME - REPLACE OLD IMAGE
     def save(self, *args, **kwargs):

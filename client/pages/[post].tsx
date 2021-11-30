@@ -14,10 +14,13 @@ import client from "./api/appolo-client"
 interface Props {
     post: any,
     comments: any,
-    lastThreePosts: Array<object>
+    prevPost: any,
+    nextPost: any,
+    lastThreePosts: Array<object>,
+    threeRelatedPosts: Array<object>,
 }
 
-const post = ({ post, comments, lastThreePosts }: Props) => {
+const post = ({ post, comments, prevPost, nextPost, lastThreePosts, threeRelatedPosts }: Props) => {
     return (
         <Layout lastThreePosts={lastThreePosts}>
             <div className="post pad-default">
@@ -73,8 +76,8 @@ const post = ({ post, comments, lastThreePosts }: Props) => {
                         <MediaIcon media="github" />
                     </div>
                 </div>
-                <div className="post-prevNext">
-                    <Link href="/slug">
+                <div className="pad-default post-prevNext">
+                    <Link href={`/${prevPost.slug}`}>
                         <a className="post-prevNext-container previusPost">
                             <div className="post-prevNext-container-wrapper">
                                 <Image objectFit="cover" layout="fill" src={img} />
@@ -82,12 +85,12 @@ const post = ({ post, comments, lastThreePosts }: Props) => {
                             <div className="post-prevNext-container-info">
                                 <span><FaAngleLeft /> Previus Post</span>
                                 <h2 className="posts-post-content-title">
-                                    Believe and act as if it were impossible to fail
+                                    {prevPost.title}
                                 </h2>
                             </div>
                         </a>
                     </Link>
-                    <Link href="/slug">
+                    <Link href={`/${nextPost.slug}`}>
                         <a className="post-prevNext-container nextPost">
                             <div className="post-prevNext-container-wrapper">
                                 <Image objectFit="cover" layout="fill" src={img} />
@@ -95,14 +98,16 @@ const post = ({ post, comments, lastThreePosts }: Props) => {
                             <div className="post-prevNext-container-info">
                                 <span id="nextPost">Next Post <FaAngleRight /></span>
                                 <h2 className="posts-post-content-title">
-                                    Believe and act as if it were impossible to fail
+                                    {nextPost.title}
                                 </h2>
                             </div>
                         </a>
                     </Link>
                 </div>
-                <Title title="You may also like" />
-                <Posts />
+                <div className="pad-default">
+                    <Title title="You may also like" />
+                    <Posts posts={threeRelatedPosts} />
+                </div>
                 <div className="post-discussion">
                     <DiscussionForm comments={comments} />
                 </div>
@@ -139,6 +144,22 @@ export async function getServerSideProps(context: any) {
                 name
               }
             }
+            prevNextPosts(slug: "${context.resolvedUrl.substring(1)}"){
+                title
+                slug
+                thumbnail
+            }
+            threeRelatedPosts(slug: "${context.resolvedUrl.substring(1)}") {
+                title
+                slug
+                thumbnail
+                excerpt
+                duration
+                createdAt
+                tags {
+                  name
+                }
+              }
             lastNPosts(N: 3) {
                 id
                 title
@@ -154,7 +175,10 @@ export async function getServerSideProps(context: any) {
         props: {
             post: data.post,
             comments: data.allComments,
-            lastThreePosts: data.lastNPosts
+            prevPost: data.prevNextPosts[0],
+            nextPost: data.prevNextPosts[1],
+            lastThreePosts: data.lastNPosts,
+            threeRelatedPosts: data.threeRelatedPosts
         }
     }
 }

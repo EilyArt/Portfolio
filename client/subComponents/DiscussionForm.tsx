@@ -43,7 +43,7 @@ const DiscussionForm = ({ comments }: any) => {
 
     return (
         <div className="discussion">
-            <Title title={`View ${comments.length} Comments`} />
+            <Title title={`${comments.length} Comments`} />
             {comments.map((comment: any, index: number) => {
                 if (index > viewIndex)
                     return;
