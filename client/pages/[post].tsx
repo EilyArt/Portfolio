@@ -76,7 +76,7 @@ const post = ({ post, comments, prevPost, nextPost, lastThreePosts, threeRelated
                         <MediaIcon media="github" />
                     </div>
                 </div>
-                <div className="pad-default post-prevNext">
+                <div className="post-prevNext">
                     <Link href={`/${prevPost.slug}`}>
                         <a className="post-prevNext-container previusPost">
                             <div className="post-prevNext-container-wrapper">
@@ -127,10 +127,14 @@ export async function getServerSideProps(context: any) {
               username
               comment
               createdAt
+              likes
+              dislikes
               replies {
                 comment
                 createdAt
                 username
+                likes
+                dislikes
               }
             }
             post(slug: "${context.resolvedUrl.substring(1)}") {

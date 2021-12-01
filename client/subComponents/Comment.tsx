@@ -9,6 +9,8 @@ type Comment = {
 };
 
 const Comment = ({ id, comment, replies }: Comment) => {
+    console.log(Math.trunc((comment.likes/(comment.likes+comment.dislikes)) * 100));
+    console.log(comment, replies);
     
     const initialState = {
         repliesLength: replies.length - 1,
@@ -57,15 +59,15 @@ const Comment = ({ id, comment, replies }: Comment) => {
                             <div className="comment-info-actions-emotion">
                                 <div>
                                     <button><FaThumbsUp /></button>
-                                    <small>121</small>
+                                    <small>{comment.likes}</small>
                                 </div>
                                 <div>
                                     <button><FaThumbsDown /></button>
-                                    <small>19</small>
+                                    <small>{comment.dislikes}</small>
                                 </div>
                             </div>
                             <div className="comment-info-actions-emotion-proportion">
-                                <div className="comment-info-actions-emotion-proportion-bar" style={{ width: "45%" }}></div>
+                                <div className="comment-info-actions-emotion-proportion-bar" style={{ width: `${Math.trunc((comment.likes/(comment.likes+comment.dislikes)) * 100)}%` }}></div>
                             </div>
                         </div>
                         <button className="comment-info-actions-comment" onClick={() => document.getElementById(`reply${id}`)?.classList.remove("hidden")}><FaReply />Reply</button>
@@ -93,15 +95,15 @@ const Comment = ({ id, comment, replies }: Comment) => {
                                         <div className="comment-info-actions-emotion">
                                             <div>
                                                 <button><FaThumbsUp /></button>
-                                                <small>121</small>
+                                                <small>{reply.likes}</small>
                                             </div>
                                             <div>
                                                 <button><FaThumbsDown /></button>
-                                                <small>19</small>
+                                                <small>{reply.dislikes}</small>
                                             </div>
                                         </div>
                                         <div className="comment-info-actions-emotion-proportion">
-                                            <div className="comment-info-actions-emotion-proportion-bar" style={{ width: "45%" }}></div>
+                                            <div className="comment-info-actions-emotion-proportion-bar" style={{ width: `${Math.trunc((reply.likes/(reply.likes+reply.dislikes)) * 100)}%` }}></div>
                                         </div>
                                     </div>
                                 </div>

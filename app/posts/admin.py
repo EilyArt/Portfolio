@@ -15,7 +15,7 @@ class PostAdmin(admin.ModelAdmin):
     list_select_related = ('author', )
     search_fields = ['title']
     readonly_fields = ('Thumbnail', )
-    ordering = ('id', )
+    ordering = ('-id', )
 
     def save_model(self, request, post, form, change):
         if post.deleted_on != None:
@@ -41,7 +41,7 @@ class CommentAdmin(admin.ModelAdmin):
 # ANCHOR -  COMMENT
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ("id", "parent_id", "is_approved", "username", "ip_address",
+    list_display = ("id", "parent_id", "is_approved", "likes", "dislikes", "username", "ip_address",
                     "short_comment", "post", "created_at", "updated_at", "deleted_on")
     list_filter = ['post', 'is_approved', "ip_address", "created_at"]
 

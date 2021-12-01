@@ -158,6 +158,10 @@ class Comment(TimeStampMixin):
 
     is_approved = models.BooleanField(default=False)
 
+    likes = models.PositiveIntegerField(default=0, blank=False, null=False)
+
+    dislikes = models.PositiveIntegerField(default=0, blank=False, null=False)
+
     parent = models.ForeignKey(
         'self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
 

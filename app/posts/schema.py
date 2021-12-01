@@ -11,6 +11,7 @@ class PostType(DjangoObjectType):
 
     class Meta:
         model = Post
+        
 
 
 class TagType(DjangoObjectType):
@@ -35,7 +36,7 @@ class Query(graphene.ObjectType):
     allPosts = graphene.List(PostType)
 
     def resolve_allPosts(self, info, **kwargs):
-        return Post.objects.all()
+        return Post.objects.order_by('-id').all()
 
     # ANCHOR -  GET POST BY SLUG
     post = graphene.Field(PostType, slug=graphene.String())
@@ -77,7 +78,7 @@ class Query(graphene.ObjectType):
 
     def resolve_threeRelatedPosts(self, info, slug):
         post = Post.objects.get(slug=slug)
-        return Post.objects.all().filter(tags__in=[int(p.id) for p in post.tags.all()]).order_by("-id")[:3]
+        return Post.objects.all().exclude(id__in=[o.id for o in [post]]).filter(tags__in=[int(p.id) for p in post.tags.all()]).order_by("-id")[:3]
 
     # ANCHOR -  GET POST BY SLUG
     tag = graphene.Field(TagType, name=graphene.String())

@@ -41,8 +41,7 @@ const blog: NextPage<Props> = ({ posts, tags, lastThreePosts }: Props) => {
   )
 }
 
-export async function getServerSideProps(context: any) {
-
+export async function getServerSideProps() {
 
   const { data } = await client.query({
     query: gql`
