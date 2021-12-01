@@ -1,16 +1,9 @@
 import { useState } from "react";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
-import photo1 from "@/images/blog-dark.jpeg";
-import photo2 from "@/images/sample.jpeg";
-import photo3 from "@/images/sample2.jpeg";
-import photo4 from "@/images/avatar.png";
-import photo5 from "@/images/img1.png";
-import photo6 from "@/images/sample3.jpeg";
 import Image from "next/dist/client/image";
 
-const Gallery = ({ id }: any) => {
-
-    const [gallery, setGallery] = useState([photo1, photo2, photo3, photo4, photo5, photo6]);
+const Gallery = ({ id, images }: any) => {
+    const [gallery, setGallery] = useState(images);
 
     function moveLeft(event: any) {
         const newTodos = gallery.slice();
@@ -52,10 +45,16 @@ const Gallery = ({ id }: any) => {
                 <FaArrowAltCircleLeft />
             </div>
             <div className="gallery-images">
-                {gallery.map((ele: any, index: any) => {
+                {gallery.map((image: any, index: any) => {
                     return (
                         <div className={`gallery-images-image gallery-images-image${id}`} >
-                            <Image objectFit="cover" layout="fill" src={gallery[index]} />
+                            <Image
+                                objectFit="cover"
+                                layout="fill"
+                                alt={`${image.alt}`}
+                                loader={() => `${process.env.NEXT_PUBLIC_API}media/${image.image}`}
+                                src={`${process.env.NEXT_PUBLIC_API}media/${image.image}`}
+                            />
                         </div>
                     );
                 })}

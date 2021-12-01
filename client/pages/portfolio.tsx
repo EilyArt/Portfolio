@@ -7,10 +7,11 @@ import { gql } from "@apollo/client"
 import client from "./api/appolo-client"
 
 interface Props {
-    lastThreePosts: Array<object>
+    projects: Array<object>,
+    lastThreePosts: Array<object>,
 }
 
-const portfolio: NextPage<Props> = ({ lastThreePosts }: Props) => {
+const portfolio: NextPage<Props> = ({ projects, lastThreePosts }: Props) => {
 
     return (
         <Layout lastThreePosts={lastThreePosts}>
@@ -18,20 +19,20 @@ const portfolio: NextPage<Props> = ({ lastThreePosts }: Props) => {
                 <Header span="Showcasing some of my best work" header="Portfolio" />
             </div>
             <div className="portfolio pad-default-horizontal">
-                {[...Array(8)].map((project, index) => {
+                {projects.map((project: any, index: number) => {
                     return (
                         <div className="portfolio-project">
-                            <Gallery id={index} />
+                            <Gallery id={index} images={project.images}/>
                             <div className="portfolio-project-info">
                                 <dl className="portfolio-project-info-container">
                                     <dt className="portfolio-project-info-container-dt"><h4>Project Name:</h4></dt>
-                                    <dd className="portfolio-project-info-container-dd">Elithair</dd>
+                                    <dd className="portfolio-project-info-container-dd">{project.name}</dd>
                                     <dt className="portfolio-project-info-container-dt"><h4>Price:</h4></dt>
-                                    <dd className="portfolio-project-info-container-dd">1399$</dd>
+                                    <dd className="portfolio-project-info-container-dd">{project.price}$</dd>
                                     <dt className="portfolio-project-info-container-dt"><h4>Label:</h4></dt>
-                                    <dd className="portfolio-project-info-container-dd">For Sell</dd>
+                                    <dd className="portfolio-project-info-container-dd">{project.label}</dd>
                                     <dt className="portfolio-project-info-container-dt"><h4>Project Link:</h4> <dd className="portfolio-project-info-container-dd">
-                                        <a href='/contact' target="_blank">
+                                        <a href={`${project.link}`} target="_blank">
                                             Open <FaExternalLinkAlt />
                                         </a>
                                     </dd></dt>
@@ -39,17 +40,16 @@ const portfolio: NextPage<Props> = ({ lastThreePosts }: Props) => {
                                 <div className="portfolio-project-info-container">
                                     <dt className="portfolio-project-info-container-dt"><h4>Features:</h4></dt>
                                     <ul>
-                                        <li className="portfolio-project-info-container-li">SEO Friendly</li>
-                                        <li className="portfolio-project-info-container-li">Admin Dashboard</li>
-                                        <li className="portfolio-project-info-container-li">Auto Posting</li>
-                                        <li className="portfolio-project-info-container-li">Email Service</li>
-                                        <li className="portfolio-project-info-container-li">Security</li>
-                                        <li className="portfolio-project-info-container-li">Great Design</li>
+                                        {project.features.map((feature: any, index: number) => {
+                                            return (
+                                                <li key={index} className="portfolio-project-info-container-li">{feature.feature}</li>
+                                            )
+                                        })}
                                     </ul>
                                 </div>
                                 <dl className="portfolio-project-info-container" id='project-description'>
-                                    <dt className="portfolio-project-info-container-dt"><h4>Short Description:</h4></dt>
-                                    <p className="portfolio-project-info-container-p">Praesent dapibus, neque id cursus faucibus, tortor neque egestas auguae, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
+                                    <dt className="portfolio-project-info-container-dt"><h4>Description:</h4></dt>
+                                    <p className="portfolio-project-info-container-p">{project.description}</p>
                                 </dl>
                             </div>
                         </div>
@@ -65,6 +65,20 @@ export async function getServerSideProps(context: any) {
     const { data } = await client.query({
         query: gql`
       {
+        allProjects {
+            name
+            price
+            label
+            link
+            description
+            features {
+              feature
+            }
+            images {
+              image
+              alt
+            }
+        }
         lastNPosts(N: 3) {
             id
             title
@@ -78,7 +92,8 @@ export async function getServerSideProps(context: any) {
 
     return {
         props: {
-            lastThreePosts: data.lastNPosts
+            projects: data.allProjects,
+            lastThreePosts: data.lastNPosts,
         }
     }
 }

@@ -11,7 +11,6 @@ class PostType(DjangoObjectType):
 
     class Meta:
         model = Post
-        
 
 
 class TagType(DjangoObjectType):

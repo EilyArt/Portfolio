@@ -87,6 +87,8 @@ class Post(TimeStampMixin):
 
     thumbnail = models.ImageField(upload_to="static/images/", default=None)
 
+    thumbnail_alt = models.CharField(max_length=54, blank=False, null=False)
+
     tags = models.ManyToManyField(Tag)
 
     def __str__(self):

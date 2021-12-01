@@ -143,7 +143,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 GRAPHENE = {
-    "SCHEMA": "posts.schema.schema",
+    "SCHEMA": "core.schema.schema",
 }
 
 STATICFILES_DIRS = [

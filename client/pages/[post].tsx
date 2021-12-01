@@ -30,6 +30,7 @@ const post = ({ post, comments, prevPost, nextPost, lastThreePosts, threeRelated
                             objectFit="cover"
                             height={450}
                             width={700}
+                            alt={`${post.thumbnailAlt}`}
                             className="post-content-wrapper-img"
                             loader={() => `${process.env.NEXT_PUBLIC_API}media/${post.thumbnail}`}
                             src={`${process.env.NEXT_PUBLIC_API}media/${post.thumbnail}`}
@@ -52,6 +53,7 @@ const post = ({ post, comments, prevPost, nextPost, lastThreePosts, threeRelated
                                         <Image
                                             objectFit="cover"
                                             layout="intrinsic"
+                                            alt="eilya amin"
                                             src={img} />
                                     </div>
                                 </div>
@@ -141,6 +143,7 @@ export async function getServerSideProps(context: any) {
               title
               slug
               thumbnail
+              thumbnailAlt
               description
               duration
               createdAt
