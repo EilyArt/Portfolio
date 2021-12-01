@@ -13,13 +13,14 @@ interface Props {
     languages: Array<object>,
     certificates: Array<object>,
     skillCategories: Array<object>,
+    lastProject: any,
     lastThreePosts: Array<object>,
 }
 
-const resume: NextPage<Props> = ({ educations, experiences, languages, certificates, skillCategories, lastThreePosts }: Props) => {
+const resume: NextPage<Props> = ({ educations, experiences, languages, certificates, skillCategories, lastProject, lastThreePosts }: Props) => {
 
     return (
-        <About lastThreePosts={lastThreePosts}>
+        <About lastThreePosts={lastThreePosts} lastProject={lastProject}>
             <Title title="Resume" />
             <div className="m-top-2 pad-vertical-2">
                 <AboutSection src={pin} title="EDUCATION"
@@ -122,6 +123,13 @@ export async function getServerSideProps(context: any) {
               percentage
             }
         }
+        lastProject {
+            name
+            images{
+              image
+              alt
+            }
+        }
         lastNPosts(N: 3) {
             id
             title
@@ -140,6 +148,7 @@ export async function getServerSideProps(context: any) {
             languages: data.languages,
             certificates: data.certificates,
             skillCategories: data.skillCategories,
+            lastProject: data.lastProject[0],
             lastThreePosts: data.lastNPosts,
         }
     }

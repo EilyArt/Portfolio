@@ -5,6 +5,11 @@ from datetime import datetime
 from django.utils import timezone
 
 
+class HobbyType(DjangoObjectType):
+    class Meta:
+        model = Hobby
+
+
 class EducationType(DjangoObjectType):
     class Meta:
         model = Education
@@ -36,6 +41,12 @@ class SkillType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
+    hobbies = graphene.List(HobbyType)
+
+    # ANCHOR -  GET ALL HOBBIES
+    def resolve_hobbies(self, info, **kwargs):
+        return Hobby.objects.all()
+
     educations = graphene.List(EducationType)
 
     # ANCHOR -  GET ALL EDUCATIONS

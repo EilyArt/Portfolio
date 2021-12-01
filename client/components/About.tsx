@@ -6,13 +6,14 @@ import Header from "@/subComponents/Header"
 
 interface Props {
     lastThreePosts: Array<object>,
-    children: any
+    lastProject: any,
+    children: any,
 }
 
 
-const About: NextPage<Props> = ({ lastThreePosts, children }) => {
+const About: NextPage<Props> = ({ lastThreePosts, lastProject ,children }) => {
     return (
-        <Layout lastThreePosts={lastThreePosts}>
+        <Layout lastThreePosts={lastThreePosts} lastProject={lastProject}>
             <div className="pad-default">
           <Header span="EILYA's Thoughts, stories and ideas." header="About" />
         </div>

@@ -4,10 +4,11 @@ import Head from 'next/head'
 
 interface Props {
     lastThreePosts: Array<object>,
-    children: any
+    lastProject: any,
+    children: any,
 }
 
-const Layout = ({ lastThreePosts, children }: Props) => {
+const Layout = ({ lastThreePosts, lastProject, children }: Props) => {
     return (
         <div>
             <Head>
@@ -18,7 +19,7 @@ const Layout = ({ lastThreePosts, children }: Props) => {
 
             <Navbar />
             {children}
-            <Footer lastThreePosts={lastThreePosts}/>
+            <Footer lastThreePosts={lastThreePosts} lastProject={lastProject}/>
         </div>
     )
 }

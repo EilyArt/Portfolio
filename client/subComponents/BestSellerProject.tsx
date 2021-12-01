@@ -6,7 +6,8 @@ const BestSellerProject = ({ src, alt, title }: any) => {
         <div>
             <div>
                 <Image
-                    src={src}
+                    loader={() => `${process.env.NEXT_PUBLIC_API}media/${src}`} 
+                    src={`${process.env.NEXT_PUBLIC_API}media/${src}`}
                     alt={alt}
                     id={alt}
                     objectFit="cover"

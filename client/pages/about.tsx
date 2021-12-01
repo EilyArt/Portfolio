@@ -9,13 +9,15 @@ import { gql } from "@apollo/client"
 import client from "./api/appolo-client"
 
 interface Props {
+    hobbies: Array<object>,
+    lastProject: any,
     lastThreePosts: Array<object>
 }
 
-const about: NextPage<Props> = ({ lastThreePosts }: Props) => {
+const about: NextPage<Props> = ({ hobbies, lastProject, lastThreePosts }: Props) => {
 
     return (
-        <About lastThreePosts={lastThreePosts}>
+        <About lastThreePosts={lastThreePosts} lastProject={lastProject}>
             <Title title="about me" />
             <p>
                 I'm Creative Director and UI/UX Designer from Sydney, Australia,
@@ -32,28 +34,15 @@ const about: NextPage<Props> = ({ lastThreePosts }: Props) => {
                 <SkillBox />
             </div>
             <div className="m-top-2 pad-vertical-2">
-                <h2 className="pad-vertical-2">My Skills</h2>
-                <ProgressTable />
-            </div>
-            <div className="m-top-2 pad-vertical-2">
                 <AboutSection src={pin} title="HOBBIES"
-                    records={[
-                        {
-                            label: "University School of the Arts",
-                            date: "2007 — 2009",
-                            description: "Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et quas molestias exceptur.",
-                        },
-                        {
-                            label: "New York Academy of Art",
-                            date: "2005 — 2007",
-                            description: "Ratione voluptatem sequi nesciunt, facere quisquams facere menda ossimus, omnis voluptas assumenda est omnis..",
-                        },
-                        {
-                            label: "High School of Art and Design",
-                            date: "2003 — 2005",
-                            description: "Duis aute irure dolor in reprehenderit in voluptate, quila voluptas mag odit aut fugit, sed consequuntur magni dolores eos.",
-                        }
-                    ]}
+                    records={
+                        hobbies.map((hobby: any) => {
+                            return {
+                                label: `${hobby.name}`
+                            }
+
+                        })
+                    }
                 />
             </div>
         </About>
@@ -65,6 +54,16 @@ export async function getServerSideProps(context: any) {
     const { data } = await client.query({
         query: gql`
       {
+        hobbies {
+            name
+        }
+        lastProject {
+            name
+            images{
+              image
+              alt
+            }
+        }
         lastNPosts(N: 3) {
             id
             title
@@ -78,6 +77,8 @@ export async function getServerSideProps(context: any) {
 
     return {
         props: {
+            hobbies: data.hobbies,
+            lastProject: data.lastProject[0],
             lastThreePosts: data.lastNPosts
         }
     }

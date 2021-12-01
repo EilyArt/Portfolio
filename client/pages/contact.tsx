@@ -10,10 +10,11 @@ import { gql } from "@apollo/client"
 import client from "./api/appolo-client"
 
 interface Props {
+    lastProject: any,
     lastThreePosts: Array<object>
 }
 
-const contact: NextPage<Props> = ({ lastThreePosts }: Props) => {
+const contact: NextPage<Props> = ({ lastProject, lastThreePosts }: Props) => {
 
     const initialState = {
         name: '',
@@ -33,7 +34,7 @@ const contact: NextPage<Props> = ({ lastThreePosts }: Props) => {
     }
 
     return (
-        <Layout lastThreePosts={lastThreePosts}>
+        <Layout lastThreePosts={lastThreePosts} lastProject={lastProject}>
             <div className='pad-default'>
                 <Header span='Showcasing some of my best work' header='Contact' />
             </div>
@@ -127,6 +128,13 @@ export async function getServerSideProps(context: any) {
     const { data } = await client.query({
         query: gql`
       {
+        lastProject {
+            name
+            images{
+              image
+              alt
+            }
+        }
         lastNPosts(N: 3) {
             id
             title
@@ -140,6 +148,7 @@ export async function getServerSideProps(context: any) {
 
     return {
         props: {
+            lastProject: data.lastProject[0],
             lastThreePosts: data.lastNPosts
         }
     }

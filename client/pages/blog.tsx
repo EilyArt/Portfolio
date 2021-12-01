@@ -12,13 +12,14 @@ import client from "./api/appolo-client"
 interface Props {
   posts: Array<object>,
   tags: Array<object>,
+  lastProject: any,
   lastThreePosts: Array<object>
 }
 
-const blog: NextPage<Props> = ({ posts, tags, lastThreePosts }: Props) => {
+const blog: NextPage<Props> = ({ posts, tags, lastProject, lastThreePosts }: Props) => {
 
   return (
-    <Layout lastThreePosts={lastThreePosts}>
+    <Layout lastThreePosts={lastThreePosts} lastProject={lastProject}>
       <div className="blog">
         <div className="pad-default">
           <Header span="EILYA's Thoughts, stories and ideas." header="Blog" />
@@ -60,6 +61,13 @@ export async function getServerSideProps() {
       allTags {
         name
       }
+      lastProject {
+        name
+        images{
+          image
+          alt
+        }
+    }
       lastNPosts(N: 3) {
         id
         title
@@ -75,6 +83,7 @@ export async function getServerSideProps() {
     props: {
       posts: data.allPosts,
       tags: data.allTags,
+      lastProject: data.lastProject[0],
       lastThreePosts: data.lastNPosts
     }
   }

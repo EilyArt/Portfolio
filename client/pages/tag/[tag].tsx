@@ -8,13 +8,14 @@ import client from "../api/appolo-client"
 interface Props {
     tag: any,
     posts: Array<object>,
+    lastProject: any,
     lastThreePosts: Array<object>,
 }
 
-const tag: NextPage<Props> = ({ tag, posts, lastThreePosts }: Props) => {
+const tag: NextPage<Props> = ({ tag, posts, lastProject, lastThreePosts }: Props) => {
     
     return (
-        <Layout lastThreePosts={lastThreePosts}>
+        <Layout lastThreePosts={lastThreePosts} lastProject={lastProject}>
             <div className="contact pad-default">
                 <Header span="you can view posts related to " header={`#${tag}`} />
             </div>
@@ -41,7 +42,14 @@ export async function getServerSideProps(context: any) {
             tags {
                 name
             }
-          }
+        }
+        lastProject {
+            name
+            images{
+              image
+              alt
+            }
+        }
         lastNPosts(N: 3) {
             id
             title
@@ -57,6 +65,7 @@ export async function getServerSideProps(context: any) {
         props: {
             tag: context.resolvedUrl.substring(5),
             posts: data.allTaggedPosts,
+            lastProject: data.lastProject[0],
             lastThreePosts: data.lastNPosts
         }
     }

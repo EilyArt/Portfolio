@@ -7,6 +7,15 @@ from django.utils.html import mark_safe
 
 # ANCHOR - EDUCATION
 
+class Hobby(models.Model):
+    name = models.CharField(max_length=54)
+
+    def __str__(self):
+        return self.name
+
+
+# ANCHOR - EDUCATION
+
 class Education(models.Model):
     title = models.CharField(max_length=54)
     institution = models.CharField(max_length=54)

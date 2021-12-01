@@ -8,10 +8,13 @@ import MediaIcon from '../subComponents/MediaIcon';
 
 
 interface Props {
+    lastProject: any,
     lastThreePosts: Array<object>,
 }
 
-const Footer = ({ lastThreePosts }: Props) => {
+const Footer = ({ lastProject, lastThreePosts }: Props) => {
+    console.log(lastProject);
+    
     return (
         <footer className="pad-default pad-bottom-0">
             <div className="container container-top">
@@ -66,7 +69,10 @@ const Footer = ({ lastThreePosts }: Props) => {
                 </div>
                 <div className="col m-right-2">
                     <h3 className="m-bottom-2">Projects</h3>
-                    <BestSellerProject src={photo} alt="photo" title="Grilled Beef with potatoes" />
+                    <BestSellerProject
+                        src={lastProject.images[0].image}
+                        alt={`${lastProject.images[0].alt}`}
+                        title={`${lastProject.name}`} />
                 </div>
                 <div className="col m-right-2">
                     <h3 className="m-bottom-2">Twitter</h3>

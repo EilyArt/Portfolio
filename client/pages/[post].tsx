@@ -17,12 +17,13 @@ interface Props {
     prevPost: any,
     nextPost: any,
     lastThreePosts: Array<object>,
+    lastProject: any,
     threeRelatedPosts: Array<object>,
 }
 
-const post = ({ post, comments, prevPost, nextPost, lastThreePosts, threeRelatedPosts }: Props) => {
+const post = ({ post, comments, prevPost, nextPost, lastThreePosts, lastProject, threeRelatedPosts }: Props) => {
     return (
-        <Layout lastThreePosts={lastThreePosts}>
+        <Layout lastThreePosts={lastThreePosts} lastProject={lastProject}>
             <div className="post pad-default">
                 <div className="post-content">
                     <div className="post-content-wrapper">
@@ -68,7 +69,7 @@ const post = ({ post, comments, prevPost, nextPost, lastThreePosts, threeRelated
                     </div>
                 </div>
                 <div className="pad-default-horizontal">
-                    <div className="posts-post-content-excerpt" dangerouslySetInnerHTML={{ __html: post.description }} />
+                    <article className="posts-post-content-excerpt" dangerouslySetInnerHTML={{ __html: post.description }} />
                 </div>
                 <div className="row">
                     <div className="post-socialMedia">
@@ -166,7 +167,14 @@ export async function getServerSideProps(context: any) {
                 tags {
                   name
                 }
-              }
+            }
+            lastProject {
+                name
+                images{
+                  image
+                  alt
+                }
+            }
             lastNPosts(N: 3) {
                 id
                 title
@@ -185,6 +193,7 @@ export async function getServerSideProps(context: any) {
             prevPost: data.prevNextPosts[0],
             nextPost: data.prevNextPosts[1],
             lastThreePosts: data.lastNPosts,
+            lastProject: data.lastProject[0],
             threeRelatedPosts: data.threeRelatedPosts
         }
     }
