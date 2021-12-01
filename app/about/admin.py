@@ -1,27 +1,47 @@
 from django.contrib import admin
-
 from .models import *
-# Register your models here.
+
+# SECTION - ADMIN PANEL SETTINGS
+
+# ANCHOR -  EDUCATION
+
 
 @admin.register(Education)
 class EducationAdmin(admin.ModelAdmin):
-    list_display = ("id", "institution", "title", "start_date", "end_date", "description")
+    list_display = ("id", "institution", "title",
+                    "start_date", "end_date", "description")
+
+
+# ANCHOR -  EXPERIENCE
 
 @admin.register(Experience)
 class ExperienceAdmin(admin.ModelAdmin):
-    list_display = ("id", "job", "company", "start_date", "end_date", "description")
+    list_display = ("id", "job", "company", "start_date",
+                    "end_date", "description")
+
+
+# ANCHOR -  CERTIFICATE
 
 @admin.register(Certificate)
 class CertificateAdmin(admin.ModelAdmin):
     list_display = ("id", "title", "date")
 
+
+# ANCHOR -  LANGUAGE
+
 @admin.register(Language)
 class LanguageAdmin(admin.ModelAdmin):
     list_display = ("id", "language", "level")
 
+
+# ANCHOR -  SKILL_CATEGORY
+
 @admin.register(SkillCategory)
 class SkillCategoryAdmin(admin.ModelAdmin):
     list_display = ("id", "title")
+
+
+# ANCHOR -  SKILL
 
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):

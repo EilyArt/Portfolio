@@ -1,32 +1,22 @@
-const ProgressTable = () => {
+type Props = {
+    skills: Array<object>
+};
+
+const ProgressTable = ({ skills }: Props) => {
     return (
         <div>
             <span className="progressTable-box">
                 <div className="progressTable-box-items">
-                    <i className="progressTable-item">
-                        <h5 className="progressTable-item-title">Front-end</h5>
-                        <div className="progressTable-item-progress">
-                            <div className="progressTable-item-progress-bar" style={{ width: "50%" }}></div>
-                        </div>
-                    </i>
-                    <i className="progressTable-item">
-                        <h5 className="progressTable-item-title">Back-end</h5>
-                        <div className="progressTable-item-progress">
-                            <div className="progressTable-item-progress-bar" style={{ width: "70%" }}></div>
-                        </div>
-                    </i>
-                    <i className="progressTable-item">
-                        <h5 className="progressTable-item-title">Database</h5>
-                        <div className="progressTable-item-progress">
-                            <div className="progressTable-item-progress-bar" style={{ width: "60%" }}></div>
-                        </div>
-                    </i>
-                    <i className="progressTable-item">
-                        <h5 className="progressTable-item-title">Data Science</h5>
-                        <div className="progressTable-item-progress">
-                            <div className="progressTable-item-progress-bar" style={{ width: "90%" }}></div>
-                        </div>
-                    </i>
+                    {skills.map((skill: any) => {
+                        return (
+                            <i key={skill.id} className="progressTable-item">
+                                <h5 className="progressTable-item-title">{skill.title}</h5>
+                                <div className="progressTable-item-progress">
+                                    <div className="progressTable-item-progress-bar" style={{ height: `${skill.percentage}%` }}></div>
+                                </div>
+                            </i>
+                        )
+                    })}
                 </div>
             </span>
         </div>

@@ -2,13 +2,13 @@ import { FaUserAlt, FaThumbsUp, FaThumbsDown, FaCaretDown, FaCaretUp, FaReply, F
 import { useState } from "react";
 import ReplyComment from "./ReplyComment";
 
-type Comment = {
+type Props = {
     id: number,
     comment: any,
     replies: Array<object>
 };
 
-const Comment = ({ id, comment, replies }: Comment) => {
+const Comment = ({ id, comment, replies }: Props) => {
     console.log(Math.trunc((comment.likes/(comment.likes+comment.dislikes)) * 100));
     console.log(comment, replies);
     

@@ -3,7 +3,8 @@ import type { NextPage } from 'next'
 import Title from '@/subComponents/Title'
 import AboutSection from '@/subComponents/AboutSection';
 import SkillBox from "@/subComponents/SkillBox";
-import ProgressTableVertical from '../subComponents/ProgressTableVertical';
+import ProgressTable from '@/subComponents/ProgressTable';
+import pin from "@/svgs/pin.svg"
 import { gql } from "@apollo/client"
 import client from "./api/appolo-client"
 
@@ -32,7 +33,28 @@ const about: NextPage<Props> = ({ lastThreePosts }: Props) => {
             </div>
             <div className="m-top-2 pad-vertical-2">
                 <h2 className="pad-vertical-2">My Skills</h2>
-                <ProgressTableVertical />
+                <ProgressTable />
+            </div>
+            <div className="m-top-2 pad-vertical-2">
+                <AboutSection src={pin} title="HOBBIES"
+                    records={[
+                        {
+                            label: "University School of the Arts",
+                            date: "2007 — 2009",
+                            description: "Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et quas molestias exceptur.",
+                        },
+                        {
+                            label: "New York Academy of Art",
+                            date: "2005 — 2007",
+                            description: "Ratione voluptatem sequi nesciunt, facere quisquams facere menda ossimus, omnis voluptas assumenda est omnis..",
+                        },
+                        {
+                            label: "High School of Art and Design",
+                            date: "2003 — 2005",
+                            description: "Duis aute irure dolor in reprehenderit in voluptate, quila voluptas mag odit aut fugit, sed consequuntur magni dolores eos.",
+                        }
+                    ]}
+                />
             </div>
         </About>
     )
