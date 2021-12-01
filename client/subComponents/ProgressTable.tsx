@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type Props = {
     skills: Array<object>
 };
@@ -10,7 +12,17 @@ const ProgressTable = ({ skills }: Props) => {
                     {skills.map((skill: any) => {
                         return (
                             <i key={skill.id} className="progressTable-item">
-                                <h5 className="progressTable-item-title">{skill.title}</h5>
+                                <div className="row m-bottom-1 align-start">
+                                    <Image
+                                        alt={`${skill.title}`}
+                                        objectFit="cover"
+                                        height={40}
+                                        width={40}
+                                        loader={() => `${process.env.NEXT_PUBLIC_API}media/${skill.logo}`}
+                                        src={`${process.env.NEXT_PUBLIC_API}media/${skill.logo}`}
+                                    />
+                                    <h5 className="progressTable-item-title m-horizontal-2">{skill.title}<p>{skill.percentage}%</p></h5>
+                                </div>
                                 <div className="progressTable-item-progress">
                                     <div className="progressTable-item-progress-bar" style={{ height: `${skill.percentage}%` }}></div>
                                 </div>
