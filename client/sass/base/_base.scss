@@ -226,17 +226,9 @@ iframe {
 }
 
 ::-moz-selection {
-    background: transparent;
-    color: var(--color-accent);
+    background: var(--color-accent);
 }
 
 ::selection {
-    background: transparent;
-    color: var(--color-accent);
-}
-
-article {
-    p {
-        // font-size: 16px;
-    }
+    background: var(--color-accent);
 }
