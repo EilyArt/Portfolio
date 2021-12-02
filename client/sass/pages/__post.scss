@@ -1,6 +1,8 @@
 .post {
   background-color: var(--color-surface-1);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
   &-content {
     display: flex;

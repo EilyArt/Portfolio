@@ -1,4 +1,4 @@
-import { FaMapMarkerAlt, FaWhatsapp, FaPaperPlane } from "react-icons/fa";
+import { FaMapMarkerAlt, FaWhatsapp, FaPaperPlane, FaTwitter } from "react-icons/fa";
 import photo from "@/images/avatar.png"
 import Image from "next/dist/client/image";
 import InputEmail from "../subComponents/InputEmail";
@@ -14,7 +14,7 @@ interface Props {
 
 const Footer = ({ lastProject, lastThreePosts }: Props) => {
     console.log(lastProject);
-    
+
     return (
         <footer className="pad-default pad-bottom-0">
             <div className="container container-top">
@@ -34,7 +34,7 @@ const Footer = ({ lastProject, lastThreePosts }: Props) => {
             <div className="separation-1" />
             <div className="container">
                 <div className="col m-right-2">
-                    <h3 className="m-bottom-2">Contact</h3>
+                    <h3 className="m-bottom-2">CONTACT</h3>
                     <div className="pad-vertical-2">
                         <address><FaMapMarkerAlt className="m-right-2" />Istanbul</address>
                     </div>
@@ -44,16 +44,9 @@ const Footer = ({ lastProject, lastThreePosts }: Props) => {
                     <div className="pad-vertical-2">
                         <a><FaPaperPlane className="m-right-2" /> info@yourdomain.com</a>
                     </div>
-                    <div className="pad-vertical-2">
-                        <h3 className="pad-vertical-2">My Newsletter</h3>
-                        <p className="pad-vertical-2">Please join my newsletter to get notifications for new posts and projects.<br /> It can make my day ;)</p>
-                        <div className="pad-vertical-2">
-                            <InputEmail />
-                        </div>
-                    </div>
                 </div>
                 <div className="col m-right-2">
-                    <h3 className="m-bottom-2">Latest Posts</h3>
+                    <h3 className="m-bottom-2">LATEST POSTS</h3>
                     {lastThreePosts.map((post: any) => {
                         return (
                             <LatestNewsBox
@@ -68,23 +61,29 @@ const Footer = ({ lastProject, lastThreePosts }: Props) => {
                     })}
                 </div>
                 <div className="col m-right-2">
-                    <h3 className="m-bottom-2">Projects</h3>
+                    <h3 className="m-bottom-2">PROJECTS</h3>
                     <BestSellerProject
                         src={lastProject.images[0].image}
                         alt={`${lastProject.images[0].alt}`}
                         title={`${lastProject.name}`} />
                 </div>
                 <div className="col m-right-2">
-                    <h3 className="m-bottom-2">Twitter</h3>
-                    <Image
-                        src={photo}
-                        alt="photo"
-                        objectFit="cover"
-                        layout="fixed"
-                        height="250px"
-                        width="300px"
-                        className="b-radius"
-                    />
+                    <h3 className="m-bottom-2">TWITTER</h3>
+                    <a href="https://twitter.com/EILYAAMIN?ref_src=twsrc%5Etfw"
+                        className="twitterFolloButton"
+                        target="_blank"
+                        data-size="large"
+                        data-related=""
+                        data-lang="en"
+                        data-show-count="false"><FaTwitter/> Follow @EILYAAMIN
+                    </a> 
+                    <div className="pad-vertical-2">
+                        <h3 className="pad-vertical-2">My Newsletter</h3>
+                        <p className="pad-vertical-2">Please join my newsletter to get notifications for new posts and projects.<br /> It can make my day ;)</p>
+                        <div className="pad-vertical-2">
+                            <InputEmail />
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="separation-1" />

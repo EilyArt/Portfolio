@@ -59,10 +59,14 @@ class Query(graphene.ObjectType):
             nextPost = Post.objects.get(id=post.id + 1)
         except:
             try:
-                prevPost = Post.objects.get(id=post.id + 1)
-                nextPost = Post.objects.get(id=post.id + 2)
+                prevPost = Post.objects.get(id=post.id - 1)
+                nextPost = Post.objects.get(id=1)
             except:
-                return [post, post]
+                try:
+                    prevPost = Post.objects.order_by('-id')[:1]
+                    nextPost = Post.objects.get(id=post.id + 1)
+                except:
+                    [post, post]
         return [prevPost, nextPost]
 
     # ANCHOR -  GET ALL POSTS OF A TAG

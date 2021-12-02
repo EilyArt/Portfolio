@@ -153,4 +153,15 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_UPLOAD_PATH = os.path.join(MEDIA_ROOT)
+CKEDITOR_IMAGE_BACKEND = 'pillow'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 700,
+        'width': 1000,
+        'skin': 'moono',
+    },
+}
