@@ -9,7 +9,12 @@ from .models import *
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "label", "price", "description", "link")
-
+    
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions  
 
 # ANCHOR -  FEATURES
 
