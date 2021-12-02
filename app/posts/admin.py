@@ -9,20 +9,19 @@ from .models import *
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ("title", "Thumbnail", "published", "id", "author",
-                    "slug", "short_description", "created_at", "updated_at", "deleted_on")
+                    "slug", "short_description", "created_at", "updated_at")
     list_filter = ["published", "created_at",
-                   "updated_at", "deleted_on", "tags"]
+                   "updated_at", "tags"]
     list_select_related = ('author', )
     search_fields = ['title']
     readonly_fields = ('Thumbnail', )
     ordering = ('-id', )
 
-    def save_model(self, request, post, form, change):
-        if post.deleted_on != None:
-            return
-        if getattr(post, 'author', None) is None:
-            post.author = request.user
-        post.save()
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions  
 
 
 # ANCHOR -  TAG
@@ -42,9 +41,9 @@ class CommentAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ("id", "parent_id", "is_approved", "likes", "dislikes", "username", "ip_address",
-                    "short_comment", "post", "created_at", "updated_at", "deleted_on")
+                    "short_comment", "post", "created_at", "updated_at")
     list_filter = ['post', 'is_approved', "ip_address", "created_at"]
-
+    ordering = ('-id', )
     # REVIEW -  GET IP ADDRESS *MAYBE NOT REQUIRED FOR ADMIN PANEL*
     def save_model(self, request, comment, form, change):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')

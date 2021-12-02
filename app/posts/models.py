@@ -18,8 +18,6 @@ class TimeStampMixin(models.Model):
 
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
 
-    deleted_on = models.DateTimeField(blank=True, null=True, editable=False)
-
     class Meta:
         abstract = True
 
@@ -28,17 +26,12 @@ class TimeStampMixin(models.Model):
 
 # ANCHOR - POST
 class PostQuerySet(models.QuerySet):
-    def delete(self, *args, **kwargs):
-        for post in self:
-            post.published = False
-            post.thumbnail.delete()
-            post.deleted_on = datetime.datetime.now()
-            post.save(update_fields=["deleted_on", "published"])
-        super(PostQuerySet, self).update()
+    pass
 
 
 # ANCHOR - COMMENT
 class CommentQuerySet(models.QuerySet):
+    # ANCHOR - SOFT DELETE COMMENT ON BULK DELETE
     def delete(self, *args, **kwargs):
         for comment in self:
             comment.deleted_on = datetime.datetime.now()
@@ -97,7 +90,7 @@ class Post(TimeStampMixin):
     # ANCHOR - DISPLAY THUMBNAIL IN ADMIN PANEL
     def Thumbnail(self):
         if self.thumbnail:
-            return mark_safe('<img src="{}" height="35" width="35" />'.format(self.thumbnail.url))
+            return mark_safe('<img src="{}" height="35" width="45" />'.format(self.thumbnail.url))
         else:
             return ''
 
@@ -105,15 +98,6 @@ class Post(TimeStampMixin):
     @property
     def short_description(self):
         return truncatechars(self.description, 35)
-
-    # ANCHOR - SOFT DELETE POST
-    def delete(self, *args, **kwargs):
-        post = Post.objects.get(id=self.id)
-        post.published = False
-        post.thumbnail.delete()
-        post.deleted_on = datetime.datetime.now()
-        post.deleted = True
-        post.save(update_fields=["deleted_on", "published"])
 
     # FIXME - GET ALL TAGS OF A POST
     def get_tags(self):
@@ -167,6 +151,8 @@ class Comment(TimeStampMixin):
     parent = models.ForeignKey(
         'self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
 
+    deleted_on = models.DateTimeField(blank=True, null=True, editable=False)
+
     class Meta:
         ordering = ('-id',)
 
@@ -183,7 +169,7 @@ class Comment(TimeStampMixin):
     def short_comment(self):
         return truncatechars(self.comment, 35)
 
-    # ANCHOR - SOFT DELETE COMMENT
+    # ANCHOR - SOFT DELETE COMMENT ON DELETE
     def delete(self, *args, **kwargs):
         comment = Comment.objects.get(id=self.id)
         comment.deleted_on = datetime.datetime.now()

@@ -33,7 +33,7 @@ const portfolio: NextPage<Props> = ({ projects, lastProject, lastThreePosts }: P
                                     <dt className="portfolio-project-info-container-dt"><h4>Label:</h4></dt>
                                     <dd className="portfolio-project-info-container-dd">{project.label}</dd>
                                     <dt className="portfolio-project-info-container-dt"><h4>Project Link:</h4> <dd className="portfolio-project-info-container-dd">
-                                        <a href={`${project.link}`} target="_blank">
+                                        <a href={`http://${project.link}`} target="_blank">
                                             Open <FaExternalLinkAlt />
                                         </a>
                                     </dd></dt>
