@@ -13,7 +13,7 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ["published", "created_at",
                    "updated_at", "tags"]
     list_select_related = ('author', )
-    search_fields = ['title']
+    search_fields = ['title', "slug", "title"]
     readonly_fields = ('Thumbnail', )
     ordering = ('-id', )
 
@@ -33,8 +33,9 @@ class TagAdmin(admin.ModelAdmin):
 # ANCHOR -  POST_META
 @admin.register(PostMeta)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ("post", "id", "name", "content")
+    list_display = ("post_id", "id", "name", "content")
     list_filter = ['post', ]
+    ordering = ('-post_id', )
 
 
 # ANCHOR -  COMMENT

@@ -44,8 +44,7 @@ class CommentQuerySet(models.QuerySet):
 # ANCHOR - TAG
 class Tag(models.Model):
 
-    name = models.SlugField(verbose_name=_("Tag Name"),
-                            max_length=20, unique=True)
+    name = models.SlugField(verbose_name=_("Tag Name"), max_length=20, unique=True)
 
     def __str__(self):
         return self.name
@@ -61,26 +60,21 @@ class Post(TimeStampMixin):
 
     published = models.BooleanField(default=False, verbose_name="publish")
 
-    author = models.ForeignKey(
-        User, null=True, blank=True, on_delete=models.SET_NULL, editable=False)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, editable=False, null=True, blank=False)
 
-    title = models.CharField(
-        max_length=285, blank=True, null=True, unique=True)
+    title = models.CharField(max_length=80, unique=True, null=False, blank=False)
 
-    excerpt = models.TextField(
-        max_length=350, verbose_name="short description")
+    excerpt = models.TextField(max_length=180, verbose_name="short description")
 
-    duration = models.DecimalField(
-        max_digits=2, decimal_places=1, default=3, validators=PERCENTAGE_VALIDATOR)
+    duration = models.DecimalField(max_digits=2, decimal_places=1, default=3, validators=PERCENTAGE_VALIDATOR)
 
     description = RichTextUploadingField()
 
-    slug = models.SlugField(verbose_name=_("Post Slug"),
-                            max_length=256, unique=True)
+    slug = models.SlugField(verbose_name=_("Post Slug"), max_length=25, unique=True)
 
     thumbnail = models.ImageField(upload_to="static/images/", default=None)
 
-    thumbnail_alt = models.CharField(max_length=54, blank=False, null=False)
+    thumbnail_alt = models.CharField(max_length=50, blank=False, null=False)
 
     tags = models.ManyToManyField(Tag)
 
@@ -117,8 +111,7 @@ class Post(TimeStampMixin):
 # ANCHOR - POST_META
 class PostMeta(models.Model):
 
-    post = models.ForeignKey(
-        Post, null=False, blank=False, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, null=False, blank=False, on_delete=models.CASCADE)
 
     name = models.CharField(max_length=54)
 

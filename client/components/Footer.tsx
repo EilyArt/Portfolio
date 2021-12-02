@@ -13,8 +13,6 @@ interface Props {
 }
 
 const Footer = ({ lastProject, lastThreePosts }: Props) => {
-    console.log(lastProject);
-
     return (
         <footer className="pad-default pad-bottom-0">
             <div className="container container-top">

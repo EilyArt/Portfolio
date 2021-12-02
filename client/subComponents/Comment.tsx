@@ -9,8 +9,6 @@ type Props = {
 };
 
 const Comment = ({ id, comment, replies }: Props) => {
-    console.log(Math.trunc((comment.likes/(comment.likes+comment.dislikes)) * 100));
-    console.log(comment, replies);
     
     const initialState = {
         repliesLength: replies.length - 1,

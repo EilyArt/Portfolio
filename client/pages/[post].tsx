@@ -18,12 +18,13 @@ interface Props {
     nextPost: any,
     lastThreePosts: Array<object>,
     lastProject: any,
+    postMetas: Array<object>,
     threeRelatedPosts: Array<object>,
 }
 
-const post = ({ post, comments, prevPost, nextPost, lastThreePosts, lastProject, threeRelatedPosts }: Props) => {
+const post = ({ post, comments, prevPost, nextPost, lastThreePosts, lastProject, postMetas, threeRelatedPosts }: Props) => {
     return (
-        <Layout lastThreePosts={lastThreePosts} lastProject={lastProject}>
+        <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} postMetas={postMetas} title={post.title}>
             <div className="post pad-default">
                 <div className="post-content">
                     <div className="post-content-wrapper">
@@ -175,6 +176,10 @@ export async function getServerSideProps(context: any) {
                   alt
                 }
             }
+            postMetas(slug: "${context.resolvedUrl.substring(1)}") {
+                name
+                content
+            } 
             lastNPosts(N: 3) {
                 id
                 title
@@ -189,6 +194,7 @@ export async function getServerSideProps(context: any) {
     return {
         props: {
             post: data.post,
+            postMetas: data.postMetas,
             comments: data.allComments,
             prevPost: data.prevNextPosts[0],
             nextPost: data.prevNextPosts[1],
