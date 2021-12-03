@@ -9,13 +9,14 @@ interface Props {
     tag: any,
     posts: Array<object>,
     lastProject: any,
+    title: string,
     lastThreePosts: Array<object>,
 }
 
-const tag: NextPage<Props> = ({ tag, posts, lastProject, lastThreePosts }: Props) => {
+const tag: NextPage<Props> = ({ tag, posts, lastProject, title, lastThreePosts }: Props) => {
 
     return (
-        <Layout lastThreePosts={lastThreePosts} lastProject={lastProject}>
+        <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} title={`#${title}`}>
             <div className="contact pad-default">
                 <Header span="you can view posts related to " header={`#${tag}`} />
             </div>
@@ -65,6 +66,7 @@ export async function getServerSideProps(context: any) {
             tag: context.resolvedUrl.substring(5),
             posts: data.allTaggedPosts,
             lastProject: data.lastProject[0],
+            title: context.resolvedUrl.substring(5),
             lastThreePosts: data.lastNPosts
         }
     }
