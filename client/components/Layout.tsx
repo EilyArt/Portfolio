@@ -11,9 +11,7 @@ interface Props {
     title: string
 }
 
-const Layout = ({ lastThreePosts, lastProject, title, postMetas, pageMetas, children }: Props) => {
-    console.log(pageMetas);
-    
+const Layout = ({ lastThreePosts, lastProject, title, postMetas, pageMetas, children }: Props) => {    
     return (
         <div>
             <Head>

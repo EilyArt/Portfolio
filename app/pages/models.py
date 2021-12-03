@@ -5,7 +5,7 @@ from django.db import models
 # TODO - Remove descrition and rename link to slug with verbose name
 class Page(models.Model):
     title = models.CharField(max_length=54)
-    slug = models.SlugField(max_length=256, unique=True, verbose_name="page link")
+    slug = models.SlugField(max_length=256, unique=True, blank=True, verbose_name="page link")
 
     def __str__(self):
         return self.title

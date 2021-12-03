@@ -33,7 +33,7 @@ export async function getServerSideProps(context: any) {
           alt
         }
       }
-      pageMetas(page: "${context.resolvedUrl.substring(1)}") {
+      pageMetas(page: "index") {
         page{
           title
         }
