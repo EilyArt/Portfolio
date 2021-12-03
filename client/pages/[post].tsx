@@ -124,8 +124,9 @@ const post = ({ post, comments, prevPost, nextPost, lastThreePosts, lastProject,
 export async function getServerSideProps(context: any) {
 
 
-    const { data } = await client.query({
-        query: gql`
+    try {
+        const { data } = await client.query({
+            query: gql`
         {
             allComments(slug: "${context.resolvedUrl.substring(1)}") {
               username
@@ -189,18 +190,25 @@ export async function getServerSideProps(context: any) {
             }
         }
       `
-    })
+        })
 
-    return {
-        props: {
-            post: data.post,
-            postMetas: data.postMetas,
-            comments: data.allComments,
-            prevPost: data.prevNextPosts[0],
-            nextPost: data.prevNextPosts[1],
-            lastThreePosts: data.lastNPosts,
-            lastProject: data.lastProject[0],
-            threeRelatedPosts: data.threeRelatedPosts
+        return {
+            props: {
+                post: data.post,
+                postMetas: data.postMetas,
+                comments: data.allComments,
+                prevPost: data.prevNextPosts[0],
+                nextPost: data.prevNextPosts[1],
+                lastThreePosts: data.lastNPosts,
+                lastProject: data.lastProject[0],
+                threeRelatedPosts: data.threeRelatedPosts
+            }
+        }
+    } catch (e) {
+        return {
+            redirect: {
+                destination: '/'
+            }
         }
     }
 }

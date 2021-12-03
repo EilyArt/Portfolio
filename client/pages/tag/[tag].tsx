@@ -13,14 +13,14 @@ interface Props {
 }
 
 const tag: NextPage<Props> = ({ tag, posts, lastProject, lastThreePosts }: Props) => {
-    
+
     return (
         <Layout lastThreePosts={lastThreePosts} lastProject={lastProject}>
             <div className="contact pad-default">
                 <Header span="you can view posts related to " header={`#${tag}`} />
             </div>
             <div className="blog-posts pad-default-horizontal">
-                <Posts posts={posts}/>
+                <Posts posts={posts} />
             </div>
         </Layout>
     )
@@ -29,8 +29,9 @@ const tag: NextPage<Props> = ({ tag, posts, lastProject, lastThreePosts }: Props
 export async function getServerSideProps(context: any) {
 
 
-    const { data } = await client.query({
-        query: gql`
+    try {
+        const { data } = await client.query({
+            query: gql`
       {
         allTaggedPosts(tag: "${context.resolvedUrl.substring(5)}") {
             title
@@ -59,14 +60,21 @@ export async function getServerSideProps(context: any) {
         }
       }
       `
-    })
+        })
 
-    return {
-        props: {
-            tag: context.resolvedUrl.substring(5),
-            posts: data.allTaggedPosts,
-            lastProject: data.lastProject[0],
-            lastThreePosts: data.lastNPosts
+        return {
+            props: {
+                tag: context.resolvedUrl.substring(5),
+                posts: data.allTaggedPosts,
+                lastProject: data.lastProject[0],
+                lastThreePosts: data.lastNPosts
+            }
+        }
+    } catch (e) {
+        return {
+            redirect: {
+                destination: '/'
+            }
         }
     }
 }
