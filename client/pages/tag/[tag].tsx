@@ -28,10 +28,8 @@ const tag: NextPage<Props> = ({ tag, posts, lastProject, lastThreePosts }: Props
 
 export async function getServerSideProps(context: any) {
 
-
-    try {
-        const { data } = await client.query({
-            query: gql`
+    const { data } = await client.query({
+        query: gql`
       {
         allTaggedPosts(tag: "${context.resolvedUrl.substring(5)}") {
             title
@@ -60,21 +58,14 @@ export async function getServerSideProps(context: any) {
         }
       }
       `
-        })
+    })
 
-        return {
-            props: {
-                tag: context.resolvedUrl.substring(5),
-                posts: data.allTaggedPosts,
-                lastProject: data.lastProject[0],
-                lastThreePosts: data.lastNPosts
-            }
-        }
-    } catch (e) {
-        return {
-            redirect: {
-                destination: '/'
-            }
+    return {
+        props: {
+            tag: context.resolvedUrl.substring(5),
+            posts: data.allTaggedPosts,
+            lastProject: data.lastProject[0],
+            lastThreePosts: data.lastNPosts
         }
     }
 }
