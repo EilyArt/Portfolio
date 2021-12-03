@@ -14,13 +14,14 @@ interface Props {
     certificates: Array<object>,
     skillCategories: Array<object>,
     lastProject: any,
+    pageMetas: Array<object>,
     lastThreePosts: Array<object>,
 }
 
-const resume: NextPage<Props> = ({ educations, experiences, languages, certificates, skillCategories, lastProject, lastThreePosts }: Props) => {
+const resume: NextPage<Props> = ({ educations, experiences, languages, certificates, skillCategories, lastProject, pageMetas, lastThreePosts }: Props) => {
 
     return (
-        <About lastThreePosts={lastThreePosts} lastProject={lastProject}>
+        <About lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
             <Title title="Resume" />
             <div className="m-top-2 pad-vertical-2">
                 <AboutSection src={pin} title="EDUCATION"
@@ -130,6 +131,13 @@ export async function getServerSideProps(context: any) {
               alt
             }
         }
+        pageMetas(page: "${context.resolvedUrl.substring(1)}") {
+            page{
+                title
+            }
+            name
+            content
+        }
         lastNPosts(N: 3) {
             id
             title
@@ -149,6 +157,7 @@ export async function getServerSideProps(context: any) {
             certificates: data.certificates,
             skillCategories: data.skillCategories,
             lastProject: data.lastProject[0],
+            pageMetas: data.pageMetas,
             lastThreePosts: data.lastNPosts,
         }
     }

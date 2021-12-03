@@ -13,13 +13,14 @@ interface Props {
   posts: Array<object>,
   tags: Array<object>,
   lastProject: any,
-  lastThreePosts: Array<object>
+  pageMetas: Array<object>,
+  lastThreePosts: Array<object>,
 }
 
-const blog: NextPage<Props> = ({ posts, tags, lastProject, lastThreePosts }: Props) => {
+const blog: NextPage<Props> = ({ posts, tags, lastProject, pageMetas, lastThreePosts }: Props) => {
 
   return (
-    <Layout lastThreePosts={lastThreePosts} lastProject={lastProject}>
+    <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
       <div className="blog">
         <div className="pad-default">
           <Header span="EILYA's Thoughts, stories and ideas." header="Blog" />
@@ -42,7 +43,7 @@ const blog: NextPage<Props> = ({ posts, tags, lastProject, lastThreePosts }: Pro
   )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: any) {
 
   const { data } = await client.query({
     query: gql`
@@ -67,7 +68,14 @@ export async function getServerSideProps() {
           image
           alt
         }
-    }
+      }
+      pageMetas(page: "${context.resolvedUrl.substring(1)}") {
+        page{
+          title
+        }
+        name
+        content
+      }
       lastNPosts(N: 3) {
         id
         title
@@ -84,6 +92,7 @@ export async function getServerSideProps() {
       posts: data.allPosts,
       tags: data.allTags,
       lastProject: data.lastProject[0],
+      pageMetas: data.pageMetas,
       lastThreePosts: data.lastNPosts
     }
   }

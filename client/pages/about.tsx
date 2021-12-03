@@ -11,13 +11,14 @@ import client from "./api/appolo-client"
 interface Props {
     hobbies: Array<object>,
     lastProject: any,
-    lastThreePosts: Array<object>
+    pageMetas: Array<object>,
+    lastThreePosts: Array<object>,
 }
 
-const about: NextPage<Props> = ({ hobbies, lastProject, lastThreePosts }: Props) => {
+const about: NextPage<Props> = ({ hobbies, lastProject, pageMetas, lastThreePosts }: Props) => {
 
     return (
-        <About lastThreePosts={lastThreePosts} lastProject={lastProject}>
+        <About lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
             <Title title="about me" />
             <p>
                 I'm Creative Director and UI/UX Designer from Sydney, Australia,
@@ -64,6 +65,13 @@ export async function getServerSideProps(context: any) {
               alt
             }
         }
+        pageMetas(page: "${context.resolvedUrl.substring(1)}") {
+            page{
+                title
+            }
+            name
+            content
+        }
         lastNPosts(N: 3) {
             id
             title
@@ -79,6 +87,7 @@ export async function getServerSideProps(context: any) {
         props: {
             hobbies: data.hobbies,
             lastProject: data.lastProject[0],
+            pageMetas: data.pageMetas,
             lastThreePosts: data.lastNPosts
         }
     }

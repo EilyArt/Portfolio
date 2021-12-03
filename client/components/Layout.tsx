@@ -5,22 +5,28 @@ import Head from 'next/head'
 interface Props {
     lastThreePosts: Array<object>,
     postMetas: Array<object>,
+    pageMetas: Array<any>,
     lastProject: any,
     children: any,
     title: string
 }
 
-const Layout = ({ lastThreePosts, lastProject, title, postMetas, children }: Props) => {
-    console.log(postMetas);
+const Layout = ({ lastThreePosts, lastProject, title, postMetas, pageMetas, children }: Props) => {
+    console.log(pageMetas);
     
     return (
         <div>
             <Head>
-                <title>{`${title}`}</title>
+                <title>{`${title.length === 0 ? (pageMetas ? pageMetas[0].page.title : "EILYA AMIN") : title}`}</title>
                 <link rel="icon" href="/favicon.ico" />
                 {postMetas.map((meta: any) => {
                     return (
                         <meta name={`${meta.name}`} content={`${meta.content}`} />
+                    )
+                })}
+                {pageMetas && pageMetas.map((meta: any, index: number) => {
+                    return (
+                        <meta key={index} name={`${meta.name}`} content={`${meta.content}`} />
                     )
                 })}
             </Head>
@@ -35,6 +41,7 @@ const Layout = ({ lastThreePosts, lastProject, title, postMetas, children }: Pro
 Layout.defaultProps = {
     lastThreePosts: [],
     postMetas: [],
+    pageMetas: [],
     lastProject: {},
     title: ""
 }

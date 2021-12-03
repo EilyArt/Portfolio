@@ -5,13 +5,14 @@ import client from "./api/appolo-client"
 
 interface Props {
   lastProject: any,
+  pageMetas: Array<object>,
   lastThreePosts: Array<object>,
 }
 
-const index: NextPage<Props> = ({ lastProject, lastThreePosts }: Props) => {
+const index: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Props) => {
 
   return (
-    <Layout lastThreePosts={lastThreePosts} lastProject={lastProject}>
+    <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
       <div className='pad-default'>
         HomePage
       </div>
@@ -32,6 +33,13 @@ export async function getServerSideProps(context: any) {
           alt
         }
       }
+      pageMetas(page: "${context.resolvedUrl.substring(1)}") {
+        page{
+          title
+        }
+        name
+        content
+      }
       lastNPosts(N: 3) {
         id
         title
@@ -46,6 +54,7 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       lastProject: data.lastProject[0],
+      pageMetas: data.pageMetas,
       lastThreePosts: data.lastNPosts,
     }
   }

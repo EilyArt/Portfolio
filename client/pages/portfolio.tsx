@@ -9,13 +9,14 @@ import client from "./api/appolo-client"
 interface Props {
     projects: Array<object>,
     lastProject: any,
+    pageMetas: Array<object>,
     lastThreePosts: Array<object>,
 }
 
-const portfolio: NextPage<Props> = ({ projects, lastProject, lastThreePosts }: Props) => {
+const portfolio: NextPage<Props> = ({ projects, lastProject, pageMetas, lastThreePosts }: Props) => {
 
     return (
-        <Layout lastThreePosts={lastThreePosts} lastProject={lastProject}>
+        <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
             <div className="portfolio pad-default">
                 <Header span="Showcasing some of my best work" header="Portfolio" />
             </div>
@@ -23,7 +24,7 @@ const portfolio: NextPage<Props> = ({ projects, lastProject, lastThreePosts }: P
                 {projects.map((project: any, index: number) => {
                     return (
                         <div className="portfolio-project">
-                            <Gallery id={index} images={project.images}/>
+                            <Gallery id={index} images={project.images} />
                             <div className="portfolio-project-info">
                                 <dl className="portfolio-project-info-container">
                                     <dt className="portfolio-project-info-container-dt"><h4>Project Name:</h4></dt>
@@ -87,6 +88,13 @@ export async function getServerSideProps(context: any) {
               alt
             }
         }
+        pageMetas(page: "${context.resolvedUrl.substring(1)}") {
+            page{
+                title
+            }
+            name
+            content
+        }
         lastNPosts(N: 3) {
             id
             title
@@ -102,6 +110,7 @@ export async function getServerSideProps(context: any) {
         props: {
             projects: data.allProjects,
             lastProject: data.lastProject[0],
+            pageMetas: data.pageMetas,
             lastThreePosts: data.lastNPosts,
         }
     }

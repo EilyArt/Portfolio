@@ -1,8 +1,6 @@
 import graphene
-from graphene_django.types import DjangoObjectType, ObjectType
+from graphene_django.types import DjangoObjectType
 from .models import *
-from datetime import datetime
-from django.utils import timezone
 from graphene.types.generic import GenericScalar
 
 
