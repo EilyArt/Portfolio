@@ -2,7 +2,7 @@ import graphene
 from graphene_django.types import DjangoObjectType
 from .models import *
 from graphene.types.generic import GenericScalar
-
+from django.shortcuts import get_object_or_404
 
 class PostType(DjangoObjectType):
     meta = GenericScalar()
@@ -41,28 +41,39 @@ class Query(graphene.ObjectType):
     allPosts = graphene.List(PostType)
 
     def resolve_allPosts(self, info, **kwargs):
-        return Post.objects.order_by('-id').all()
+        try:
+            return Post.objects.order_by('-id').all()
+        except Post.DoesNotExist:
+            return None
 
 
     # ANCHOR -  GET POST BY SLUG
     post = graphene.Field(PostType, slug=graphene.String())
 
     def resolve_post(self, info, slug):
-        return Post.objects.get(slug=slug)
-
+        try:
+            return Post.objects.get(slug=slug)
+        except Post.DoesNotExist:
+            return None
 
     # ANCHOR -  GET POST BY SLUG
     lastNPosts = graphene.List(PostType, N=graphene.Int())
 
     def resolve_lastNPosts(self, info, N):
-        return Post.objects.order_by('-id')[:N]
+        try:
+            return Post.objects.order_by('-id')[:N]
+        except Post.DoesNotExist:
+            return None
 
 
     # ANCHOR -  GET PREVIOUS/NEXT POSTS
     prevNextPosts = graphene.List(PostType, slug=graphene.String())
 
     def resolve_prevNextPosts(self, info, slug):
-        post = Post.objects.get(slug=slug)
+        try:
+            post = Post.objects.get(slug=slug)
+        except Post.DoesNotExist:
+            return None
         try:
             prevPost = Post.objects.get(id=post.id - 1)
             nextPost = Post.objects.get(id=post.id + 1)
@@ -83,23 +94,32 @@ class Query(graphene.ObjectType):
     allTaggedPosts = graphene.List(PostType, tag=graphene.String())
 
     def resolve_allTaggedPosts(self, info, tag):
-        tagObject = Tag.objects.get(name=tag)
-        return Post.objects.all().filter(tags__in=[tagObject.id])
+        try:
+            tagObject = Tag.objects.get(name=tag)
+            return Post.objects.all().filter(tags__in=[tagObject.id])
+        except Post.DoesNotExist:
+            return None
 
 
     # ANCHOR -  GET LAST 3 POSTS OF A TAG
     threeRelatedPosts = graphene.List(PostType, slug=graphene.String())
 
     def resolve_threeRelatedPosts(self, info, slug):
-        post = Post.objects.get(slug=slug)
-        return Post.objects.all().exclude(id__in=[o.id for o in [post]]).filter(tags__in=[int(p.id) for p in post.tags.all()]).order_by("-id")[:3]
+        try:
+            post = Post.objects.get(slug=slug)
+            return Post.objects.all().exclude(id__in=[o.id for o in [post]]).filter(tags__in=[int(p.id) for p in post.tags.all()]).order_by("-id")[:3]
+        except Post.DoesNotExist:
+            return None
 
 
     # ANCHOR -  GET POST BY SLUG
     tag = graphene.Field(TagType, name=graphene.String())
 
     def resolve_tag(self, info, slug):
-        return Post.objects.get(slug=slug)
+        try:
+            return Post.objects.get(slug=slug)
+        except Post.DoesNotExist:
+            return None
 
     # SECTION - COMMENT
 
@@ -108,8 +128,11 @@ class Query(graphene.ObjectType):
     allComments = graphene.List(CommentType, slug=graphene.String())
 
     def resolve_allComments(self, info, slug):
-        post = Post.objects.get(slug=slug)
-        return Comment.objects.all().filter(parent__isnull=True, post=post.id)
+        try:
+            post = Post.objects.get(slug=slug)
+            return Comment.objects.all().filter(parent__isnull=True, post=post.id)
+        except Post.DoesNotExist:
+            return None
 
     # SECTION - TAG
 
@@ -118,7 +141,10 @@ class Query(graphene.ObjectType):
     allTags = graphene.List(TagType)
 
     def resolve_allTags(self, info, **kwargs):
-        return Tag.objects.all()
+        try:
+            return Tag.objects.all()
+        except Tag.DoesNotExist:
+            return None
 
 
     # SECTION - POST META
@@ -128,7 +154,10 @@ class Query(graphene.ObjectType):
     postMetas = graphene.List(PostMetaType, slug=graphene.String())
 
     def resolve_postMetas(self, info, slug):
-        post = Post.objects.get(slug=slug)
-        return PostMeta.objects.all().filter(post=post.id)
+        try:
+            post = Post.objects.get(slug=slug)
+            return PostMeta.objects.all().filter(post=post.id)
+        except Post.DoesNotExist:
+            return None
 
 schema = graphene.Schema(query=Query)
