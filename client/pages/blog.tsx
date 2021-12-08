@@ -7,7 +7,7 @@ import Title from '@/subComponents/Title';
 import Tag from '@/subComponents/Tag';
 import Header from '@/subComponents/Header'
 import { gql } from "@apollo/client"
-import client from "./api/appolo-client"
+import client from "./api/apollo-client"
 
 interface Props {
   posts: Array<object>,
@@ -91,7 +91,7 @@ export async function getServerSideProps(context: any) {
     props: {
       posts: data.allPosts,
       tags: data.allTags,
-      lastProject: data.lastProject[0],
+      lastProject: data.lastProject,
       pageMetas: data.pageMetas,
       lastThreePosts: data.lastNPosts
     }

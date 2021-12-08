@@ -7,7 +7,7 @@ import { FaPaperPlane } from "react-icons/fa";
 import React, { useState } from 'react'
 import boxLogo from "@/images/star.png"
 import { gql } from "@apollo/client"
-import client from "./api/appolo-client"
+import client from "./api/apollo-client"
 
 interface Props {
     lastProject: any,
@@ -156,7 +156,7 @@ export async function getServerSideProps(context: any) {
 
     return {
         props: {
-            lastProject: data.lastProject[0],
+            lastProject: data.lastProject,
             pageMetas: data.pageMetas,
             lastThreePosts: data.lastNPosts,
         }

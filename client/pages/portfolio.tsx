@@ -4,7 +4,7 @@ import Header from '@/subComponents/Header'
 import Gallery from '@/subComponents/Gallery'
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { gql } from "@apollo/client"
-import client from "./api/appolo-client"
+import client from "./api/apollo-client"
 
 interface Props {
     projects: Array<object>,
@@ -109,7 +109,7 @@ export async function getServerSideProps(context: any) {
     return {
         props: {
             projects: data.allProjects,
-            lastProject: data.lastProject[0],
+            lastProject: data.lastProject,
             pageMetas: data.pageMetas,
             lastThreePosts: data.lastNPosts,
         }

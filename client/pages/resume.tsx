@@ -5,7 +5,7 @@ import AboutSection from '@/subComponents/AboutSection';
 import pin from "@/svgs/pin.svg"
 import ProgressTable from '../subComponents/ProgressTable';
 import { gql } from "@apollo/client"
-import client from "./api/appolo-client"
+import client from "./api/apollo-client"
 
 interface Props {
     educations: Array<object>,
@@ -156,7 +156,7 @@ export async function getServerSideProps(context: any) {
             languages: data.languages,
             certificates: data.certificates,
             skillCategories: data.skillCategories,
-            lastProject: data.lastProject[0],
+            lastProject: data.lastProject,
             pageMetas: data.pageMetas,
             lastThreePosts: data.lastNPosts,
         }
