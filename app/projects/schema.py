@@ -35,10 +35,13 @@ class Query(graphene.ObjectType):
 
 
     # ANCHOR -  GET LAST PROJECT
-    lastProject = graphene.List(ProjectType)
+    lastProject = graphene.Field(ProjectType)
 
     def resolve_lastProject(self, info, **kwargs):
-        return Project.objects.order_by('-id')[:1]
+        try:
+            return Project.objects.last()
+        except Project.DoesNotExist:
+            return None
 
 
 schema = graphene.Schema(query=Query)

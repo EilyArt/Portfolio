@@ -73,7 +73,7 @@ class Query(graphene.ObjectType):
         try:
             post = Post.objects.get(slug=slug)
         except Post.DoesNotExist:
-            return None
+            return [None, None]
         try:
             prevPost = Post.objects.get(id=post.id - 1)
             nextPost = Post.objects.get(id=post.id + 1)
