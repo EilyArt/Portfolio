@@ -10,22 +10,22 @@ import DiscussionForm from "@/subComponents/DiscussionForm"
 import Link from "next/dist/client/link"
 import { gql } from "@apollo/client"
 import client from "./api/apollo-client"
-import { useQuery } from '@apollo/client';
-import GET_PRODUCT_BY_ID from '../lib/queries/getProductById';
-import { initializeApollo } from '../lib/apollo';
-const VARIABLE = 'again-land-know';
 
+interface Props {
+    post: any,
+    comments: any,
+    prevPost: any,
+    nextPost: any,
+    lastThreePosts: Array<object>,
+    lastProject: any,
+    postMetas: Array<object>,
+    threeRelatedPosts: Array<object>,
+}
 
-const post = () => {
-    const { data, error, loading } = useQuery(GET_PRODUCT_BY_ID, {
-        variables: { code: VARIABLE },
-    });
-
-    if (error || !data.post) return <h2>404 | Product Not Found</h2>;
-
-
+const post = ({post, comments, prevPost, nextPost, lastThreePosts, lastProject, postMetas, threeRelatedPosts }: Props) => {
+    
     return (
-        <Layout lastThreePosts={data.lastNPosts} lastProject={data.lastProject} postMetas={data.postMetas} title={data.post.title}>
+        <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} postMetas={postMetas} title={post.title}>
             <div className="post pad-default">
                 <div className="post-content">
                     <div className="post-content-wrapper">
@@ -33,21 +33,21 @@ const post = () => {
                             objectFit="cover"
                             height={450}
                             width={700}
-                            alt={`${data.post.thumbnailAlt}`}
+                            alt={`${post.thumbnailAlt}`}
                             className="post-content-wrapper-img"
-                            loader={() => `${process.env.NEXT_PUBLIC_API}media/${data.post.thumbnail}`}
-                            src={`${process.env.NEXT_PUBLIC_API}media/${data.post.thumbnail}`}
+                            loader={() => `${process.env.NEXT_PUBLIC_API}media/${post.thumbnail}`}
+                            src={`${process.env.NEXT_PUBLIC_API}media/${post.thumbnail}`}
                         />
                     </div>
                     <div className="post-content-thumbnail">
                         <div className="post-content-thumbnail-meta">
                             <span className="post-content-thumbnail-meta-minutes">
-                                {data.post.duration} min read
+                                {post.duration} min read
                             </span>
-                            <time className="post-content-thumbnail-meta-date" dateTime="2020-11-12"> {new Date(data.post.createdAt).toDateString()}</time>
+                            <time className="post-content-thumbnail-meta-date" dateTime="2020-11-12"> {new Date(post.createdAt).toDateString()}</time>
                         </div>
                         <h2 className="post-content-thumbnail-title">
-                            {data.post.title}
+                            {post.title}
                         </h2>
                         <div className="post-content-thumbnail-bottom">
                             <div className="post-content-thumbnail-bottom-writer">
@@ -62,7 +62,7 @@ const post = () => {
                                 </div>
                                 <h6 className="post-content-thumbnail-bottom-writer-name">Eilya Amin in</h6>
                             </div>
-                            {data.post.tags.map((tag: { name: string }, index: number) => {
+                            {post.tags.map((tag: { name: string }, index: number) => {
                                 return (
                                     <Tag size="sm-tag" name={tag.name} />
                                 )
@@ -71,7 +71,7 @@ const post = () => {
                     </div>
                 </div>
                 <div className="pad-default-horizontal">
-                    <article className="posts-post-content-excerpt" dangerouslySetInnerHTML={{ __html: data.post.description }} />
+                    <article className="posts-post-content-excerpt" dangerouslySetInnerHTML={{ __html: post.description }} />
                 </div>
                 <div className="row">
                     <div className="post-socialMedia">
@@ -82,7 +82,7 @@ const post = () => {
                     </div>
                 </div>
                 <div className="post-prevNext">
-                    <Link href={`/${data.prevNextPosts[0].slug}`}>
+                    <Link href={`/${prevPost.slug}`}>
                         <a className="post-prevNext-container previusPost">
                             <div className="post-prevNext-container-wrapper">
                                 <Image objectFit="cover" layout="fill" src={img} />
@@ -90,12 +90,12 @@ const post = () => {
                             <div className="post-prevNext-container-info">
                                 <span><FaAngleLeft /> Previus Post</span>
                                 <h2 className="posts-post-content-title">
-                                    {data.prevNextPosts[0].title}
+                                    {prevPost.title}
                                 </h2>
                             </div>
                         </a>
                     </Link>
-                    <Link href={`/${data.prevNextPosts[1].slug}`}>
+                    <Link href={`/${nextPost.slug}`}>
                         <a className="post-prevNext-container nextPost">
                             <div className="post-prevNext-container-wrapper">
                                 <Image objectFit="cover" layout="fill" src={img} />
@@ -103,7 +103,7 @@ const post = () => {
                             <div className="post-prevNext-container-info">
                                 <span id="nextPost">Next Post <FaAngleRight /></span>
                                 <h2 className="posts-post-content-title">
-                                    {data.prevNextPosts[1].title}
+                                    {nextPost.title}
                                 </h2>
                             </div>
                         </a>
@@ -111,29 +111,99 @@ const post = () => {
                 </div>
                 <div className="pad-default">
                     <Title title="You may also like" />
-                    <Posts posts={data.threeRelatedPosts} />
+                    <Posts posts={threeRelatedPosts} />
                 </div>
                 <div className="post-discussion">
-                    <DiscussionForm comments={data.allComments} />
+                    <DiscussionForm comments={comments} />
                 </div>
             </div>
         </Layout>
     )
 }
 
-export const getServerSideProps = async () => {
-    const apolloClient = initializeApollo();
 
-    await apolloClient.query({
-        query: GET_PRODUCT_BY_ID,
-        variables: { code: VARIABLE },
-    });
+export async function getServerSideProps(context: any) {
+
+
+    const { data } = await client.query({
+        query: gql`
+        {
+            allComments(slug: "${context.resolvedUrl.substring(1)}") {
+              username
+              comment
+              createdAt
+              likes
+              dislikes
+              replies {
+                comment
+                createdAt
+                username
+                likes
+                dislikes
+              }
+            }
+            post(slug: "${context.resolvedUrl.substring(1)}") {
+              title
+              slug
+              thumbnail
+              thumbnailAlt
+              description
+              duration
+              createdAt
+              tags {
+                name
+              }
+            }
+            prevNextPosts(slug: "${context.resolvedUrl.substring(1)}"){
+                title
+                slug
+                thumbnail
+            }
+            threeRelatedPosts(slug: "${context.resolvedUrl.substring(1)}") {
+                title
+                slug
+                thumbnail
+                excerpt
+                duration
+                createdAt
+                tags {
+                  name
+                }
+            }
+            lastProject {
+                name
+                images{
+                  image
+                  alt
+                }
+            }
+            postMetas(slug: "${context.resolvedUrl.substring(1)}") {
+                name
+                content
+            } 
+            lastNPosts(N: 3) {
+                id
+                title
+                slug
+                thumbnail
+                createdAt
+            }
+        }
+      `
+    })
 
     return {
         props: {
-            initialApolloState: apolloClient.cache.extract()
+            post: data.post,
+            postMetas: data.postMetas,
+            comments: data.allComments,
+            prevPost: data.prevNextPosts[0],
+            nextPost: data.prevNextPosts[1],
+            lastThreePosts: data.lastNPosts,
+            lastProject: data.lastProject,
+            threeRelatedPosts: data.threeRelatedPosts
         }
-    };
-};
+    }
+}
 
 export default post

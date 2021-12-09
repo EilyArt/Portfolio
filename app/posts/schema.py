@@ -51,10 +51,8 @@ class Query(graphene.ObjectType):
     post = graphene.Field(PostType, slug=graphene.String())
 
     def resolve_post(self, info, slug):
-        try:
-            return Post.objects.get(slug=slug)
-        except Post.DoesNotExist:
-            return None
+        return Post.objects.get(slug=slug)
+
 
     # ANCHOR -  GET POST BY SLUG
     lastNPosts = graphene.List(PostType, N=graphene.Int())

@@ -10,13 +10,11 @@ Router.events.on('routeChangeComplete', () => NProgress.done())
 Router.events.on('routeChangeError', () => NProgress.done())
 NProgress.configure({ showSpinner: false });
 
-import { useApollo } from '../lib/apollo';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const apolloClient = useApollo(pageProps.initialApolloState);
 
   return (
-    <ApolloProvider client={apolloClient}>
+    <ApolloProvider client={client}>
       <Component {...pageProps} />
     </ApolloProvider>
   );
