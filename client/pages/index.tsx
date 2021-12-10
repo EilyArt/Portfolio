@@ -33,7 +33,7 @@ export async function getServerSideProps(context: any) {
           alt
         }
       }
-      pageMetas(page: "index") {
+      pageMetas(page: "") {
         page{
           title
         }
