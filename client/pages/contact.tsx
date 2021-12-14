@@ -1,3 +1,4 @@
+import axios from "axios";
 import { NextPage } from 'next'
 import Layout from '@/components/Layout'
 import Header from '@/subComponents/Header'
@@ -8,6 +9,8 @@ import React, { useState } from 'react'
 import boxLogo from "@/images/star.png"
 import { gql } from "@apollo/client"
 import client from "./api/apollo-client"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Props {
     lastProject: any,
@@ -27,7 +30,98 @@ const contact: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Pr
 
     const [formData, setFormData] = useState(initialState);
 
-    const { name, email, subject, content } = formData
+    const { name, email, subject, content } = formData;
+
+    const validateEmail = (email: String) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+
+    const notify = (message: string, status: string) => {
+        switch (status) {
+            case "success":
+                toast.success(`${message}`, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark"
+                });
+                break;
+            case "danger":
+                toast.error(`${message}`, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark"
+                });
+                break;
+            case "warning":
+                toast.warn(`${message}`, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark"
+                });
+                break;
+            case "info":
+                toast.info(`${message}`, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark"
+                });
+                break;
+            default:
+                break;
+        }
+    }
+
+    const submitContact = async () => {
+        if (!validateEmail(email))
+            return notify("Please enter a valid email address!", "warning");
+        if (subject.length === 0 || content.length === 0 || name.length === 0)
+            return notify("Please fill all the fields of the form!", "warning");
+        axios({
+            url: `${process.env.NEXT_PUBLIC_API}graphql/`,
+            method: 'post',
+            data: {
+                query: `
+                mutation{
+                    createContact(email:"${email}", name:"${name}", description: "${content}", subject: "${subject}") {
+                          contact{
+                            name
+                        }
+                    }
+                  }
+                  `
+            }
+        }).then((res: any) => {
+            notify(`Thank You dear ${res.data.data.createContact.contact.name} for contacting me. I will get back to you in less than 24 hours.`, "success");
+            return setFormData(initialState);
+        }).catch((err: any) => {
+            notify("An Error has occured. Sorry for inconvenience", "danger")
+        });
+
+    }
 
     const onChange = (event: any) => {
         event.preventDefault();
@@ -36,6 +130,19 @@ const contact: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Pr
 
     return (
         <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
+            <div>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
+            </div>
             <div className='pad-default'>
                 <Header span='Showcasing some of my best work' header='Contact' />
             </div>
@@ -71,7 +178,7 @@ const contact: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Pr
                         <MediaIcon media='github' />
                     </div>
                 </div>
-                <form className='contact-form'>
+                <div className='contact-form'>
                     <h2>Free Consultaion</h2>
                     <div className="contact-form-info">
                         <input
@@ -112,13 +219,13 @@ const contact: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Pr
                         <span className="contact-form-submitFormButton-span">
                             <h4>Send Message</h4>
                         </span>
-                        <button id="contactSubmitButton" type="submit" className="contact-form-submitFormButton-button">
+                        <button id="contactSubmitButton" type="button" className="contact-form-submitFormButton-button" onClick={() => submitContact()}>
                             <span className="contact-form-submitFormButton-button-span">
                                 <FaPaperPlane />
                             </span>
                         </button>
                     </div>
-                </form>
+                </div>
             </div>
         </Layout>
     )
