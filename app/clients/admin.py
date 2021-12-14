@@ -11,5 +11,5 @@ class ContactAdmin(admin.ModelAdmin):
 
 @admin.register(Follower)
 class FollowerAdmin(admin.ModelAdmin):
-    list_display = ("id", "email", "created_at")
+    list_display = ("id", "email", "ip", "created_at")
     list_filter = ["created_at", ]

@@ -21,8 +21,8 @@ export async function middleware(req: NextRequest, ev: NextFetchEvent) {
             `
         })
 
-        const SLUG = data.allPosts.filter((e: any) => e.slug === slug);
-        const TAG = data.allTags.filter((e: any) => e.name === `${slug.substring(4)}`);
+        const SLUG = await data.allPosts.filter((e: any) => e.slug === slug);
+        const TAG = await data.allTags.filter((e: any) => e.name === `${slug.substring(4)}`);
 
         if (SLUG.length === 0 && TAG.length === 0) {
             return new Response(JSON.stringify("404 | PAGE NOT FOUND!"), {

@@ -15,6 +15,20 @@ class Contact(models.Model):
 class Follower(models.Model):
     email = models.EmailField(unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    ip = models.GenericIPAddressField(editable=False, null=True, blank=True)
 
     def __str__(self):
         return self.email
+
+    def save_model(self, request, follower, form, change):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        follower.ip_address = ip
+        if follower.parent != None:
+            follower.post = follower.parent.post
+        follower.save()
+
+    

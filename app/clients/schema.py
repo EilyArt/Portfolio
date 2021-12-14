@@ -5,12 +5,12 @@ from graphene.types.generic import GenericScalar
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 
+
 class FollowerType(DjangoObjectType):
     meta = GenericScalar()
 
     class Meta:
         model = Follower
-
 
 
 class FollowerMutation(graphene.Mutation):
@@ -23,9 +23,16 @@ class FollowerMutation(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info, email):
+        request = info.context
         try:
             validate_email(email)
             follower = Follower(email=email)
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[0]
+            else:
+                ip = request.META.get('REMOTE_ADDR')
+            follower.ip = ip
             follower.save()
         except ValidationError as e:
             return e
