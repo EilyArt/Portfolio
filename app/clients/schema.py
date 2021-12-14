@@ -2,7 +2,8 @@ import graphene
 from graphene_django.types import DjangoObjectType
 from .models import *
 from graphene.types.generic import GenericScalar
-
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 
 class FollowerType(DjangoObjectType):
     meta = GenericScalar()
@@ -22,8 +23,12 @@ class FollowerMutation(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info, email):
-        follower = Follower(email=email)
-        follower.save()
+        try:
+            validate_email(email)
+            follower = Follower(email=email)
+            follower.save()
+        except ValidationError as e:
+            return e
         # NOTE - Notice we return an instance of this mutation
         return FollowerMutation(follower=follower)
 

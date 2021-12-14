@@ -13,7 +13,7 @@ class Contact(models.Model):
         return self.name
 
 class Follower(models.Model):
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
