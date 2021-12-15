@@ -10,7 +10,7 @@ class Query(posts.schema.Query, projects.schema.Query, about.schema.Query, pages
     pass
 
 # Query for getting the data from the server.
-class Mutation(clients.schema.Mutation):
+class Mutation(clients.schema.Mutation, posts.schema.Mutation, graphene.ObjectType):
     pass
 
 

@@ -72,9 +72,9 @@ const Comment = ({ id, comment, replies }: Props) => {
                     </div>
                 </div>
             </div>
-            <div id={`reply${id}`} className="hidden">
+            <div id={`reply${id}`} className="hidden m-left-2">
                 <button className="comment-info-actions-comment" onClick={() => document.getElementById(`reply${id}`)?.classList.add("hidden")}><FaTimes />Cancel</button>
-                <ReplyComment />
+                <ReplyComment placeholder="Reply"/>
             </div>
             <div className="replies">
                 {replies.map((reply: any, index: number) => {

@@ -141,21 +141,20 @@ class Comment(TimeStampMixin):
 
     dislikes = models.PositiveIntegerField(default=0, blank=False, null=False)
 
-    parent = models.ForeignKey(
-        'self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
 
     deleted_on = models.DateTimeField(blank=True, null=True, editable=False)
 
     class Meta:
         ordering = ('-id',)
 
+    def __str__(self):
+        return self.username
+
     # ANCHOR - REMOVE DESCRIPTION OVERFLOW
     @property
     def short_comment(self):
         return truncatechars(self.comment, 35)
-
-    def __str__(self):
-        return self.short_comment
 
     # ANCHOR - REMOVE COMMENT OVERFLOW
     @property

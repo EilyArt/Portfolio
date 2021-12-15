@@ -84,7 +84,7 @@ const InputEmail = () => {
     const submitEmail = async () => {
         if (!validateEmail(email))
             return notify("Please enter a valid email address!", "warning");
-        axios({
+        await axios({
             url: `${process.env.NEXT_PUBLIC_API}graphql/`,
             method: 'post',
             data: {

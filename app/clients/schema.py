@@ -19,7 +19,7 @@ class FollowerType(DjangoObjectType):
     class Meta:
         model = Follower
 
-
+# ANCHOR - NEW CONTACT MUTATION
 class ContactMutation(graphene.Mutation):
     class Arguments:
         # NOTE - The input arguments for this mutation

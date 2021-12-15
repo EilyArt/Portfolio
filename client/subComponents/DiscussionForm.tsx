@@ -56,7 +56,7 @@ const DiscussionForm = ({ comments }: any) => {
                 {commentsLength >= 1 && viewIndex < commentsLength && <small className="discussion-actions-small" onClick={() => viewMoreComments()}>view more Comments<FaCaretDown /></small>}
                 {viewIndex > 2 && <small className="discussion-actions-small" onClick={() => collapseComments()}>collapse Comments<FaCaretUp /></small>}
             </div>
-            <ReplyComment />
+            <ReplyComment placeholder="Add a comment"/>
         </div>
     )
 }

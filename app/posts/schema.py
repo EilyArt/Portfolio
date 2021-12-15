@@ -158,4 +158,43 @@ class Query(graphene.ObjectType):
         except Post.DoesNotExist:
             return None
 
-schema = graphene.Schema(query=Query)
+
+# ANCHOR - NEW COMMENT MUTATION
+class CommentMutation(graphene.Mutation):
+    class Arguments:
+        # NOTE - The input arguments for this mutation
+        post = graphene.Int(required=True)
+        parent = graphene.Int(required=True)
+        comment = graphene.String(required=True)
+        username = graphene.String(required=True)
+
+    # NOTE - The class attributes define the response of the mutation
+    comment = graphene.Field(CommentType)
+
+    @classmethod
+    def mutate(cls, root, info, comment, post, parent, username):
+        request = info.context
+        try:
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[0]
+            else:
+                ip = request.META.get('REMOTE_ADDR')
+            comment.ip_address = ip
+            comment.comment = comment
+            comment.post = post
+            comment.username = username
+            if parent == 0:
+                comment.parent = None
+            else:
+                comment.parent = parent
+            comment.save()
+        except:
+            return 
+        # NOTE - Notice we return an instance of this mutation
+        return CommentMutation(comment=comment)
+
+class Mutation(graphene.ObjectType):
+    add_comment = CommentMutation.Field()
+
+schema = graphene.Schema(query=Query, mutation=Mutation)

@@ -95,12 +95,13 @@ const contact: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Pr
         }
     }
 
-    const submitContact = async () => {
+    const submitContact = async (event: any) => {
+        event.preventDefault();
         if (!validateEmail(email))
             return notify("Please enter a valid email address!", "warning");
         if (subject.length === 0 || content.length === 0 || name.length === 0)
             return notify("Please fill all the fields of the form!", "warning");
-        axios({
+        await axios({
             url: `${process.env.NEXT_PUBLIC_API}graphql/`,
             method: 'post',
             data: {
@@ -115,12 +116,12 @@ const contact: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Pr
                   `
             }
         }).then((res: any) => {
-            notify(`Thank You dear ${res.data.data.createContact.contact.name} for contacting me. I will get back to you in less than 24 hours.`, "success");
-            return setFormData(initialState);
+            return notify(`Thank You dear ${res.data.data.createContact.contact.name} for contacting me. I will get back to you in less than 24 hours.`, "success");
         }).catch((err: any) => {
-            notify("An Error has occured. Sorry for inconvenience", "danger")
+            return notify("An Error has occured. Sorry for inconvenience", "danger")
         });
-
+        
+        return setFormData(initialState);
     }
 
     const onChange = (event: any) => {
@@ -219,7 +220,7 @@ const contact: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Pr
                         <span className="contact-form-submitFormButton-span">
                             <h4>Send Message</h4>
                         </span>
-                        <button id="contactSubmitButton" type="button" className="contact-form-submitFormButton-button" onClick={() => submitContact()}>
+                        <button id="contactSubmitButton" type="button" className="contact-form-submitFormButton-button" onClick={(event) => submitContact(event)}>
                             <span className="contact-form-submitFormButton-button-span">
                                 <FaPaperPlane />
                             </span>
