@@ -77,13 +77,14 @@ const ReplyComment = ({ placeholder, PARENT, POST }: any) => {
             method: 'post',
             data: {
                 query: `
-              mutation {
-                  createFollower(email: "${comment}"){
-                    follower{
-                      email
+                mutation{
+                    addComment(post: ${POST}, parent: ${PARENT}, comment: ${comment}, username: "username"){
+                      comment{
+                        id
+                      }
                     }
                   }
-                }`
+                  `
             }
         }).then((res: any) => {
             if (!res.data.data.createFollower)
@@ -98,14 +99,14 @@ const ReplyComment = ({ placeholder, PARENT, POST }: any) => {
     }
 
     return (
-        <form className="reply">
+        <div className="reply">
             <textarea className="reply-box" placeholder={`${placeholder}`} />
-            <button id="sss" className="reply-postComment" type='button'>
+            <button id="sss" className="reply-postComment" type='button' onClick={() => submitEmail()}>
                 <span className="reply-postComment-button">
                     <FaPaperPlane />
                 </span>
             </button>
-        </form>
+        </div>
     )
 }
 

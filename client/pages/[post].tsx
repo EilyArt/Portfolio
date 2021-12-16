@@ -129,6 +129,10 @@ export async function getServerSideProps(context: any) {
         query: gql`
         {
             allComments(slug: "${context.resolvedUrl.substring(1)}") {
+              id
+              post{
+                id
+              }
               username
               comment
               createdAt

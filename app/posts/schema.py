@@ -170,10 +170,13 @@ class CommentMutation(graphene.Mutation):
 
     # NOTE - The class attributes define the response of the mutation
     comment = graphene.Field(CommentType)
+    post_object = graphene.Field(PostType)
 
     @classmethod
     def mutate(cls, root, info, comment, post, parent, username):
         request = info.context
+        post_object = Post.objects.get(id=post)
+        comment = Comment(comment=comment)
         try:
             x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
             if x_forwarded_for:
@@ -182,12 +185,16 @@ class CommentMutation(graphene.Mutation):
                 ip = request.META.get('REMOTE_ADDR')
             comment.ip_address = ip
             comment.comment = comment
-            comment.post = post
+            comment.post = post_object
             comment.username = username
             if parent == 0:
                 comment.parent = None
             else:
-                comment.parent = parent
+                comment_parent = Comment.objects.get(id=parent)
+                if comment_parent.post_id == post_object.id:
+                    comment.parent = comment_parent
+                else:
+                    comment.parent = None
             comment.save()
         except:
             return 
