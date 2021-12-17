@@ -51,7 +51,10 @@ class Query(graphene.ObjectType):
     post = graphene.Field(PostType, slug=graphene.String())
 
     def resolve_post(self, info, slug):
-        return Post.objects.get(slug=slug)
+        try:
+            return Post.objects.get(slug=slug)
+        except Post.DoesNotExist:
+            return None
 
 
     # ANCHOR -  GET POST BY SLUG
@@ -184,7 +187,6 @@ class CommentMutation(graphene.Mutation):
             else:
                 ip = request.META.get('REMOTE_ADDR')
             comment.ip_address = ip
-            comment.comment = comment
             comment.post = post_object
             comment.username = username
             if parent == 0:
@@ -201,7 +203,39 @@ class CommentMutation(graphene.Mutation):
         # NOTE - Notice we return an instance of this mutation
         return CommentMutation(comment=comment)
 
+
+# ANCHOR - NEW COMMENT MUTATION
+class LikeDislikeMutation(graphene.Mutation):
+    class Arguments:
+        # NOTE - The input arguments for this mutation
+        like = graphene.Boolean(required=True)
+        comment_id = graphene.Int(required=True)
+
+    # NOTE - The class attributes define the response of the mutation
+    comment = graphene.Field(CommentType)
+
+    @classmethod
+    def mutate(cls, root, info, comment_id, like):
+        request = info.context
+        try:
+            comment = Comment.objects.get(id=comment_id)
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[0]
+            else:
+                ip = request.META.get('REMOTE_ADDR')
+            if like:
+                comment.likes = comment.likes + 1
+            else:
+                comment.dislikes = comment.dislikes + 1
+            comment.save()
+        except:
+            return 
+        # NOTE - Notice we return an instance of this mutation
+        return LikeDislikeMutation(comment=comment)
+
 class Mutation(graphene.ObjectType):
     add_comment = CommentMutation.Field()
+    comment_emotion = LikeDislikeMutation.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

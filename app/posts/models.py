@@ -131,7 +131,7 @@ class Comment(TimeStampMixin):
 
     username = models.CharField(max_length=128)
 
-    comment = models.CharField(max_length=1024, blank=True, null=True)
+    comment = models.TextField(max_length=1024)
 
     ip_address = models.GenericIPAddressField(editable=False)
 

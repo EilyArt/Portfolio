@@ -22,8 +22,8 @@ interface Props {
     threeRelatedPosts: Array<object>,
 }
 
-const post = ({post, comments, prevPost, nextPost, lastThreePosts, lastProject, postMetas, threeRelatedPosts }: Props) => {
-    
+const post = ({ post, comments, prevPost, nextPost, lastThreePosts, lastProject, postMetas, threeRelatedPosts }: Props) => {
+
     return (
         <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} postMetas={postMetas} title={post.title}>
             <div className="post pad-default">
@@ -114,7 +114,7 @@ const post = ({post, comments, prevPost, nextPost, lastThreePosts, lastProject, 
                     <Posts posts={threeRelatedPosts} />
                 </div>
                 <div className="post-discussion">
-                    <DiscussionForm comments={comments} />
+                    <DiscussionForm post={post} comments={comments} />
                 </div>
             </div>
         </Layout>
@@ -147,6 +147,7 @@ export async function getServerSideProps(context: any) {
               }
             }
             post(slug: "${context.resolvedUrl.substring(1)}") {
+              id
               title
               slug
               thumbnail

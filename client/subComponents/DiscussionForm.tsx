@@ -5,7 +5,7 @@ import ReplyComment from "./ReplyComment";
 import Title from "./Title";
 
 
-const DiscussionForm = ({ comments }: any) => {
+const DiscussionForm = ({ comments, post }: any) => {
 
     const initialState = {
         commentsLength: comments.length - 1,
@@ -49,14 +49,14 @@ const DiscussionForm = ({ comments }: any) => {
                     return;
                 (index: number) => updateViewIndex(index);
                 return (
-                    <Comment id={index} comment={comment} replies={comment.replies} />
+                    <Comment id={comment.id} comment={comment} replies={comment.replies} />
                 )
             })}
             <div className="discussion-actions">
                 {commentsLength >= 1 && viewIndex < commentsLength && <small className="discussion-actions-small" onClick={() => viewMoreComments()}>view more Comments<FaCaretDown /></small>}
                 {viewIndex > 2 && <small className="discussion-actions-small" onClick={() => collapseComments()}>collapse Comments<FaCaretUp /></small>}
             </div>
-            <ReplyComment placeholder="Add a comment"/>
+            <ReplyComment PARENT={0}  POST={post.id} placeholder="Add a comment"/>
         </div>
     )
 }
