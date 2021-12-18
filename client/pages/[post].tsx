@@ -82,32 +82,28 @@ const post = ({ post, comments, prevPost, nextPost, lastThreePosts, lastProject,
                     </div>
                 </div>
                 <div className="post-prevNext">
-                    <Link href={`/${prevPost.slug}`}>
-                        <a className="post-prevNext-container previusPost">
-                            <div className="post-prevNext-container-wrapper">
-                                <Image objectFit="cover" layout="fill" src={img} />
-                            </div>
-                            <div className="post-prevNext-container-info">
-                                <span><FaAngleLeft /> Previus Post</span>
-                                <h2 className="posts-post-content-title">
-                                    {prevPost.title}
-                                </h2>
-                            </div>
-                        </a>
-                    </Link>
-                    <Link href={`/${nextPost.slug}`}>
-                        <a className="post-prevNext-container nextPost">
-                            <div className="post-prevNext-container-wrapper">
-                                <Image objectFit="cover" layout="fill" src={img} />
-                            </div>
-                            <div className="post-prevNext-container-info">
-                                <span id="nextPost">Next Post <FaAngleRight /></span>
-                                <h2 className="posts-post-content-title">
-                                    {nextPost.title}
-                                </h2>
-                            </div>
-                        </a>
-                    </Link>
+                    <a href={`/${prevPost.slug}`} className="post-prevNext-container previusPost">
+                        <div className="post-prevNext-container-wrapper">
+                            <Image objectFit="cover" layout="fill" src={img} />
+                        </div>
+                        <div className="post-prevNext-container-info">
+                            <span><FaAngleLeft /> Previus Post</span>
+                            <h2 className="posts-post-content-title">
+                                {prevPost.title}
+                            </h2>
+                        </div>
+                    </a>
+                    <a href={`/${nextPost.slug}`} className="post-prevNext-container nextPost">
+                        <div className="post-prevNext-container-wrapper">
+                            <Image objectFit="cover" layout="fill" src={img} />
+                        </div>
+                        <div className="post-prevNext-container-info">
+                            <span id="nextPost">Next Post <FaAngleRight /></span>
+                            <h2 className="posts-post-content-title">
+                                {nextPost.title}
+                            </h2>
+                        </div>
+                    </a>
                 </div>
                 <div className="pad-default">
                     <Title title="You may also like" />
@@ -196,19 +192,25 @@ export async function getServerSideProps(context: any) {
         }
       `
     })
-
-    return {
-        props: {
-            post: data.post,
-            postMetas: data.postMetas,
-            comments: data.allComments,
-            prevPost: data.prevNextPosts[0],
-            nextPost: data.prevNextPosts[1],
-            lastThreePosts: data.lastNPosts,
-            lastProject: data.lastProject,
-            threeRelatedPosts: data.threeRelatedPosts
+    if (!data.post) {
+        return {
+            redirect: {
+                destination: '/'
+            }
         }
-    }
+    } else
+        return {
+            props: {
+                post: data.post,
+                postMetas: data.postMetas,
+                comments: data.allComments,
+                prevPost: data.prevNextPosts[0],
+                nextPost: data.prevNextPosts[1],
+                lastThreePosts: data.lastNPosts,
+                lastProject: data.lastProject,
+                threeRelatedPosts: data.threeRelatedPosts
+            }
+        }
 }
 
 export default post

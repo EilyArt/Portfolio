@@ -98,7 +98,7 @@ class Query(graphene.ObjectType):
         try:
             tagObject = Tag.objects.get(name=tag)
             return Post.objects.all().filter(tags__in=[tagObject.id])
-        except Post.DoesNotExist:
+        except Tag.DoesNotExist:
             return None
 
 
@@ -136,6 +136,16 @@ class Query(graphene.ObjectType):
             return None
 
     # SECTION - TAG
+
+
+    # ANCHOR -  GET TAG
+    tag = graphene.Field(TagType, name=graphene.String())
+
+    def resolve_tag(self, info, name):
+        try:
+            return Tag.objects.get(name=name)
+        except Tag.DoesNotExist:
+            return None
 
 
     # ANCHOR -  GET ALL TAGS

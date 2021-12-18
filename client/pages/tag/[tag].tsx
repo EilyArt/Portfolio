@@ -32,6 +32,9 @@ export async function getServerSideProps(context: any) {
     const { data } = await client.query({
         query: gql`
       {
+        tag(name: "${context.resolvedUrl.substring(5)}") {
+            id
+        }
         allTaggedPosts(tag: "${context.resolvedUrl.substring(5)}") {
             title
             slug
@@ -60,7 +63,13 @@ export async function getServerSideProps(context: any) {
       }
       `
     })
-
+    if (!data.tag) {
+        return {
+            redirect: {
+                destination: '/'
+            }
+        }
+    } else
     return {
         props: {
             tag: context.resolvedUrl.substring(5),

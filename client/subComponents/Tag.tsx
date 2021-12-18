@@ -5,13 +5,11 @@ interface Props {
     name: string
 }
 
-const Tag = ({size, name}: Props) => {
+const Tag = ({ size, name }: Props) => {
     return (
-        <Link href={`/tag/${name}`}>
-            <a className={`${size}`}>
-             #{name} 
-            </a>
-        </Link>
+        <a href={`/tag/${name}`} className={`${size}`}>
+            #{name}
+        </a>
     )
 }
 
