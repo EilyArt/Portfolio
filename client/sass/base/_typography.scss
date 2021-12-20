@@ -307,3 +307,10 @@ a {
     padding: .3rem 1rem;
     width: fit-content;
 }
+
+.color-accent {
+    color: var(--color-accent);
+    &>* {
+        color: var(--color-accent) !important;
+    }
+}

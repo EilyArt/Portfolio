@@ -135,6 +135,7 @@ export async function getServerSideProps(context: any) {
               likes
               dislikes
               replies {
+                id
                 comment
                 createdAt
                 username

@@ -21,6 +21,33 @@
       font-style: italic;
       font-size: 14px;
     }
+
+  }
+  &-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &>* {
+      margin: 0.6rem 0;
+      width: 49%;
+      background: var(--color-surface-2);
+      padding: 1rem;
+      border: none;
+      border-radius: var(--radius-32);
+      max-width: 100%;
+      font-family: var(--font-family);
+      color: white;
+      text-indent: 0.6rem;
+      font-size: 15px;
+
+      &::placeholder {
+        text-transform: uppercase;
+        font-weight: 600;
+        font-style: italic;
+        text-indent: 0.6rem;
+      }
+    }
   }
 
   &-postComment {

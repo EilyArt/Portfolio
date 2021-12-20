@@ -1,5 +1,5 @@
 import { FaUserAlt, FaThumbsUp, FaThumbsDown, FaCaretDown, FaCaretUp, FaReply, FaTimes } from "react-icons/fa"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ReplyComment from "./ReplyComment";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,6 +13,17 @@ type Props = {
 };
 
 const Comment = ({ id, comment, replies }: Props) => {
+
+    const [ip, setIP] = useState('');
+
+    const getData = async () => {
+        const res = await axios.get('https://geolocation-db.com/json/')
+        setIP(res.data.IPv4)
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
 
     const initialState = {
         repliesLength: replies.length - 1,
@@ -104,15 +115,14 @@ const Comment = ({ id, comment, replies }: Props) => {
         }
     }
 
-    const reaction = async (like: boolean) => {
-
+    const reaction = async (like: boolean, ID: number) => {
         await axios({
             url: `${process.env.NEXT_PUBLIC_API}graphql/`,
             method: 'POST',
             data: {
                 query: `
                 mutation{
-                    commentEmotion(commentId: ${id}, like: ${like}) {
+                    commentEmotion(commentId: ${ID}, like: ${like}) {
                       comment{
                         likes
                         dislikes
@@ -123,7 +133,7 @@ const Comment = ({ id, comment, replies }: Props) => {
         }).then((res: any) => {
             if (like)
                 return notify(`You Liked ${comment.username}'s comment.`, "success");
-            else 
+            else
                 return notify(`You Disliked ${comment.username}'s comment.`, "danger");
         }).catch((err: any) => {
             notify("An Error has occured. Sorry for inconvenience", "danger")
@@ -140,13 +150,13 @@ const Comment = ({ id, comment, replies }: Props) => {
                     <div className="comment-info-actions">
                         <div>
                             <div className="comment-info-actions-emotion">
-                                <div>
-                                    <button onClick={() => reaction(true)}><FaThumbsUp /></button>
-                                    <small>{comment.likes}</small>
+                                <div className={`${comment.likes.includes(ip) && "color-accent"}`}>
+                                    <button onClick={() => reaction(true, id)}><FaThumbsUp /></button>
+                                    <small>{comment.likes.length}</small>
                                 </div>
-                                <div>
-                                    <button onClick={() => reaction(false)}><FaThumbsDown /></button>
-                                    <small>{comment.dislikes}</small>
+                                <div className={`${comment.dislikes.includes(ip) && "color-accent"}`}>
+                                    <button onClick={() => reaction(false, id)}><FaThumbsDown /></button>
+                                    <small>{comment.dislikes.length}</small>
                                 </div>
                             </div>
                             <div className="comment-info-actions-emotion-proportion">
@@ -162,7 +172,7 @@ const Comment = ({ id, comment, replies }: Props) => {
                 <ReplyComment PARENT={comment.id} POST={comment.post.id} placeholder="Reply" />
             </div>
             <div className="replies">
-                {replies.map((reply: any, index: number) => {
+                {replies.map((reply: any, index: number) => {                    
                     if (index > viewIndex)
                         return;
                     (index: number) => updateViewIndex(index);
@@ -176,13 +186,13 @@ const Comment = ({ id, comment, replies }: Props) => {
                                 <div className="comment-info-actions">
                                     <div>
                                         <div className="comment-info-actions-emotion">
-                                            <div>
-                                                <button><FaThumbsUp /></button>
-                                                <small>{reply.likes}</small>
+                                            <div className={`${reply.likes.includes(ip) && "color-accent"}`}>
+                                                <button onClick={() => reaction(true, reply.id)}><FaThumbsUp /></button>
+                                                <small>{reply.likes.length}</small>
                                             </div>
-                                            <div>
-                                                <button><FaThumbsDown /></button>
-                                                <small>{reply.dislikes}</small>
+                                            <div className={`${reply.dislikes.includes(ip) && "color-accent"}`}>
+                                                <button onClick={() => reaction(false, reply.id)}><FaThumbsDown /></button>
+                                                <small>{reply.dislikes.length}</small>
                                             </div>
                                         </div>
                                         <div className="comment-info-actions-emotion-proportion">

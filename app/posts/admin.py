@@ -41,8 +41,8 @@ class CommentAdmin(admin.ModelAdmin):
 # ANCHOR -  COMMENT
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ("id", "parent_id", "is_approved", "likes", "dislikes", "username", "ip_address",
-                    "short_comment", "post", "created_at", "updated_at")
+    list_display = ("id", "parent_id", "is_approved", "like", "dislike", "username", "ip_address",
+                    "short_comment", "email", "post", "created_at", "updated_at")
     list_filter = ['post', 'is_approved', "ip_address", "created_at"]
     ordering = ('-id', )
     # REVIEW -  GET IP ADDRESS *MAYBE NOT REQUIRED FOR ADMIN PANEL*

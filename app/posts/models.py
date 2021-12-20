@@ -6,6 +6,7 @@ from django.utils.html import mark_safe
 from django.template.defaultfilters import truncatechars
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.postgres.fields import ArrayField
 
 # SECTION - MIXINS
 
@@ -120,7 +121,6 @@ class PostMeta(models.Model):
     def __str__(self):
         return self.name
 
-
 # ANCHOR - COMMENT
 class Comment(TimeStampMixin):
 
@@ -131,15 +131,17 @@ class Comment(TimeStampMixin):
 
     username = models.CharField(max_length=128)
 
+    email = models.EmailField()
+
     comment = models.TextField(max_length=1024)
 
     ip_address = models.GenericIPAddressField(editable=False)
 
     is_approved = models.BooleanField(default=False)
 
-    likes = models.PositiveIntegerField(default=0, blank=False, null=False)
+    likes = ArrayField(models.GenericIPAddressField(null=True, unique=True), default=list, blank=True)
 
-    dislikes = models.PositiveIntegerField(default=0, blank=False, null=False)
+    dislikes = ArrayField(models.GenericIPAddressField(null=True, unique=True), default=list, blank=True)
 
     parent = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
 
@@ -167,3 +169,9 @@ class Comment(TimeStampMixin):
         comment.deleted_on = datetime.datetime.now()
         comment.deleted = True
         comment.save(update_fields=["deleted_on"])
+
+    def like(self):
+        return len(self.likes)
+
+    def dislike(self):
+        return len(self.dislikes)

@@ -180,13 +180,14 @@ class CommentMutation(graphene.Mutation):
         parent = graphene.Int(required=True)
         comment = graphene.String(required=True)
         username = graphene.String(required=True)
+        email = graphene.String(required=True)
 
     # NOTE - The class attributes define the response of the mutation
     comment = graphene.Field(CommentType)
     post_object = graphene.Field(PostType)
 
     @classmethod
-    def mutate(cls, root, info, comment, post, parent, username):
+    def mutate(cls, root, info, comment, post, parent, username, email):
         request = info.context
         post_object = Post.objects.get(id=post)
         comment = Comment(comment=comment)
@@ -199,6 +200,7 @@ class CommentMutation(graphene.Mutation):
             comment.ip_address = ip
             comment.post = post_object
             comment.username = username
+            comment.email = email
             if parent == 0:
                 comment.parent = None
             else:
@@ -234,10 +236,17 @@ class LikeDislikeMutation(graphene.Mutation):
                 ip = x_forwarded_for.split(',')[0]
             else:
                 ip = request.META.get('REMOTE_ADDR')
-            if like:
-                comment.likes = comment.likes + 1
-            else:
-                comment.dislikes = comment.dislikes + 1
+
+            if like and ip not in comment.likes:
+                if ip in comment.dislikes:
+                    comment.dislikes.remove(ip)
+                comment.likes.append(ip)
+
+            if not like and ip not in comment.dislikes:
+                if ip in comment.likes:
+                    comment.likes.remove(ip)
+                comment.dislikes.append(ip)
+
             comment.save()
         except:
             return 
