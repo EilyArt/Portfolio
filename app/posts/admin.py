@@ -8,8 +8,8 @@ from .models import *
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ("title", "Thumbnail", "published", "id", "author",
-                    "slug", "short_description", "created_at", "updated_at")
+    list_display = ("slug", "title", "Thumbnail", "published", "id", "author",
+                    "short_description", "created_at", "updated_at")
     list_filter = ["published", "created_at",
                    "updated_at", "tags"]
     list_select_related = ('author', )
@@ -41,9 +41,10 @@ class CommentAdmin(admin.ModelAdmin):
 # ANCHOR -  COMMENT
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ("id", "parent_id", "is_approved", "like", "dislike", "username", "ip_address",
-                    "short_comment", "email", "post", "created_at", "updated_at")
-    list_filter = ['post', 'is_approved', "ip_address", "created_at"]
+    list_display = ("username", "ip_address", "email", "is_approved", "id", "parent_id", "post_id", "like", "dislike", 
+                    "short_comment", "created_at", "deleted_on")
+    readonly_fields = ('ip_address', )
+    list_filter = ['is_approved', "ip_address", "created_at", "post"]
     ordering = ('-id', )
     # REVIEW -  GET IP ADDRESS *MAYBE NOT REQUIRED FOR ADMIN PANEL*
     def save_model(self, request, comment, form, change):
@@ -55,4 +56,6 @@ class CommentAdmin(admin.ModelAdmin):
         comment.ip_address = ip
         if comment.parent != None:
             comment.post = comment.parent.post
+        if comment.deleted_on != None:
+            comment.is_approved = False
         comment.save()

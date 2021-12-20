@@ -36,7 +36,8 @@ class CommentQuerySet(models.QuerySet):
     def delete(self, *args, **kwargs):
         for comment in self:
             comment.deleted_on = datetime.datetime.now()
-            comment.save(update_fields=["deleted_on"])
+            comment.is_approved = False
+            comment.save(update_fields=["deleted_on", "is_approved"])
         super(CommentQuerySet, self).update()
 
 
@@ -151,7 +152,7 @@ class Comment(TimeStampMixin):
         ordering = ('-id',)
 
     def __str__(self):
-        return self.username
+        return self.short_comment
 
     # ANCHOR - REMOVE DESCRIPTION OVERFLOW
     @property
