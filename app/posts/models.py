@@ -163,12 +163,12 @@ class Comment(TimeStampMixin):
     def short_comment(self):
         return truncatechars(self.comment, 35)
 
-    # ANCHOR - SOFT DELETE COMMENT ON DELETE
-    def delete(self, *args, **kwargs):
-        comment = Comment.objects.get(id=self.id)
-        comment.deleted_on = datetime.datetime.now()
-        comment.deleted = True
-        comment.save(update_fields=["deleted_on"])
+    # # ANCHOR - SOFT DELETE COMMENT ON DELETE
+    # def delete(self, *args, **kwargs):
+    #     comment = Comment.objects.get(id=self.id)
+    #     comment.deleted_on = datetime.datetime.now()
+    #     comment.deleted = True
+    #     comment.save(update_fields=["deleted_on"])
 
     def like(self):
         return len(self.likes)
