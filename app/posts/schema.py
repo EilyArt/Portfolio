@@ -253,8 +253,37 @@ class LikeDislikeMutation(graphene.Mutation):
         # NOTE - Notice we return an instance of this mutation
         return LikeDislikeMutation(comment=comment)
 
+# ANCHOR - NEW COMMENT MUTATION
+class PostViewMutation(graphene.Mutation):
+    class Arguments:
+        # NOTE - The input arguments for this mutation
+        post_id = graphene.Int(required=True)
+
+    # NOTE - The class attributes define the response of the mutation
+    post = graphene.Field(PostType)
+
+    @classmethod
+    def mutate(cls, root, info, post_id):
+        request = info.context
+        try:
+            post = Post.objects.get(id=post_id)
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[0]
+            else:
+                ip = request.META.get('REMOTE_ADDR')
+
+            if ip not in post.view:
+                post.view.append(ip)
+            post.save()
+        except:
+            return 
+        # NOTE - Notice we return an instance of this mutation
+        return PostViewMutation(post=post)
+
 class Mutation(graphene.ObjectType):
     add_comment = CommentMutation.Field()
     comment_emotion = LikeDislikeMutation.Field()
+    add_view = PostViewMutation.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

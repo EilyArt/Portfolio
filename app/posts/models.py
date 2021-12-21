@@ -78,6 +78,8 @@ class Post(TimeStampMixin):
 
     thumbnail_alt = models.CharField(max_length=50, blank=False, null=False)
 
+    view = ArrayField(models.GenericIPAddressField(null=True, unique=True), default=list, blank=True)
+
     tags = models.ManyToManyField(Tag)
 
     def __str__(self):
@@ -98,6 +100,9 @@ class Post(TimeStampMixin):
     # FIXME - GET ALL TAGS OF A POST
     def get_tags(self):
         return "\n".join([p.tags.id for p in self.tags.all()])
+    
+    def views(self):
+        return len(self.view)
 
     # FIXME - REPLACE OLD IMAGE
     def save(self, *args, **kwargs):

@@ -8,13 +8,13 @@ from .models import *
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ("slug", "title", "Thumbnail", "published", "id", "author",
+    list_display = ("slug", "views", "title", "Thumbnail", "published", "id", "author",
                     "short_description", "created_at", "updated_at")
     list_filter = ["published", "created_at",
                    "updated_at", "tags"]
     list_select_related = ('author', )
     search_fields = ['title', "slug", "title"]
-    readonly_fields = ('Thumbnail', )
+    readonly_fields = ('Thumbnail', "views")
     ordering = ('-id', )
 
     def get_actions(self, request):

@@ -1,3 +1,5 @@
+import { useEffect } from "react"
+import axios from "axios";
 import Layout from "@/components/Layout"
 import Posts from "@/subComponents/Posts"
 import Title from "@/subComponents/Title"
@@ -23,6 +25,24 @@ interface Props {
 }
 
 const post = ({ post, comments, prevPost, nextPost, lastThreePosts, lastProject, postMetas, threeRelatedPosts }: Props) => {
+
+    useEffect(() => {
+        axios({
+            url: `${process.env.NEXT_PUBLIC_API}graphql/`,
+            method: 'post',
+            data: {
+                query: `
+                mutation {
+                    addView(postId: ${post.id}){
+                      post{
+                        id
+                      }
+                    }
+                  }                  
+                  `
+            }
+        })
+    })
 
     return (
         <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} postMetas={postMetas} title={post.title}>
