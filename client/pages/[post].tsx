@@ -76,9 +76,13 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                                     <div className="post-content-thumbnail-bottom-writer-pic-wrapper">
                                         <Image
                                             objectFit="cover"
-                                            layout="intrinsic"
-                                            alt="eilya amin"
-                                            src={img} />
+                                            height={80}
+                                            width={80}
+                                            loader={() => `${process.env.NEXT_PUBLIC_API}media/${cv.photo}`}
+                                            src={`${process.env.NEXT_PUBLIC_API}media/${cv.photo}`}
+                                            alt={cv.alt}
+                                            id={cv.id}
+                                        />
                                     </div>
                                 </div>
                                 <h6 className="post-content-thumbnail-bottom-writer-name">Eilya Amin in</h6>
@@ -105,7 +109,11 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                 <div className="post-prevNext">
                     <a href={`/${prevPost.slug}`} className="post-prevNext-container previusPost">
                         <div className="post-prevNext-container-wrapper">
-                            <Image objectFit="cover" layout="fill" src={img} />
+                            <Image objectFit="cover" layout="fill"
+                                loader={() => `${process.env.NEXT_PUBLIC_API}media/${prevPost.thumbnail}`}
+                                src={`${process.env.NEXT_PUBLIC_API}media/${prevPost.thumbnail}`}
+                                alt={prevPost.thumbnailAlt}
+                            />
                         </div>
                         <div className="post-prevNext-container-info">
                             <span><FaAngleLeft /> Previus Post</span>
@@ -116,7 +124,11 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                     </a>
                     <a href={`/${nextPost.slug}`} className="post-prevNext-container nextPost">
                         <div className="post-prevNext-container-wrapper">
-                            <Image objectFit="cover" layout="fill" src={img} />
+                            <Image objectFit="cover" layout="fill"
+                                loader={() => `${process.env.NEXT_PUBLIC_API}media/${nextPost.thumbnail}`}
+                                src={`${process.env.NEXT_PUBLIC_API}media/${nextPost.thumbnail}`}
+                                alt={nextPost.thumbnailAlt}
+                            />
                         </div>
                         <div className="post-prevNext-container-info">
                             <span id="nextPost">Next Post <FaAngleRight /></span>
@@ -128,7 +140,7 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                 </div>
                 <div className="pad-default">
                     <Title title="You may also like" />
-                    <Posts posts={threeRelatedPosts} myImage={cv}/>
+                    <Posts posts={threeRelatedPosts} myImage={cv} />
                 </div>
                 <div className="post-discussion">
                     <DiscussionForm post={post} comments={comments} />
@@ -186,6 +198,7 @@ export async function getServerSideProps(context: any) {
                 title
                 slug
                 thumbnail
+                thumbnailAlt
             }
             threeRelatedPosts(slug: "${context.resolvedUrl.substring(1)}") {
                 title
