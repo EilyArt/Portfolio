@@ -86,3 +86,18 @@ class Skill(models.Model):
 
     def __str__(self):
         return self.title
+
+# ANCHOR - CV
+class Cv(models.Model):
+    alt = models.CharField(max_length=54)
+    photo = models.ImageField(upload_to="static/images/", default=None)
+    CV = models.FileField(upload_to="static/cv/", default=None)
+
+    def __str__(self):
+        return self.alt
+
+    def Photo(self):
+        if self.photo:
+            return mark_safe('<img src="{}" height="35" width="45" />'.format(self.photo.url))
+        else:
+            return ''

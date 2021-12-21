@@ -40,6 +40,11 @@ class SkillType(DjangoObjectType):
         model = Skill
 
 
+class CvType(DjangoObjectType):
+    class Meta:
+        model = Cv
+
+
 class Query(graphene.ObjectType):
     hobbies = graphene.List(HobbyType)
 
@@ -82,5 +87,11 @@ class Query(graphene.ObjectType):
     # ANCHOR -  GET ALL SKILLS
     def resolve_skills(self, info, **kwargs):
         return Skill.objects.all()
+
+    cv = graphene.Field(CvType)
+
+    # ANCHOR -  GET ALL SKILLS
+    def resolve_cv(self, info, **kwargs):
+        return Cv.objects.all().last()
 
 schema = graphene.Schema(query=Query)

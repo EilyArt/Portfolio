@@ -62,6 +62,9 @@
     }
 
         &-img {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background: var(--color-gradient-gray);
             border-radius: var(--radius-32);
             margin: 1.25rem 1.875rem 1.25rem;

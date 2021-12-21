@@ -9,6 +9,7 @@ import client from "./api/apollo-client"
 
 interface Props {
     educations: Array<object>,
+    cv: Array<object>,
     experiences: Array<object>,
     languages: Array<object>,
     certificates: Array<object>,
@@ -18,10 +19,10 @@ interface Props {
     lastThreePosts: Array<object>,
 }
 
-const resume: NextPage<Props> = ({ educations, experiences, languages, certificates, skillCategories, lastProject, pageMetas, lastThreePosts }: Props) => {
+const resume: NextPage<Props> = ({ educations, cv, experiences, languages, certificates, skillCategories, lastProject, pageMetas, lastThreePosts }: Props) => {
 
     return (
-        <About lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
+        <About cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
             <Title title="Resume" />
             <div className="m-top-2 pad-vertical-2">
                 <AboutSection src={pin} title="EDUCATION"
@@ -100,6 +101,12 @@ export async function getServerSideProps(context: any) {
             endDate
             description
         }
+        cv{
+            photo
+            CV
+            id
+            alt
+        }
         experiences{
             job
             company
@@ -152,6 +159,7 @@ export async function getServerSideProps(context: any) {
     return {
         props: {
             educations: data.educations,
+            cv: data.cv,
             experiences: data.experiences,
             languages: data.languages,
             certificates: data.certificates,

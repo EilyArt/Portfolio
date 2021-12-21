@@ -10,15 +10,15 @@ import client from "./api/apollo-client"
 
 interface Props {
     hobbies: Array<object>,
+    cv: Array<object>,
     lastProject: any,
     pageMetas: Array<object>,
     lastThreePosts: Array<object>,
 }
 
-const about: NextPage<Props> = ({ hobbies, lastProject, pageMetas, lastThreePosts }: Props) => {
-
+const about: NextPage<Props> = ({ hobbies, cv, lastProject, pageMetas, lastThreePosts }: Props) => {
     return (
-        <About lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
+        <About cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
             <Title title="about me" />
             <p>
                 I'm Creative Director and UI/UX Designer from Sydney, Australia,
@@ -58,6 +58,12 @@ export async function getServerSideProps(context: any) {
         hobbies {
             name
         }
+        cv{
+            photo
+            CV
+            id
+            alt
+        }
         lastProject {
             name
             images{
@@ -86,6 +92,7 @@ export async function getServerSideProps(context: any) {
     return {
         props: {
             hobbies: data.hobbies,
+            cv: data.cv,
             lastProject: data.lastProject,
             pageMetas: data.pageMetas,
             lastThreePosts: data.lastNPosts

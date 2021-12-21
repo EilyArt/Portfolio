@@ -48,3 +48,9 @@ class SkillAdmin(admin.ModelAdmin):
     list_display = ("id", "title", "percentage", "SkillLogo", "category")
     list_filter = ['category', ]
     readonly_fields = ('SkillLogo',)
+
+
+# ANCHOR -  CV
+@admin.register(Cv)
+class CvAdmin(admin.ModelAdmin):
+    list_display = ("id","Photo", "CV", "alt")
