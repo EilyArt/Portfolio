@@ -7,13 +7,14 @@ import client from "../api/apollo-client"
 
 interface Props {
     tag: any,
+    cv: any,
     posts: Array<object>,
     lastProject: any,
     title: string,
     lastThreePosts: Array<object>,
 }
 
-const tag: NextPage<Props> = ({ tag, posts, lastProject, title, lastThreePosts }: Props) => {
+const tag: NextPage<Props> = ({ tag, cv, posts, lastProject, title, lastThreePosts }: Props) => {
 
     return (
         <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} title={`#${title}`}>
@@ -21,7 +22,7 @@ const tag: NextPage<Props> = ({ tag, posts, lastProject, title, lastThreePosts }
                 <Header span="you can view posts related to " header={`#${tag}`} />
             </div>
             <div className="blog-posts pad-default-horizontal">
-                <Posts posts={posts} />
+                <Posts posts={posts} myImage={cv}/>
             </div>
         </Layout>
     )
@@ -34,6 +35,11 @@ export async function getServerSideProps(context: any) {
       {
         tag(name: "${context.resolvedUrl.substring(5)}") {
             id
+        }
+        cv{
+            photo
+            id
+            alt
         }
         allTaggedPosts(tag: "${context.resolvedUrl.substring(5)}") {
             title
@@ -73,6 +79,7 @@ export async function getServerSideProps(context: any) {
     return {
         props: {
             tag: context.resolvedUrl.substring(5),
+            cv: data.cv,
             posts: data.allTaggedPosts,
             lastProject: data.lastProject,
             title: context.resolvedUrl.substring(5),

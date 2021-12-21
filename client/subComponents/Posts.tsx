@@ -9,10 +9,12 @@ import { useState } from "react";
 
 interface Props {
     star: boolean,
-    posts: Array<object>
+    posts: Array<object>,
+    myImage: any
 }
 
-const Posts = ({ star, posts }: Props) => {
+const Posts = ({ star, posts, myImage }: Props) => {
+console.log();
 
     const initialState = {
         postsLength: posts.length - 1,
@@ -40,7 +42,8 @@ const Posts = ({ star, posts }: Props) => {
                             <div>
                                 <Image objectFit="cover" layout="fill"
                                     loader={() => `${process.env.NEXT_PUBLIC_API}media/${post.thumbnail}`}
-                                    src={`${process.env.NEXT_PUBLIC_API}media/${post.thumbnail}`} />
+                                    src={`${process.env.NEXT_PUBLIC_API}media/${post.thumbnail}`}
+                                />
                                 <div className="posts-post-content">
                                     <div className="posts-post-content-meta">
                                         <span className="posts-post-content-meta-minutes">
@@ -58,8 +61,13 @@ const Posts = ({ star, posts }: Props) => {
                                                 <div className="posts-post-content-bottom-writer-pic-wrapper">
                                                     <Image
                                                         objectFit="cover"
-                                                        layout="intrinsic"
-                                                        src={img2} />
+                                                        height={80}
+                                                        width={80}
+                                                        loader={() => `${process.env.NEXT_PUBLIC_API}media/${myImage.photo}`}
+                                                        src={`${process.env.NEXT_PUBLIC_API}media/${myImage.photo}`}
+                                                        alt={myImage.alt}
+                                                        id={myImage.id}
+                                                    />
                                                 </div>
                                             </div>
                                             <h6 className="posts-post-content-bottom-writer-name">Eilya Amin in</h6>

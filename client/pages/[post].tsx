@@ -15,6 +15,7 @@ import client from "./api/apollo-client"
 
 interface Props {
     post: any,
+    cv: any,
     comments: any,
     prevPost: any,
     nextPost: any,
@@ -24,7 +25,7 @@ interface Props {
     threeRelatedPosts: Array<object>,
 }
 
-const post = ({ post, comments, prevPost, nextPost, lastThreePosts, lastProject, postMetas, threeRelatedPosts }: Props) => {
+const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProject, postMetas, threeRelatedPosts }: Props) => {
 
     useEffect(() => {
         axios({
@@ -127,7 +128,7 @@ const post = ({ post, comments, prevPost, nextPost, lastThreePosts, lastProject,
                 </div>
                 <div className="pad-default">
                     <Title title="You may also like" />
-                    <Posts posts={threeRelatedPosts} />
+                    <Posts posts={threeRelatedPosts} myImage={cv}/>
                 </div>
                 <div className="post-discussion">
                     <DiscussionForm post={post} comments={comments} />
@@ -162,6 +163,11 @@ export async function getServerSideProps(context: any) {
                 likes
                 dislikes
               }
+            }
+            cv{
+                photo
+                id
+                alt
             }
             post(slug: "${context.resolvedUrl.substring(1)}") {
               id
@@ -223,6 +229,7 @@ export async function getServerSideProps(context: any) {
         return {
             props: {
                 post: data.post,
+                cv: data.cv,
                 postMetas: data.postMetas,
                 comments: data.allComments,
                 prevPost: data.prevNextPosts[0],
