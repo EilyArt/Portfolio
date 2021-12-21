@@ -4,11 +4,13 @@ from .models import *
 from graphene.types.generic import GenericScalar
 from django.shortcuts import get_object_or_404
 
+
 class PostType(DjangoObjectType):
     meta = GenericScalar()
 
     class Meta:
         model = Post
+        fields = ("id", "title", "excerpt", "duration", "description", "slug", "thumbnail", "thumbnail_alt", "tags", "created_at")
 
 
 class TagType(DjangoObjectType):
@@ -24,7 +26,6 @@ class CommentType(DjangoObjectType):
     class Meta:
         model = Comment
 
-
 class PostMetaType(DjangoObjectType):
     meta = GenericScalar()
 
@@ -36,7 +37,6 @@ class Query(graphene.ObjectType):
 
     # SECTION - POST
 
-
     # ANCHOR -  GET ALL POSTS
     allPosts = graphene.List(PostType)
 
@@ -45,7 +45,6 @@ class Query(graphene.ObjectType):
             return Post.objects.order_by('-id').all()
         except Post.DoesNotExist:
             return None
-
 
     # ANCHOR -  GET POST BY SLUG
     post = graphene.Field(PostType, slug=graphene.String())
@@ -56,7 +55,6 @@ class Query(graphene.ObjectType):
         except Post.DoesNotExist:
             return None
 
-
     # ANCHOR -  GET POST BY SLUG
     lastNPosts = graphene.List(PostType, N=graphene.Int())
 
@@ -65,7 +63,6 @@ class Query(graphene.ObjectType):
             return Post.objects.order_by('-id')[:N]
         except Post.DoesNotExist:
             return None
-
 
     # ANCHOR -  GET PREVIOUS/NEXT POSTS
     prevNextPosts = graphene.List(PostType, slug=graphene.String())
@@ -90,7 +87,6 @@ class Query(graphene.ObjectType):
                     [post, post]
         return [prevPost, nextPost]
 
-
     # ANCHOR -  GET ALL POSTS OF A TAG
     allTaggedPosts = graphene.List(PostType, tag=graphene.String())
 
@@ -100,7 +96,6 @@ class Query(graphene.ObjectType):
             return Post.objects.all().filter(tags__in=[tagObject.id])
         except Tag.DoesNotExist:
             return None
-
 
     # ANCHOR -  GET LAST 3 POSTS OF A TAG
     threeRelatedPosts = graphene.List(PostType, slug=graphene.String())
@@ -112,7 +107,6 @@ class Query(graphene.ObjectType):
         except Post.DoesNotExist:
             return None
 
-
     # ANCHOR -  GET POST BY SLUG
     tag = graphene.Field(TagType, name=graphene.String())
 
@@ -123,7 +117,6 @@ class Query(graphene.ObjectType):
             return None
 
     # SECTION - COMMENT
-
 
     # ANCHOR -  GET ALL POST COMMENTS
     allComments = graphene.List(CommentType, slug=graphene.String())
@@ -137,7 +130,6 @@ class Query(graphene.ObjectType):
 
     # SECTION - TAG
 
-
     # ANCHOR -  GET TAG
     tag = graphene.Field(TagType, name=graphene.String())
 
@@ -146,7 +138,6 @@ class Query(graphene.ObjectType):
             return Tag.objects.get(name=name)
         except Tag.DoesNotExist:
             return None
-
 
     # ANCHOR -  GET ALL TAGS
     allTags = graphene.List(TagType)
@@ -157,9 +148,7 @@ class Query(graphene.ObjectType):
         except Tag.DoesNotExist:
             return None
 
-
     # SECTION - POST META
-
 
     # ANCHOR -  GET ALL POST COMMENTS
     postMetas = graphene.List(PostMetaType, slug=graphene.String())
@@ -211,7 +200,7 @@ class CommentMutation(graphene.Mutation):
                     comment.parent = None
             comment.save()
         except:
-            return 
+            return
         # NOTE - Notice we return an instance of this mutation
         return CommentMutation(comment=comment)
 
@@ -249,11 +238,13 @@ class LikeDislikeMutation(graphene.Mutation):
 
             comment.save()
         except:
-            return 
+            return
         # NOTE - Notice we return an instance of this mutation
         return LikeDislikeMutation(comment=comment)
 
 # ANCHOR - NEW COMMENT MUTATION
+
+
 class PostViewMutation(graphene.Mutation):
     class Arguments:
         # NOTE - The input arguments for this mutation
@@ -277,13 +268,15 @@ class PostViewMutation(graphene.Mutation):
                 post.view.append(ip)
             post.save()
         except:
-            return 
+            return
         # NOTE - Notice we return an instance of this mutation
         return PostViewMutation(post=post)
+
 
 class Mutation(graphene.ObjectType):
     add_comment = CommentMutation.Field()
     comment_emotion = LikeDislikeMutation.Field()
     add_view = PostViewMutation.Field()
+
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

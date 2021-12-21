@@ -8,8 +8,9 @@ from .models import *
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "label", "price", "description", "link")
-    
+    list_display = ("name", "price","label", "id", "link", "description")
+    search_fields = ["name", "label", "link"]
+
     def get_actions(self, request):
         actions = super().get_actions(request)
         if 'delete_selected' in actions:
@@ -26,5 +27,5 @@ class ProjectFeatureAdmin(admin.ModelAdmin):
 
 @admin.register(ProjectImage)
 class ProjectImageAdmin(admin.ModelAdmin):
-    list_display = ("id", "resolve_image", "alt")
+    list_display = ("resolve_image", "alt", "id" )
     readonly_fields = ('resolve_image', )

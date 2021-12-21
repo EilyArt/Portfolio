@@ -28,13 +28,15 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     list_display = ("id", "name")
+    search_fields = ["name", ]
 
 
 # ANCHOR -  POST_META
 @admin.register(PostMeta)
-class CommentAdmin(admin.ModelAdmin):
+class PostMetaAdmin(admin.ModelAdmin):
     list_display = ("post_id", "id", "name", "content")
     list_filter = ['post', ]
+    search_fields = ['post_id', "name", "content"]
     ordering = ('-post_id', )
 
 
@@ -46,6 +48,7 @@ class CommentAdmin(admin.ModelAdmin):
     readonly_fields = ('ip_address', )
     list_filter = ['is_approved', "ip_address", "created_at", "post"]
     ordering = ('-id', )
+    search_fields = ['ip_address', "email", "comment"]
     # REVIEW -  GET IP ADDRESS *MAYBE NOT REQUIRED FOR ADMIN PANEL*
     def save_model(self, request, comment, form, change):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
