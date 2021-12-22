@@ -11,6 +11,9 @@ import { gql } from "@apollo/client"
 import client from "./api/apollo-client"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import email from "@/svgs/email.svg"
+import phone from "@/svgs/phone.svg"
+import calendar from "@/svgs/calendar.svg"
 
 interface Props {
     lastProject: any,
@@ -120,7 +123,7 @@ const contact: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Pr
         }).catch((err: any) => {
             return notify("An Error has occured. Sorry for inconvenience", "danger")
         });
-        
+
         return setFormData(initialState);
     }
 
@@ -157,17 +160,17 @@ const contact: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Pr
                     </p>
                     <div className='contact-info-items'>
                         <StickyBarItem
-                            src={boxLogo}
+                            src={phone}
                             title='ADDRESS POINT'
                             content='123 Stree New York City '
                         />
                         <StickyBarItem
-                            src={boxLogo}
+                            src={phone}
                             title='MAIL ME'
                             content='eilya@mail.com'
                         />
                         <StickyBarItem
-                            src={boxLogo}
+                            src={phone}
                             title='CALL ME'
                             content='+90 533 838 0450'
                         />

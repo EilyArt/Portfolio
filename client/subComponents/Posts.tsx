@@ -59,7 +59,7 @@ console.log();
                                         <div className="posts-post-content-bottom-writer">
                                             <div className="posts-post-content-bottom-writer-pic">
                                                 <div className="posts-post-content-bottom-writer-pic-wrapper">
-                                                    <Image
+                                                    {myImage && <Image
                                                         objectFit="cover"
                                                         height={80}
                                                         width={80}
@@ -67,7 +67,7 @@ console.log();
                                                         src={`${process.env.NEXT_PUBLIC_API}media/${myImage.photo}`}
                                                         alt={myImage.alt}
                                                         id={myImage.id}
-                                                    />
+                                                    />}
                                                 </div>
                                             </div>
                                             <h6 className="posts-post-content-bottom-writer-name">Eilya Amin in</h6>

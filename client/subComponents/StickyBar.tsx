@@ -1,7 +1,5 @@
 import Image from "next/dist/client/image"
 import Link from "next/dist/client/link";
-import photo from "@/images/avatar.png"
-import Button from "./Button";
 import email from "@/svgs/email.svg"
 import phone from "@/svgs/phone.svg"
 import calendar from "@/svgs/calendar.svg"
@@ -44,7 +42,7 @@ const StickyBar = (cv: any) => {
                     <StickyBarItem src={calendar} title="birthday" content="April 5th, 1998" />
                 </div>
                 <div className="stickyBar-button" onClick={() => document.getElementById("downloadCV")?.click}>
-                    <Link href={`${process.env.NEXT_PUBLIC_API}media/${cv.cv.CV}`}>
+                    {cv.cv && <Link href={`${process.env.NEXT_PUBLIC_API}media/${cv.cv.CV}`}>
                         <a id={"downloadCV"} download>
                             <button className={`button`}>
                                 <span className={`button-span`} >
@@ -52,7 +50,7 @@ const StickyBar = (cv: any) => {
                                 </span>
                             </button>
                         </a>
-                    </Link>
+                    </Link>}
                 </div>
             </div>
         </aside>

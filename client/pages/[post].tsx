@@ -74,7 +74,7 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                             <div className="post-content-thumbnail-bottom-writer">
                                 <div className="post-content-thumbnail-bottom-writer-pic">
                                     <div className="post-content-thumbnail-bottom-writer-pic-wrapper">
-                                        <Image
+                                        {cv && <Image
                                             objectFit="cover"
                                             height={80}
                                             width={80}
@@ -82,7 +82,7 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                                             src={`${process.env.NEXT_PUBLIC_API}media/${cv.photo}`}
                                             alt={cv.alt}
                                             id={cv.id}
-                                        />
+                                        />}
                                     </div>
                                 </div>
                                 <h6 className="post-content-thumbnail-bottom-writer-name">Eilya Amin in</h6>
