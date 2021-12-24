@@ -68,24 +68,14 @@ class Query(graphene.ObjectType):
     prevNextPosts = graphene.List(PostType, slug=graphene.String())
 
     def resolve_prevNextPosts(self, info, slug):
-        try:
             post = Post.objects.get(slug=slug)
-        except Post.DoesNotExist:
-            return [None, None]
-        try:
-            prevPost = Post.objects.get(id=post.id - 1)
-            nextPost = Post.objects.get(id=post.id + 1)
-        except:
-            try:
-                prevPost = Post.objects.get(id=post.id - 1)
-                nextPost = Post.objects.get(id=1)
-            except:
-                try:
-                    prevPost = Post.objects.get(id=post.id + 2)
-                    nextPost = Post.objects.get(id=post.id + 1)
-                except:
-                    [post, post]
-        return [prevPost, nextPost]
+            prevPost = Post.objects.filter(created_at__lt=post.created_at).all().last()
+            nextPost = Post.objects.filter(created_at__gt=post.created_at).all().first()
+            if prevPost == None:
+                prevPost = Post.objects.all().last()
+            if nextPost == None:
+                nextPost = Post.objects.all().first()
+            return [prevPost, nextPost]
 
     # ANCHOR -  GET ALL POSTS OF A TAG
     allTaggedPosts = graphene.List(PostType, tag=graphene.String())
