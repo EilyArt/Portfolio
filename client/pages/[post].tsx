@@ -138,10 +138,10 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                         </div>
                     </a>
                 </div>
-                <div className="pad-default">
+                {threeRelatedPosts.length !== 0 && <div className="pad-default">
                     <Title title="You may also like" />
                     <Posts posts={threeRelatedPosts} myImage={cv} />
-                </div>
+                </div>}
                 <div className="post-discussion">
                     <DiscussionForm post={post} comments={comments} />
                 </div>
