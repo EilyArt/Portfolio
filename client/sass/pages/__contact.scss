@@ -91,7 +91,6 @@
       font-family: var(--font-family);
       color: white;
       text-indent: 0.6rem;
-      font-size: 15px;
 
       &::placeholder {
         text-transform: uppercase;
@@ -173,7 +172,6 @@
 
         &-span {
           border-radius: var(--radius-32);
-          font-size: 18px;
         }
       }
     }

@@ -28,7 +28,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    font-size: 16px;
     background: var(--color-paragraph);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -57,7 +56,6 @@
   }
 
   .linkActive {
-    font-size: 16px;
     background: var(--color-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

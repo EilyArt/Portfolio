@@ -26,10 +26,6 @@
       font-weight: 400;
     }
 
-    time {
-      font-size: 12px;
-    }
-
     p {
       padding: 0.2rem 0;
       line-height: 1.45;
@@ -111,7 +107,6 @@
       align-items: center;
       cursor: pointer;
       user-select: none;
-      font-size: 12px;
       background: var(--color-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;

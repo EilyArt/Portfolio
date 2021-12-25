@@ -3,7 +3,6 @@
     height: fit-content;
     
     &-hero {
-        // position: relative;
         height: 70vh;
 
         &-img {
@@ -28,20 +27,7 @@
             align-items: center;
             z-index: 2;
             top: 40%;
-
-            h1 {
-                font-size: 3rem;
-            }
-            
-            p {
-                font-size: 1.2rem;
-            }
         }
-    }
-
-    &-posts{
-        // transform: translateY(-20rem);
-        
     }
     &-tags{
         max-width: 30rem;

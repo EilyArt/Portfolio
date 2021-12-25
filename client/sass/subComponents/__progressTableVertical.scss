@@ -1,6 +1,5 @@
 .progressTableVertical {
     &-box {
-        font-size: 1.125rem;
         display: -webkit-inline-box;
         display: -ms-inline-flexbox;
         display: inline-flex;
@@ -74,7 +73,6 @@
 
         &-label {
             color: var(--color-paragraph);
-            font-size: 0.75rem;
             font-weight: 400;
             display: block;
             opacity: .7;
@@ -90,7 +88,6 @@
             overflow: hidden;
             white-space: nowrap;
             line-height: 1.65;
-            font-size: 0.875rem;
         }
     }
 
