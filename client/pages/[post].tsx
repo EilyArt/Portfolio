@@ -95,8 +95,8 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                         </div>
                     </div>
                 </div>
-                <div className="pad-default-horizontal">
-                    <article className="posts-post-content-excerpt" dangerouslySetInnerHTML={{ __html: post.description }} />
+                <div className="pad-default-horizontal post-content-excerpt">
+                    <article className="post-content-excerpt-description" dangerouslySetInnerHTML={{ __html: post.description }} />
                 </div>
                 <div className="row">
                     <div className="post-socialMedia">

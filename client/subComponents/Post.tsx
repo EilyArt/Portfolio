@@ -18,10 +18,10 @@ const Post = ({ post, index, myImage, star }: any) => {
                         </span>
                         <time className="postItem-content-meta-date" dateTime="2020-11-12"> {new Date(post.createdAt).toDateString()}</time>
                     </div>
-                    <h2 className="postItem-content-title">
+                    <h4 className="postItem-content-title">
                         {post.title}
-                    </h2>
-                    <p className="postItem-content-excerpt" dangerouslySetInnerHTML={{ __html: post.excerpt.slice(0, 150) + `...` }} />
+                    </h4>
+                    <aside className="postItem-content-excerpt" dangerouslySetInnerHTML={{ __html: post.excerpt.slice(0, 150) + `...` }} />
                     <div className="postItem-content-bottom">
                         <div className="postItem-content-bottom-writer">
                             <div className="postItem-content-bottom-writer-pic">

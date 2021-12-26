@@ -29,6 +29,15 @@
       }
     }
 
+    &-excerpt {
+      display: flex;
+      justify-content: center;
+
+      &-description {
+        max-width: 100rem;
+      }
+    }
+
     &-thumbnail {
       flex: 1;
       width: 100%;
@@ -41,6 +50,7 @@
 
       &-meta {
         line-height: 20px;
+
         &-minutes {
           color: var(--color-heading);
         }
@@ -52,6 +62,15 @@
         font-weight: 900;
         line-height: 1.1;
         letter-spacing: -1px;
+        font-size: 4.6rem;
+
+        @include respond(tablet) {
+          font-size: 4rem;
+        }
+
+        @include respond(phone) {
+          font-size: 3.3rem;
+        }
       }
 
       &-bottom {
@@ -123,7 +142,7 @@
       @include respond(tablet) {
         width: 100%;
         margin: 1rem;
-    }
+      }
 
       &:hover {
         filter: brightness(0.8);
@@ -153,17 +172,18 @@
     }
   }
 
-  &-discussion{
+  &-discussion {
     @extend .pad-default;
+
     @include respond(tablet) {
       padding: 0;
     }
   }
 
   &-socialMedia {
-      display: flex;
-      flex-direction: row;
-        margin: 2rem;
+    display: flex;
+    flex-direction: row;
+    margin: 2rem;
   }
 }
 
@@ -179,6 +199,7 @@
 .nextPost {
   border-top-left-radius: 0%;
   border-bottom-left-radius: 0%;
+
   @include respond(tablet) {
     border-radius: var(--radius-16);
   }

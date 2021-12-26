@@ -4,15 +4,11 @@
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: auto;
     grid-auto-flow: row dense;
-    gap: 2rem;
+    gap: 1rem;
 
     @include respond(tablet) {
         display: flex;
         flex-direction: column;
-
-        &>* {
-            height: 30rem !important;
-        }
     }
 
     .star {
