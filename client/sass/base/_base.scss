@@ -53,94 +53,16 @@
 
 html {
     box-sizing: border-box;
-    font-size: 62.5%; // 1rem = 10px, 10px/16px = 62.5%
-    -webkit-text-size-adjust: 100%;
 }
-
-html {
-    font-size: 62.5%;
-
-    @include respond(desktop) {
-        font-size: 75%;
-    }
-    
-    @include respond(tablet) {
-        font-size: 56.25%;
-    }
-
-    @include respond(phone) {
-        font-size: 50%;
-    }
-}
-
 
 body {
     margin: 0;
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-style: normal;
-    line-height: 1.5;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
     color: var(--color-paragraph);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     background-color: var(--color-surface-1);
-}
-
-
-@font-face {
-    font-family: "Poppins";
-    src: url("../Fonts/Poppins-Regular.ttf");
-    font-weight: 400;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "Poppins";
-    src: url("../Fonts/Poppins-Italic.ttf");
-    font-weight: normal;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: "Poppins";
-    src: url("../Fonts/Poppins-Bold.ttf");
-    font-weight: bold;
-}
-
-@font-face {
-    font-family: "Poppins-Bold";
-    src: url("../Fonts/Poppins-Bold.ttf");
-}
-
-@font-face {
-    font-family: "Poppins-ExtraBold";
-    src: url("../Fonts/Poppins-ExtraBold.ttf");
-}
-
-@font-face {
-    font-family: "Poppins";
-    src: url("../Fonts/Poppins-Thin.ttf");
-    font-weight: 200;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "Poppins";
-    src: url("../Fonts/Poppins-ThinItalic.ttf");
-    font-weight: 200;
-    font-style: italic;
-}
-
-small {
-    font-weight: 200;
-    font-style: normal;
-}
-
-strong,
-b {
-    font-weight: bold;
 }
 
 *,
@@ -156,79 +78,26 @@ html {
     box-sizing: border-box;
 }
 
-body,
-html {
-    // font-size: rem(16px);
-    -webkit-text-size-adjust: 100%;
-}
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color: var(--color-heading);
-    font-family: var(--font-family);
-    font-weight: 600;
-    line-height: 1.3;
-}
+// html.is-scroll-disabled body {
+//     height: 100vh;
+//     overflow: hidden;
+// }
 
-h1 {
-    font-size: 5rem;
-}
-h2 {
-    font-size: 4.2rem;
-}
-h3 {
-    font-size: 3.4rem;
-}
-h4 {
-    font-size: 2.6rem;
-}
-h5 {
-    font-size: 1.8rem;
-}
-h6 {
-    font-size: 1rem;
-}
+// .no-scroll {
+//     overflow: hidden;
+//     -ms-overflow-style: none;
+// }
 
-p {
-    color: var(--color-paragraph);
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 1.75rem;
-    line-height: 1.632;
-    letter-spacing: .1px;
-}
+// .no-scroll-height {
+//     overflow-x: hidden;
+// }
 
-aside {
-    font-size: 1.2rem;
-}
-
-small {
-    font-size: 1rem;
-}
-
-html.is-scroll-disabled body {
-    height: 100vh;
-    overflow: hidden;
-}
-
-.no-scroll {
-    overflow: hidden;
-    -ms-overflow-style: none;
-}
-
-.no-scroll-height {
-    overflow-x: hidden;
-}
-
-.svg-defs {
-    position: absolute;
-    height: 0;
-    width: 0;
-}
+// .svg-defs {
+//     position: absolute;
+//     height: 0;
+//     width: 0;
+// }
 
 img {
     max-width: 100%;
@@ -246,14 +115,6 @@ iframe {
     background-color: var(--color-bg);
     border: 0;
     display: block;
-    height: 100%;
-    width: 100%;
-}
-
-.cover {
-    object-fit: cover;
-    object-position: center;
-    font-family: 'object-fit: cover; object-position: center;';
     height: 100%;
     width: 100%;
 }

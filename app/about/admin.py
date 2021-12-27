@@ -12,6 +12,11 @@ class EducationAdmin(admin.ModelAdmin):
                     "start_date", "end_date", "description")
 
 
+@admin.register(Hobby)
+class HobbyAdmin(admin.ModelAdmin):
+    list_display = ("id", "name" )
+
+
 # ANCHOR -  EXPERIENCE
 
 @admin.register(Experience)

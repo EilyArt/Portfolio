@@ -26,11 +26,10 @@ const StickyBar = (cv: any) => {
                         layout="intrinsic"
                         height="300px"
                         width="300px"
-                        className="b-radius"
                     />}
                 </div>
                 <div className="stickyBar-container-sub">
-                    <h1 className="stickyBar-container-sub-name">Eilya Amin</h1>
+                    <h3 className="stickyBar-container-sub-name">Eilya Amin</h3>
                     <div className="badge">software engineer</div>
                 </div>
             </div>

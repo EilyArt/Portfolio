@@ -30,6 +30,11 @@
         }
     }
     &-tags{
-        max-width: 30rem;
+        max-width: 50%;
+        
+        @include respond(tablet) {
+            max-width: 100%;
+
+        }
     }
 }

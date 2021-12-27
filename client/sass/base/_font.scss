@@ -1,0 +1,112 @@
+html {
+    // This defines what 1rem is
+    font-size: 62.5%; //1 rem = 10px; 10px/16px = 62.5%
+
+    @include responds(tab-land) {
+        // width < 1200?
+        font-size: 56.25%; //1 rem = 9px, 9/16 = 50%
+    }
+
+    @include responds(tab-port) {
+        // width < 900?
+        font-size: 50%; //1 rem = 8px, 8/16 = 50%
+    }
+
+    @include responds(big-desktop) {
+        font-size: 75%; //1rem = 12, 12/16
+    }
+}
+
+body {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 1.7;
+}
+
+p {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-font-smoothing: antialiased !important;
+    text-rendering: optimizelegibility !important;
+    letter-spacing: .03em;
+    font-weight: 400;
+    line-height: 1.632;
+}
+
+h1 {
+    font-size: 3.2rem;
+}
+
+h2 {
+    font-size: 2.4rem;
+}
+
+h3 {
+    font-size: 1.872rem;
+}
+
+h4 {
+    font-size: 1.6rem;
+}
+
+h5 {
+    font-size: 1.328rem;
+}
+
+h6 {
+    font-size: 1.072rem;
+}
+
+
+@font-face {
+    font-family: "Poppins";
+    src: url("../Fonts/Poppins-Regular.ttf");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url("../Fonts/Poppins-Italic.ttf");
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url("../Fonts/Poppins-Bold.ttf");
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "Poppins-Bold";
+    src: url("../Fonts/Poppins-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Poppins-ExtraBold";
+    src: url("../Fonts/Poppins-ExtraBold.ttf");
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url("../Fonts/Poppins-Thin.ttf");
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url("../Fonts/Poppins-ThinItalic.ttf");
+    font-weight: 200;
+    font-style: italic;
+}

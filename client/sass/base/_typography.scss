@@ -4,103 +4,13 @@ a {
     text-decoration: none;
 }
 
-.row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    max-width: 100%;
-    flex: 1;
-    overflow: hidden;
-}
-
-.row-res {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    max-width: 100%;
-    flex: 1;
-    overflow: hidden;
-
-    @include respond(tablet) {
-        flex-direction: column;
-    }
-}
-
-.row-res-rev {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    max-width: 100%;
-    flex: 1;
-    overflow: hidden;
-
-    @include respond(tablet) {
-        flex-direction: column-reverse;
-    }
-}
-
 .col {
     display: flex;
     flex-direction: column;
 }
 
-.col-res {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    width: 100%;
-
-    @include respond(tablet) {
-        flex-direction: row;
-    }
-}
-
-.flex-start-self {
-    align-self: flex-start;
-
-    @include respond(tablet) {
-        align-self: unset;
-    }
-}
-
-.flex-start-items {
-    align-items: baseline;
-
-    @include respond(tablet) {
-        align-items: center;
-    }
-}
-
-.flex-start-items-nonres {
-    align-items: baseline;
-}
-
-.align-strech {
-    align-items: stretch;
-
-    @include respond(tablet) {
-        align-items: center;
-    }
-}
-
-.justify-start {
-    justify-content: flex-start;
-}
-
-.align-center {
-    align-items: center;
-}
-
 .align-start {
     align-items: flex-start;
-}
-
-
-.cursor-pointer {
-    cursor: pointer;
 }
 
 .m-1 {
@@ -111,20 +21,12 @@ a {
     margin: 10px;
 }
 
-.m-right-1 {
-    margin-right: 10px;
-}
-
 .m-right-2 {
     margin-right: 20px;
 }
 
 .m-left-2 {
     margin-left: 5rem;
-}
-
-.pad-1 {
-    padding: 5px;
 }
 
 .pad-2 {
@@ -139,18 +41,6 @@ a {
     padding-bottom: 0px !important;
 }
 
-.pad-horizontal-1 {
-    padding: 0 5px;
-}
-
-.pad-horizontal-2 {
-    padding: 0 10px;
-}
-
-.pad-vertical-1 {
-    padding: 5px 0;
-}
-
 .pad-vertical-2 {
     padding: 10px 0;
 }
@@ -163,20 +53,8 @@ a {
     margin-bottom: 10px;
 }
 
-.m-top-1 {
-    margin-top: 5px;
-}
-
 .m-top-2 {
     margin-top: 10px;
-}
-
-.m-top-auto {
-    margin-top: auto;
-}
-
-.m-horizontal-1 {
-    margin: 0 5px;
 }
 
 .m-horizontal-2 {
@@ -191,17 +69,6 @@ a {
 
 .b-radius {
     border-radius: 8px;
-}
-
-.txt-center {
-    text-align: center;
-}
-
-.txt-justify {
-    text-align: justify;
-    text-justify: inter-word;
-    word-spacing: 1px;
-    line-height: 1.4em;
 }
 
 .linkActive {
@@ -244,24 +111,8 @@ a {
     max-width: fit-content !important;
 }
 
-.align-end {
-    align-items: flex-end;
-}
-
 .justify-end {
     justify-content: flex-end;
-}
-
-.wrap {
-    flex-wrap: wrap;
-}
-
-.flex {
-    flex: 1;
-}
-
-.width-max {
-    width: 100%;
 }
 
 .show {
@@ -292,10 +143,6 @@ a {
 
 .hidden {
     display: none !important;
-}
-
-.show {
-    display: block !important;
 }
 
 .twitterFolloButton {

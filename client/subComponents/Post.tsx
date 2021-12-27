@@ -18,10 +18,10 @@ const Post = ({ post, index, myImage, star }: any) => {
                         </span>
                         <time className="postItem-content-meta-date" dateTime="2020-11-12"> {new Date(post.createdAt).toDateString()}</time>
                     </div>
-                    <h4 className="postItem-content-title">
+                    <h3 className="postItem-content-title">
                         {post.title}
-                    </h4>
-                    <aside className="postItem-content-excerpt" dangerouslySetInnerHTML={{ __html: post.excerpt.slice(0, 150) + `...` }} />
+                    </h3>
+                    <em className="postItem-content-excerpt" dangerouslySetInnerHTML={{ __html: post.excerpt.slice(0, 150) + `...` }} />
                     <div className="postItem-content-bottom">
                         <div className="postItem-content-bottom-writer">
                             <div className="postItem-content-bottom-writer-pic">
@@ -37,7 +37,7 @@ const Post = ({ post, index, myImage, star }: any) => {
                                     />}
                                 </div>
                             </div>
-                            <h6 className="postItem-content-bottom-writer-name">Eilya Amin in</h6>
+                            <sup className="postItem-content-bottom-writer-name">Eilya Amin in&nbsp;</sup>
                         </div>
                         {post.tags.slice(0, 5).map((tag: { name: string }, index: number) => {
                             return (

@@ -1,4 +1,4 @@
-import { FaMapMarkerAlt, FaWhatsapp, FaPaperPlane, FaTwitter } from "react-icons/fa";
+import { FaMapMarkerAlt, FaWhatsapp, FaPaperPlane, FaTwitter, FaHeart } from "react-icons/fa";
 import photo from "@/images/avatar.png"
 import Image from "next/dist/client/image";
 import InputEmail from "../subComponents/InputEmail";
@@ -17,11 +17,11 @@ const Footer = ({ lastProject, lastThreePosts }: Props) => {
         <footer className="pad-default pad-bottom-0">
             <div className="container container-top">
                 <div className="col width-fit">
-                    <h5>EILYA AMIN</h5>
+                    <h3>EILYA AMIN</h3>
                     <h6>Software Engineer</h6>
                 </div>
                 <div className="col container-top-media">
-                    <div className="row">
+                    <div>
                         <MediaIcon media="linkedin" />
                         <MediaIcon media="twitter" />
                         <MediaIcon media="youtube" />
@@ -32,9 +32,9 @@ const Footer = ({ lastProject, lastThreePosts }: Props) => {
             <div className="separation-1" />
             <div className="container">
                 <div className="col m-right-2">
-                    <h5 className="m-bottom-2">CONTACT</h5>
+                    <h4 className="m-bottom-2">CONTACT</h4>
                     <div className="pad-vertical-2">
-                        <address><FaMapMarkerAlt className="m-right-2" />Istanbul</address>
+                        <address><FaMapMarkerAlt className="m-right-2" />Akdoğantekke Köyü,17, 37402, Taşköprü Kastamonu, Turkey</address>
                     </div>
                     <div className="pad-vertical-2">
                         <a><FaWhatsapp className="m-right-2" />+2 392 3929 210</a>
@@ -44,7 +44,7 @@ const Footer = ({ lastProject, lastThreePosts }: Props) => {
                     </div>
                 </div>
                 <div className="col m-right-2">
-                    <h5 className="m-bottom-2">LATEST POSTS</h5>
+                    <h4 className="m-bottom-2">LATEST POSTS</h4>
                     {lastThreePosts.map((post: any) => {
                         return (
                             <LatestNewsBox
@@ -59,14 +59,14 @@ const Footer = ({ lastProject, lastThreePosts }: Props) => {
                     })}
                 </div>
                 <div className="col m-right-2">
-                    <h5 className="m-bottom-2">PROJECTS</h5>
+                    <h4 className="m-bottom-2">PROJECTS</h4>
                     <BestSellerProject
                         src={lastProject.images[0].image}
                         alt={`${lastProject.images[0].alt}`}
                         title={`${lastProject.name}`} />
                 </div>
                 <div className="col m-right-2">
-                    <h5 className="m-bottom-2">TWITTER</h5>
+                    <h4 className="m-bottom-2">TWITTER</h4>
                     <a href="https://twitter.com/EILYAAMIN?ref_src=twsrc%5Etfw"
                         className="twitterFolloButton"
                         target="_blank"
@@ -76,7 +76,7 @@ const Footer = ({ lastProject, lastThreePosts }: Props) => {
                         data-show-count="false"><FaTwitter/> Follow @EILYAAMIN
                     </a> 
                     <div className="pad-vertical-2">
-                        <h5 className="pad-vertical-2">My Newsletter</h5>
+                        <h4 className="pad-vertical-2">My Newsletter</h4>
                         <aside className="pad-vertical-2">Please join my newsletter to get notifications for new posts and projects.<br /> It can make my day ;)</aside>
                         <div className="pad-vertical-2">
                             <InputEmail />
@@ -86,8 +86,8 @@ const Footer = ({ lastProject, lastThreePosts }: Props) => {
             </div>
             <div className="separation-1" />
             <div className="container rights">
-                <small className="width-fit">Copyright © 2021 All rights reserved.</small>
-                <small className="copyright width-fit">This website is made by <b>EILYA</b>.</small>
+                <small className="width-fit">Copyright © 2022 All rights reserved.</small>
+                <small className="copyright width-fit">This website is made by 	&nbsp;<b>EILYA</b><FaHeart /></small>
             </div>
         </footer>
     )

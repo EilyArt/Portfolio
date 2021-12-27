@@ -54,7 +54,7 @@ const resume: NextPage<Props> = ({ educations, cv, experiences, languages, certi
             {skillCategories.map((category: any) => {
                 return (
                     <div className="m-top-2 pad-vertical-2">
-                        <h2 className="pad-vertical-2">{category.title}</h2>
+                        <h4 className="pad-vertical-2">{category.title}</h4>
                         <ProgressTable skills={category.skillSet} />
                     </div>
                 )

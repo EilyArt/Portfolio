@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Layout from '@/components/Layout'
 import Header from '@/subComponents/Header'
 import Gallery from '@/subComponents/Gallery'
-import { FaExternalLinkAlt } from "react-icons/fa";
+import { FaExternalLinkAlt, FaStar } from "react-icons/fa";
 import { gql } from "@apollo/client"
 import client from "./api/apollo-client"
 
@@ -44,14 +44,14 @@ const portfolio: NextPage<Props> = ({ projects, lastProject, pageMetas, lastThre
                                     <ul>
                                         {project.features.map((feature: any, index: number) => {
                                             return (
-                                                <li key={index} className="portfolio-project-info-container-li">{feature.feature}</li>
+                                                <li key={index} className="portfolio-project-info-container-li"><FaStar /> {feature.feature}</li>
                                             )
                                         })}
                                     </ul>
                                 </div>
                                 <dl className="portfolio-project-info-container" id='project-description'>
                                     <dt className="portfolio-project-info-container-dt"><h4>Description:</h4></dt>
-                                    <p className="portfolio-project-info-container-p">{project.description}</p>
+                                    <aside className="portfolio-project-info-container-p">{project.description}</aside>
                                 </dl>
                             </div>
                         </div>

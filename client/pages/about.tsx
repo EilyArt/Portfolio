@@ -31,7 +31,7 @@ const about: NextPage<Props> = ({ hobbies, cv, lastProject, pageMetas, lastThree
                 I created web design for many famous brand companies.
             </p>
             <div className="m-top-2 pad-vertical-2">
-                <h2 className="pad-vertical-2">What I'm Doing</h2>
+                <h3 className="pad-vertical-2">What I'm Doing</h3>
                 <SkillBox />
             </div>
             <div className="m-top-2 pad-vertical-2">

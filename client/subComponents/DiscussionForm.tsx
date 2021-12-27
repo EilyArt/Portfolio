@@ -43,7 +43,8 @@ const DiscussionForm = ({ comments, post }: any) => {
 
     return (
         <div className="discussion">
-            <Title title={`${comments.length} Comments`} />
+            <Title title={`Discussion Form`} />
+            <h2>{comments.length} Comments</h2>
             {comments.map((comment: any, index: number) => {
                 if (index > viewIndex)
                     return;
@@ -56,7 +57,7 @@ const DiscussionForm = ({ comments, post }: any) => {
                 {commentsLength >= 1 && viewIndex < commentsLength && <small className="discussion-actions-small" onClick={() => viewMoreComments()}>view more Comments<FaCaretDown /></small>}
                 {viewIndex > 2 && <small className="discussion-actions-small" onClick={() => collapseComments()}>collapse Comments<FaCaretUp /></small>}
             </div>
-            <ReplyComment PARENT={0}  POST={post.id} placeholder="your comment"/>
+            <ReplyComment PARENT={0} POST={post.id} placeholder="your comment" />
         </div>
     )
 }

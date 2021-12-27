@@ -98,8 +98,8 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                 <div className="pad-default-horizontal post-content-excerpt">
                     <article className="post-content-excerpt-description" dangerouslySetInnerHTML={{ __html: post.description }} />
                 </div>
-                <div className="row">
-                    <div className="post-socialMedia">
+                <div className="post-socialMedia">
+                    <div className="post-socialMedia-container">
                         <MediaIcon media="linkedin" />
                         <MediaIcon media="twitter" />
                         <MediaIcon media="youtube" />
@@ -117,9 +117,9 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                         </div>
                         <div className="post-prevNext-container-info">
                             <span><FaAngleLeft /> Previus Post</span>
-                            <h2 className="posts-post-content-title">
+                            <h3 className="posts-post-content-title">
                                 {prevPost.title}
-                            </h2>
+                            </h3>
                         </div>
                     </a>
                     <a href={`/${nextPost.slug}`} className="post-prevNext-container nextPost">
@@ -132,13 +132,13 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                         </div>
                         <div className="post-prevNext-container-info">
                             <span id="nextPost">Next Post <FaAngleRight /></span>
-                            <h2 className="posts-post-content-title">
+                            <h3 className="posts-post-content-title">
                                 {nextPost.title}
-                            </h2>
+                            </h3>
                         </div>
                     </a>
                 </div>
-                {threeRelatedPosts.length !== 0 && <div className="pad-default">
+                {threeRelatedPosts.length !== 0 && <div className="pad-default-horizontal">
                     <Title title="You may also like" />
                     <Posts posts={threeRelatedPosts} myImage={cv} />
                 </div>}

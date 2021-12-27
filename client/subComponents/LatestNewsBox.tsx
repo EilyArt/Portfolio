@@ -27,7 +27,7 @@ const LatestNewsBox = ({ src, alt, title, slug, date, id }: Props) => {
                 />
             </div>
             <div className="latestNewsBox-text">
-                <h6 className="latestNewsBox-text-title">{title}</h6>
+                <h5 className="latestNewsBox-text-title">{title}</h5>
                 <small><time className="latestNewsBox-text-date">{new Date(date).toDateString()}</time></small>
             </div>
         </a>

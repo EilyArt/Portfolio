@@ -4,7 +4,7 @@
     position: relative;
     display: block;
 
-    h1 {
+    & > * {
         text-transform: capitalize;
         letter-spacing: -1px;
 
