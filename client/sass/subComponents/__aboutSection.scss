@@ -5,12 +5,12 @@
 
     h4 {
         text-transform: capitalize;
-        margin-left: 60px;
-        margin-top: .6rem;
+        margin-left: 6rem;
+        margin-top: .55rem;
         line-height: 2.5rem;
 
         @include respond(tablet) {
-            margin-left: 50px;
+            margin-left: 5rem;
             line-height: 3rem;
         }
 
@@ -28,8 +28,9 @@
             border-radius: var(--radius-12);
             -webkit-box-shadow: var(--box-shadow-30);
             box-shadow: var(--box-shadow-30);
-            height: 48px;
-            width: 48px;
+            height: 4rem;
+            width: 4rem;
+            margin-left: .2rem;
             background: var(--color-gradient-border);
             padding: 30px;
             z-index: 2;
@@ -59,7 +60,7 @@
 
             i {
                 filter: var(--svg-color);
-
+                
                 &::before {
                     display: flex;
                     justify-content: center;
@@ -87,7 +88,7 @@
                 bottom: 85%;
                 z-index: 1;
                 border-left-color: var(--color-border);
-                margin-left: 20px;
+                margin-left: 1.8rem;
                 border-left-color: var(--color-border);
                 border-left-width: 1px;
                 border-left-style: solid;
@@ -99,11 +100,11 @@
 
             &::before {
                 content: '';
-                margin-left: 21px;
+                margin-left: 1.7rem;
                 background-repeat: no-repeat;
                 background-size: cover;
                 background-origin: content-box;
-                left: .1rem;
+                left: .2rem;
                 position: absolute;
                 border-radius: 50%;
                 z-index: 2;
@@ -129,11 +130,7 @@
     max-width: 100%;
 
     &>* {
-        margin-left: 60px;
-
-        @include respond(tablet) {
-            margin-left: 50px;
-        }
+        margin-left: 4rem;
     }
 
     time {

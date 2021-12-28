@@ -45,6 +45,10 @@
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
+
+      @include respond(tablet) {
+        justify-content: center;
+      }
     }
   }
 
@@ -61,7 +65,7 @@
       align-items: center;
     }
 
-    h2 {
+    h3 {
       align-self: flex-start;
     }
 
@@ -174,7 +178,7 @@
       }
 
       &-button {
-        border-radius: 2px;
+        border-radius: 1px;
         border: none;
         padding: 0;
         margin: 0;
@@ -185,6 +189,7 @@
 
         &-span {
           border-radius: var(--radius-32);
+          color: var(--color-surface-2);
         }
       }
     }

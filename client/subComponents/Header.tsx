@@ -1,4 +1,4 @@
-const Header = ({span, header}: any) => {
+const Header = ({ span, header }: any) => {
     return (
         <div className="header">
             <span>{span}</span>

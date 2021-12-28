@@ -9,7 +9,7 @@
     margin: 0 5px;
     
     @include respond(tablet) {
-        margin: 0 2px;
+        margin: 0 .8rem;
         padding: 5px;
     }
 

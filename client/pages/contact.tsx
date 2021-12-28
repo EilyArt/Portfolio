@@ -148,16 +148,16 @@ const contact: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Pr
                 />
             </div>
             <div className='pad-default'>
-                <Header span='Showcasing some of my best work' header='Contact' />
+                <Header span='One step away from achieving your dreams' header='Contact' />
             </div>
             <div className='contact pad-default-horizontal'>
                 <div className='contact-info'>
-                    <h2>DON'T BE SHY !</h2>
-                    <p>
+                    <h3>DON'T BE SHY !</h3>
+                    <aside>
                         Feel free to get in touch with me. I am always open to discussing
                         new projects, creative ideas or opportunities to be part of your
                         visions.
-                    </p>
+                    </aside>
                     <div className='contact-info-items'>
                         <StickyBarItem
                             src={phone}
@@ -183,7 +183,7 @@ const contact: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Pr
                     </div>
                 </div>
                 <div className='contact-form'>
-                    <h2>Free Consultaion</h2>
+                    <h3>Free Consultaion</h3>
                     <div className="contact-form-info">
                         <input
                             type="text"
@@ -192,7 +192,7 @@ const contact: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Pr
                             value={name}
                             onChange={(event) => onChange(event)}
                             className="contact-form-input"
-                            placeholder="Your Name"
+                            placeholder="full Name"
                             required />
                         <input
                             name="email"
@@ -200,7 +200,7 @@ const contact: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Pr
                             value={email}
                             onChange={(event) => onChange(event)}
                             className="contact-form-input"
-                            placeholder="Your email@example.com"
+                            placeholder="E-mail address"
                             required />
                     </div>
                     <input
@@ -209,14 +209,14 @@ const contact: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Pr
                         value={subject}
                         onChange={(event) => onChange(event)}
                         className="contact-form-input"
-                        placeholder="your subject"
+                        placeholder="subject"
                         required />
                     <textarea
                         name="content"
                         value={content}
                         onChange={(event) => onChange(event)}
                         className="contact-form-input"
-                        placeholder="your message"
+                        placeholder="message"
                         required />
                     <div onClick={() => document.getElementById("contactSubmitButton")?.click()} id="contactButton" className="contact-form-submitFormButton">
                         <div id="cover" className="contact-form-submitFormButton-cover" />

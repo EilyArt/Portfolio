@@ -11,8 +11,8 @@ interface Props {
     title: string
 }
 
-const Layout = ({ lastThreePosts, lastProject, title, postMetas, pageMetas, children }: Props) => {    
-    
+const Layout = ({ lastThreePosts, lastProject, title, postMetas, pageMetas, children }: Props) => {
+
     return (
         <div>
             <Head>
@@ -28,11 +28,12 @@ const Layout = ({ lastThreePosts, lastProject, title, postMetas, pageMetas, chil
                         <meta key={index} name={`${meta.name}`} content={`${meta.content}`} />
                     )
                 })}
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             </Head>
 
             <Navbar />
             {children}
-            <Footer lastThreePosts={lastThreePosts} lastProject={lastProject}/>
+            <Footer lastThreePosts={lastThreePosts} lastProject={lastProject} />
         </div>
     )
 }

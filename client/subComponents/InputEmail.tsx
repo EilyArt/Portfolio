@@ -131,7 +131,7 @@ const InputEmail = () => {
                     value={email}
                     onChange={(e) => onChange(e)}
                     required
-                    placeholder="email@example.com"
+                    placeholder="Email address"
                 />
                 <button type="submit" onClick={() => submitEmail()}>
                     <span className="sr-only">

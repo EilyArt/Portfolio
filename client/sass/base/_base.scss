@@ -78,27 +78,6 @@ html {
     box-sizing: border-box;
 }
 
-
-// html.is-scroll-disabled body {
-//     height: 100vh;
-//     overflow: hidden;
-// }
-
-// .no-scroll {
-//     overflow: hidden;
-//     -ms-overflow-style: none;
-// }
-
-// .no-scroll-height {
-//     overflow-x: hidden;
-// }
-
-// .svg-defs {
-//     position: absolute;
-//     height: 0;
-//     width: 0;
-// }
-
 img {
     max-width: 100%;
     -webkit-user-select: none;
@@ -125,4 +104,18 @@ iframe {
 
 ::selection {
     background: var(--color-accent);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+//   border: 1px solid var(--color-heading);
+  -webkit-text-fill-color: var(--color-heading);
+  transition: background-color 5000s ease-in-out 0s;
 }

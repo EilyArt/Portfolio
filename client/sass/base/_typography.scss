@@ -102,9 +102,9 @@ a {
         padding: 0 15px 0 15px;
     }
 
-    @include respond(phone) {
-        padding: 0;
-    }
+    // @include respond(phone) {
+    //     padding: 0;
+    // }
 }
 
 .width-fit {

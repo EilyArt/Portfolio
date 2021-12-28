@@ -1,7 +1,6 @@
 .label {
     display: flex;
     flex-direction: row;
-    position: relative;
     float: right;
     border-bottom-left-radius: var(--radius-20);
     border-top-right-radius: var(--radius-20);
@@ -15,6 +14,7 @@
     color: var(--color-paragraph);
     z-index: 5;
     white-space: nowrap;
+    
 
     &:first-child {
         padding-left: 1.5rem;
