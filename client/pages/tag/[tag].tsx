@@ -17,7 +17,7 @@ interface Props {
 const tag: NextPage<Props> = ({ tag, cv, posts, lastProject, title, lastThreePosts }: Props) => {
 
     return (
-        <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} title={`#${title}`}>
+        <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} title={`#${title}`}>
             <div className="contact pad-default">
                 <Header span="you can view posts related to " header={`#${tag}`} />
             </div>
@@ -40,6 +40,9 @@ export async function getServerSideProps(context: any) {
             photo
             id
             alt
+            email 
+            phone
+            address
         }
         allTaggedPosts(tag: "${context.resolvedUrl.substring(5)}") {
             title

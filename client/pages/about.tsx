@@ -10,29 +10,31 @@ import client from "./api/apollo-client"
 
 interface Props {
     hobbies: Array<object>,
-    cv: Array<object>,
+    jobs: Array<object>,
+    cv: any,
     lastProject: any,
     pageMetas: Array<object>,
     lastThreePosts: Array<object>,
 }
 
-const about: NextPage<Props> = ({ hobbies, cv, lastProject, pageMetas, lastThreePosts }: Props) => {
+const about: NextPage<Props> = ({ hobbies, jobs, cv, lastProject, pageMetas, lastThreePosts }: Props) => {
     return (
         <About cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
             <Title title="about me" />
             <p>
-                I'm Creative Director and UI/UX Designer from Sydney, Australia,
+                {cv.aboutMe}
+                {/* I'm Creative Director and UI/UX Designer from Sydney, Australia,
                 working in web development and print media. I enjoy turning complex problems into simple,
                 beautiful and intuitive designs.<br /><br />
                 My job is to build your website so that it is functional
                 and user-friendly but at the same time attractive. Moreover,
                 I add personal touch to your product and make sure that is eye-catching and easy to use.
                 My aim is to bring across your message and identity in the most creative way.
-                I created web design for many famous brand companies.
+                I created web design for many famous brand companies. */}
             </p>
             <div className="m-top-2 pad-vertical-2">
                 <h3 className="pad-vertical-2">What I'm Doing</h3>
-                <SkillBox />
+                <SkillBox jobs={jobs}/>
             </div>
             <div className="m-top-2 pad-vertical-2">
                 <AboutSection src={pin} title="HOBBIES"
@@ -58,11 +60,22 @@ export async function getServerSideProps(context: any) {
         hobbies {
             name
         }
+        jobs {
+            id
+            title
+            alt
+            svg
+            description
+        }
         cv{
             photo
             CV
             id
             alt
+            phone
+            email
+            aboutMe
+            address
         }
         lastProject {
             name
@@ -92,6 +105,7 @@ export async function getServerSideProps(context: any) {
     return {
         props: {
             hobbies: data.hobbies,
+            jobs: data.jobs,
             cv: data.cv,
             lastProject: data.lastProject,
             pageMetas: data.pageMetas,

@@ -21,7 +21,7 @@ interface Props {
 const blog: NextPage<Props> = ({ posts, cv, tags, lastProject, pageMetas, lastThreePosts }: Props) => {
 
   return (
-    <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
+    <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
       <div className="blog">
         <div className="pad-default">
           <Header span="EILYA's Thoughts, stories and ideas." header="Blog" />
@@ -64,6 +64,9 @@ export async function getServerSideProps(context: any) {
         photo
         id
         alt
+        email
+        phone
+        address
     }
       allTags {
         name

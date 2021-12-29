@@ -8,15 +8,16 @@ import client from "./api/apollo-client"
 
 interface Props {
     projects: Array<object>,
+    cv: Array<object>,
     lastProject: any,
     pageMetas: Array<object>,
     lastThreePosts: Array<object>,
 }
 
-const portfolio: NextPage<Props> = ({ projects, lastProject, pageMetas, lastThreePosts }: Props) => {
+const portfolio: NextPage<Props> = ({ projects, cv, lastProject, pageMetas, lastThreePosts }: Props) => {
 
     return (
-        <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
+        <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
             <div className="portfolio pad-default">
                 <Header span="Showcasing some of my best work" header="Portfolio" />
             </div>
@@ -27,13 +28,13 @@ const portfolio: NextPage<Props> = ({ projects, lastProject, pageMetas, lastThre
                             <Gallery id={index} images={project.images} />
                             <div className="portfolio-project-info">
                                 <dl className="portfolio-project-info-container">
-                                    <dt className="portfolio-project-info-container-dt"><h4>Project Name:</h4></dt>
+                                    <dt className="portfolio-project-info-container-dt"><h4>Name:</h4></dt>
                                     <dd className="portfolio-project-info-container-dd">{project.name}</dd>
                                     <dt className="portfolio-project-info-container-dt"><h4>Price:</h4></dt>
                                     <dd className="portfolio-project-info-container-dd">{project.price}$</dd>
                                     <dt className="portfolio-project-info-container-dt"><h4>Label:</h4></dt>
                                     <dd className="portfolio-project-info-container-dd">{project.label}</dd>
-                                    <dt className="portfolio-project-info-container-dt"><h4>Project Link:</h4> <dd className="portfolio-project-info-container-dd">
+                                    <dt className="portfolio-project-info-container-dt"><h4>Link:</h4> <dd className="portfolio-project-info-container-dd">
                                         <a href={`http://${project.link}`} target="_blank">
                                             Open <FaExternalLinkAlt />
                                         </a>
@@ -81,6 +82,11 @@ export async function getServerSideProps(context: any) {
               alt
             }
         }
+        cv{
+            phone
+            email
+            address
+        }
         lastProject {
             name
             images{
@@ -109,6 +115,7 @@ export async function getServerSideProps(context: any) {
     return {
         props: {
             projects: data.allProjects,
+            cv: data.cv,
             lastProject: data.lastProject,
             pageMetas: data.pageMetas,
             lastThreePosts: data.lastNPosts,

@@ -106,6 +106,10 @@ export async function getServerSideProps(context: any) {
             CV
             id
             alt
+            phone
+            email
+            aboutMe
+            address
         }
         experiences{
             job

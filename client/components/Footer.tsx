@@ -9,10 +9,11 @@ import MediaIcon from '../subComponents/MediaIcon';
 
 interface Props {
     lastProject: any,
+    cv: any,
     lastThreePosts: Array<object>,
 }
 
-const Footer = ({ lastProject, lastThreePosts }: Props) => {
+const Footer = ({ lastProject, lastThreePosts, cv }: Props) => {
     return (
         <footer className="pad-default pad-bottom-0">
             <div className="container container-top">
@@ -34,13 +35,13 @@ const Footer = ({ lastProject, lastThreePosts }: Props) => {
                 <div className="col m-right-2">
                     <h4 className="m-bottom-2">CONTACT</h4>
                     <div className="pad-vertical-2">
-                        <address><FaMapMarkerAlt className="m-right-2" />Akdoğantekke Köyü,17, 37402, Taşköprü Kastamonu, Turkey</address>
+                        <address><FaMapMarkerAlt className="m-right-2" />{cv.address && cv.address}</address>
                     </div>
                     <div className="pad-vertical-2">
-                        <a><FaWhatsapp className="m-right-2" />+2 392 3929 210</a>
+                        <a><FaWhatsapp className="m-right-2" />{cv.phone && cv.phone}</a>
                     </div>
                     <div className="pad-vertical-2">
-                        <a><FaPaperPlane className="m-right-2" /> info@yourdomain.com</a>
+                        <a><FaPaperPlane className="m-right-2" />{cv.email && cv.email}</a>
                     </div>
                 </div>
                 <div className="col m-right-2">

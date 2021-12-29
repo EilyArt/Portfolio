@@ -5,14 +5,15 @@ import client from "./api/apollo-client"
 
 interface Props {
   lastProject: any,
+  cv: Array<object>,
   pageMetas: Array<object>,
   lastThreePosts: Array<object>,
 }
 
-const index: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Props) => {
+const index: NextPage<Props> = ({ lastProject, cv, pageMetas, lastThreePosts }: Props) => {
 
   return (
-    <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
+    <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
       <div className='pad-default'>
         HomePage
       </div>
@@ -32,6 +33,11 @@ export async function getServerSideProps(context: any) {
           image
           alt
         }
+      }
+      cv{
+        phone
+        email
+        address
       }
       pageMetas(page: "") {
         page{
@@ -54,6 +60,7 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       lastProject: data.lastProject,
+      cv: data.cv,
       pageMetas: data.pageMetas,
       lastThreePosts: data.lastNPosts,
     }

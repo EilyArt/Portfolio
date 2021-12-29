@@ -59,19 +59,15 @@
             }
 
             i {
-                filter: var(--svg-color);
-                
-                &::before {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    background: var(--color-gradient-icon);
-                    height: 100%;
-                    width: 100%;
-                    border-radius: var(--radius-12);
-                }
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
         }
+    }
+
+    .SvG {
+        filter: var(--svg-color);
     }
 
     &-items {

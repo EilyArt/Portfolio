@@ -12,7 +12,7 @@ const ProgressTable = ({ skills }: Props) => {
                     {skills.map((skill: any) => {
                         return (
                             <i key={skill.id} className="progressTable-item">
-                                <div className="row m-bottom-1 align-start">
+                                <div className="progressTable-item-info m-bottom-1">
                                     <Image
                                         alt={`${skill.title}`}
                                         objectFit="cover"

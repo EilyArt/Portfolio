@@ -58,4 +58,10 @@ class SkillAdmin(admin.ModelAdmin):
 # ANCHOR -  CV
 @admin.register(Cv)
 class CvAdmin(admin.ModelAdmin):
-    list_display = ("id","Photo", "CV", "alt")
+    list_display = ("id","Photo", "CV", "alt", "phone", "email", "address", "about_me")
+
+
+# ANCHOR -  JOB
+@admin.register(Job)
+class JobAdmin(admin.ModelAdmin):
+    list_display = ("id", "title" ,"Svg", "alt", "description")

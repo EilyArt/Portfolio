@@ -7,6 +7,8 @@ import StickyBarItem from "./StickyBarItem";
 import arrow from "@/svgs/arrow.svg"
 
 const StickyBar = (cv: any) => {
+    console.log(cv);
+    
     const showContent = () => {
         document.getElementById("stickyBar-information")?.classList.toggle("show");
     }
@@ -36,8 +38,8 @@ const StickyBar = (cv: any) => {
             <div id="stickyBar-information" className="stickyBar-resHandler">
                 <div className="separation-2" />
                 <div className="stickyBar-items">
-                    <StickyBarItem src={email} title="email" content="eilya@example.com" />
-                    <StickyBarItem src={phone} title="phone" content="+1 (930) 323-3345" />
+                    <StickyBarItem src={email} title="email" content={`${cv.cv.email}`} />
+                    <StickyBarItem src={phone} title="phone" content={`${cv.cv.phone}`} />
                     <StickyBarItem src={calendar} title="birthday" content="April 5th, 1998" />
                 </div>
                 <div className="stickyBar-button" onClick={() => document.getElementById("downloadCV")?.click}>

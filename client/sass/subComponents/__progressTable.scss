@@ -79,6 +79,13 @@
             text-transform: capitalize;
         }
 
+        &-info{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
         &-progress {
             background: var(--color-surface-2);
             width: 100%;

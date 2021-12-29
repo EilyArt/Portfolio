@@ -17,11 +17,12 @@ import calendar from "@/svgs/calendar.svg"
 
 interface Props {
     lastProject: any,
+    cv: Array<object>,
     pageMetas: Array<object>,
     lastThreePosts: Array<object>,
 }
 
-const contact: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Props) => {
+const contact: NextPage<Props> = ({ lastProject, cv, pageMetas, lastThreePosts }: Props) => {
 
     const initialState = {
         name: '',
@@ -133,7 +134,7 @@ const contact: NextPage<Props> = ({ lastProject, pageMetas, lastThreePosts }: Pr
     }
 
     return (
-        <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
+        <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
             <div>
                 <ToastContainer
                     position="bottom-right"
@@ -254,6 +255,11 @@ export async function getServerSideProps(context: any) {
             name
             content
         }
+        cv{
+            phone
+            email
+            address
+        }
         lastNPosts(N: 3) {
             id
             title
@@ -268,6 +274,7 @@ export async function getServerSideProps(context: any) {
     return {
         props: {
             lastProject: data.lastProject,
+            cv: data.cv,
             pageMetas: data.pageMetas,
             lastThreePosts: data.lastNPosts,
         }

@@ -6,7 +6,7 @@ const AboutSection = ({ src, title, records }: any) => {
             <h4>
                 <span>
                     <i>
-                        <Image height="20" width="20" src={src} />
+                        <Image layout="fixed" height={25} width={25} objectFit="contain" src={src} className="SvG" alt="svg"/>
                     </i>
                 </span>
                 {title}

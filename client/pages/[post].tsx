@@ -41,12 +41,12 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                     }
                   }                  
                   `
-            }
+            }   
         })
     })
 
     return (
-        <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} postMetas={postMetas} title={post.title}>
+        <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} postMetas={postMetas} title={post.title}>
             <div className="post pad-default">
                 <div className="post-content">
                     <div className="post-content-wrapper">
@@ -180,6 +180,9 @@ export async function getServerSideProps(context: any) {
                 photo
                 id
                 alt
+                email
+                phone
+                address
             }
             post(slug: "${context.resolvedUrl.substring(1)}") {
               id

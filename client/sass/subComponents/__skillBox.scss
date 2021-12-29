@@ -1,19 +1,21 @@
 .skillBox {
     &-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-auto-flow: row dense;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        // display: grid;
+        // grid-template-columns: 1fr 1fr;
+        // grid-auto-flow: row dense;
         
-        @include respond(phone) {
-            grid-template-columns: 1fr;
-        }
+        // @include respond(phone) {
+        //     grid-template-columns: 1fr;
+        // }
     }
 
     background: var(--color-gradient-border);
     border-radius: var(--radius-12);
     overflow: hidden;
-    min-width: 20rem;
-    max-width: 30rem;
     margin: 10px;
 
     span {
@@ -24,6 +26,9 @@
 
     &-box {
         border-radius: var(--radius-12);
+        -webkit-box-shadow: var(--box-shadow-30);
+        box-shadow: var(--box-shadow-30);
+        background: var(--color-gradient-soft);
         display: -webkit-inline-box;
         display: -ms-inline-flexbox;
         display: inline-flex;
@@ -32,22 +37,19 @@
         align-items: flex-start;
         -webkit-box-pack: center;
         -ms-flex-pack: center;
-        justify-content: center;
-        -webkit-box-shadow: var(--box-shadow-30);
-        box-shadow: var(--box-shadow-30);
+        justify-content: flex-start;
+        align-items: flex-start;
         line-height: 1;
-        height: 100%;
         min-width: 100%;
         position: relative;
         z-index: 0;
         padding: 10px;
-        background: var(--color-gradient-soft);
         margin: 1px;
         padding: 1rem;
     }
 
     &-img {
-        width: 20%;
+        // width: 20%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -60,8 +62,9 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        margin-top: 1.2rem;
-        width: 80%;
+        margin-top: .4rem;
+        width: 100%;
+        padding: 0 1.5rem 1.5rem .5rem;
 
         h4 {
             line-height: 2;

@@ -4,6 +4,7 @@ import Head from 'next/head'
 
 interface Props {
     lastThreePosts: Array<object>,
+    cv: Array<object>,
     postMetas: Array<object>,
     pageMetas: Array<any>,
     lastProject: any,
@@ -11,7 +12,7 @@ interface Props {
     title: string
 }
 
-const Layout = ({ lastThreePosts, lastProject, title, postMetas, pageMetas, children }: Props) => {
+const Layout = ({ lastThreePosts, cv, lastProject, title, postMetas, pageMetas, children }: Props) => {
 
     return (
         <div>
@@ -33,7 +34,7 @@ const Layout = ({ lastThreePosts, lastProject, title, postMetas, pageMetas, chil
 
             <Navbar />
             {children}
-            <Footer lastThreePosts={lastThreePosts} lastProject={lastProject} />
+            <Footer lastThreePosts={lastThreePosts} lastProject={lastProject} cv={cv} />
         </div>
     )
 }

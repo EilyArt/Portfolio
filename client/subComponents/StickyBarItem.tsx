@@ -1,11 +1,11 @@
 import Image from "next/dist/client/image"
 
-const StickyBarItem = ({src, title, content}: any) => {
+const StickyBarItem = ({ src, title, content }: any) => {
     return (
         <li className="stickyBarItem">
             <span className="stickyBarItem-box">
                 <i className="stickyBarItem-box-item">
-                    <Image height="20" width="20" src={src} className="stickyBarItem-box-item-img" />
+                    <Image height="20" width="20" src={src} className="stickyBarItem-box-item-img" />   
                 </i>
             </span>
             <div className="stickyBarItem-info">

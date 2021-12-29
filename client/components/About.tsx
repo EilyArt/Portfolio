@@ -15,7 +15,7 @@ interface Props {
 
 const About: NextPage<Props> = ({ lastThreePosts, cv, lastProject, pageMetas, children }) => {
     return (
-        <Layout lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
+        <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
             <div className="pad-default">
           <Header span="EILYA's Thoughts, stories and ideas." header="About" />
         </div>

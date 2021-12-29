@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.html import mark_safe
-
+from phonenumber_field.modelfields import PhoneNumberField
 
 # SECTION - MODELS
 
@@ -12,6 +12,7 @@ class Hobby(models.Model):
 
     def __str__(self):
         return self.name
+
 
 
 # ANCHOR - EDUCATION
@@ -90,8 +91,12 @@ class Skill(models.Model):
 # ANCHOR - CV
 class Cv(models.Model):
     alt = models.CharField(max_length=54)
+    about_me = models.CharField(max_length=500)
+    address = models.CharField(max_length=80)
     photo = models.ImageField(upload_to="static/images/", default=None)
     CV = models.FileField(upload_to="static/cv/", default=None)
+    phone = PhoneNumberField(null=False, blank=False, unique=True)
+    email = models.EmailField()
 
     def __str__(self):
         return self.alt
@@ -99,5 +104,21 @@ class Cv(models.Model):
     def Photo(self):
         if self.photo:
             return mark_safe('<img src="{}" height="35" width="45" />'.format(self.photo.url))
+        else:
+            return ''
+
+# ANCHOR - CV
+class Job(models.Model):
+    title = models.CharField(max_length=500)
+    svg = models.ImageField(upload_to="static/images/", default=None)
+    description = models.CharField(max_length=100)
+    alt = models.CharField(max_length=54)
+
+    def __str__(self):
+        return self.title
+
+    def Svg(self):
+        if self.svg:
+            return mark_safe('<img src="{}" height="35" width="45" />'.format(self.svg.url))
         else:
             return ''
