@@ -27,7 +27,7 @@ const blog: NextPage<Props> = ({ posts, cv, tags, lastProject, pageMetas, lastTh
           <Header span="EILYA's Thoughts, stories and ideas." header="Blog" />
         </div>
         <div className="blog-posts pad-default-horizontal">
-          {posts && <Posts posts={posts} myImage={cv}/>}
+          {posts && <Posts posts={posts} myImage={cv} star={true}/>}
         </div>
         <div className="pad-default">
           <Title title="Explore Tags" />
@@ -50,6 +50,7 @@ export async function getServerSideProps(context: any) {
     query: gql`
     {
       allPosts {
+        id
         title
         slug
         thumbnail

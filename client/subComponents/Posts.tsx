@@ -15,8 +15,6 @@ interface Props {
 }
 
 const Posts = ({ star, posts, myImage }: Props) => {
-console.log();
-
     const initialState = {
         postsLength: posts.length - 1,
         viewIndex: 16
@@ -35,11 +33,11 @@ console.log();
     }
 
     return (
-        <div className="col">
+        <div>
             <div className="posts">
                 {posts && posts.slice(0, viewIndex).map((post: any, index: number) => {
                     return (
-                        <Post post={post}  index={index} myImage={myImage} star={star}/>
+                        <Post post={post} index={index} myImage={myImage} star={star} />
                     )
                 })}
             </div>

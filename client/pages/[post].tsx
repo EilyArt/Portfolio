@@ -41,7 +41,7 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                     }
                   }                  
                   `
-            }   
+            }
         })
     })
 
@@ -140,7 +140,7 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                 </div>
                 {threeRelatedPosts.length !== 0 && <div className="pad-default-horizontal">
                     <Title title="You may also like" />
-                    <Posts posts={threeRelatedPosts} myImage={cv} />
+                    <Posts posts={threeRelatedPosts} myImage={cv} star={false} />
                 </div>}
                 <div className="post-discussion">
                     <DiscussionForm post={post} comments={comments} />
@@ -198,12 +198,14 @@ export async function getServerSideProps(context: any) {
               }
             }
             prevNextPosts(slug: "${context.resolvedUrl.substring(1)}"){
+                id
                 title
                 slug
                 thumbnail
                 thumbnailAlt
             }
             threeRelatedPosts(slug: "${context.resolvedUrl.substring(1)}") {
+                id
                 title
                 slug
                 thumbnail

@@ -139,6 +139,7 @@
       overflow: hidden;
       transition: all 0.2s ease-in-out;
 
+      filter: brightness(0.9);
       @include respond(tablet) {
         width: 100%;
         margin: 1rem;
@@ -151,9 +152,11 @@
       &-info {
         display: flex;
         flex-direction: column;
+        z-index: 2;
+        color: var(--color-accent);
       }
 
-      h2 {
+      h3 {
         display: block;
         z-index: 1;
       }
@@ -168,6 +171,8 @@
         position: absolute;
         height: 100%;
         width: 100%;
+        z-index: -1;
+        filter: brightness(0.5) blur(1px);
       }
     }
   }
@@ -207,6 +212,7 @@
 .nextPost {
   border-top-left-radius: 0%;
   border-bottom-left-radius: 0%;
+  text-align: right;
 
   @include respond(tablet) {
     border-radius: var(--radius-16);

@@ -8,9 +8,10 @@
   width: 100%;
 
   &-user {
-    transform: scale(2);
+    transform: scale(1.5);
     margin: 1rem;
     min-width: 2rem;
+    
   }
 
   &::before {
@@ -28,8 +29,9 @@
 
     p {
       padding: 0.2rem 0;
-      line-height: 1.45;
-      text-indent: 0.5rem;
+      line-height: 1.6;
+      text-indent: .1rem;
+      font-size: 1.15rem;
     }
 
     &-actions {
@@ -50,6 +52,7 @@
         margin-left: 2rem;
         border-radius: var(--radius-8);
         font-family: var(--font-family);
+        
 
         &> :first-child {
           margin-right: 0.5rem;

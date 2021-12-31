@@ -144,8 +144,8 @@ const Comment = ({ id, comment, replies }: Props) => {
             <div className="comment">
                 <FaUserAlt className="comment-user" />
                 <div className="comment-info">
-                    <h4>{comment.username}</h4>
-                    <time>{new Date(comment.createdAt).toDateString()}</time>
+                    <h5>{comment.username}</h5>
+                    <small>{new Date(comment.createdAt).toDateString()}</small>
                     <p>{comment.comment}</p>
                     <div className="comment-info-actions">
                         <div>
@@ -180,8 +180,8 @@ const Comment = ({ id, comment, replies }: Props) => {
                         <div className="comment">
                             <FaUserAlt className="comment-user" />
                             <div className="comment-info">
-                                <h4>{reply.username}</h4>
-                                <time>{new Date(reply.createdAt).toDateString()}</time>
+                                <h5>{reply.username}</h5>
+                                <small>{new Date(reply.createdAt).toDateString()}</small>
                                 <p>{reply.comment}</p>
                                 <div className="comment-info-actions">
                                     <div>

@@ -1,91 +1,106 @@
 .postItem {
-    display: block;
     position: relative;
-    overflow: hidden;
-    border-radius: var(--radius-18);
-    // border-block: .1rem solid var(--color-paragraph-2);
-    min-width: 100%;
-    height: 24rem;
-    transition: all ease-in-out 0.1s;
+    background-repeat: no-repeat;
+    background-attachment: local;
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    padding: 2.5rem;
+    margin: .5rem;
+    border-radius: var(--radius-16);
+    background-color: var(--blog-gradient);
+    background-blend-mode: overlay;
+    width: 100%;
+    min-width: 25%;
+    min-height: 30rem;
+    flex: 1;
     cursor: pointer;
-    box-shadow: var(--box-shadow-30);
-    z-index: 3;
-
-    &:hover {
-        transform: translateY(-3px);
-    }
+    box-shadow: var(--box-shadow-20);
+    color: var(--color-heading);
+    
 
     &-content {
-        position: absolute;
-        width: 100%;
         height: 100%;
-        padding: 1rem 2rem;
-        background: var(--blog-gradient);
-        z-index: 3;
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
+        align-items: flex-start;
 
-        &-meta {
-            line-height: 20px;
-
-            &-minutes {
-                color: var(--color-heading);
-            }
+        &-excerpt {
+            line-height: 1.6;
+            text-indent: .1rem;
+            font-size: 1.15rem;
         }
 
         &-title {
-            margin: 12px 0 12px;
-            font-family: "Poppins-ExtraBold";
-            font-weight: 900;
-            line-height: 1;
             letter-spacing: -.1rem;
         }
 
-        &-excerpt {
-            margin-bottom: 12px;
-            line-height: 17px;
-            color: var(--color-paragraph-2);
+        &-duration {
+            font-style: italic;
+        }
+
+        &-time {
+            line-height: 2.5;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--color-paragraph);
+            text-decoration: underline solid;
+            text-underline-offset: .40rem;
         }
 
         &-bottom {
-            width: 100%;
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
             align-items: center;
 
-            &-writer {
+            &-eilya {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
 
-                &-pic {
+                &-img {
                     border-radius: 50%;
-                    border: solid 0.15rem var(--color-error);
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 40px;
-                    width: 40px;
-                    padding: 3px;
-                    margin: 5px;
-
-                    &-wrapper {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        border-radius: 50%;
-                        overflow: hidden;
-                        height: 100%;
-                        width: 100%;
-                    }
-                }
-
-                &-name {
-                    white-space: nowrap;
+                    border: 2px solid var(--color-error);
+                    max-height: 3.25rem;
+                    max-width: 3.25rem;
+                    padding: .5rem;
+                    margin: .5rem;
+                    margin-left: 0;
                 }
             }
         }
+    }
+
+    @include respond(sm-desktop) {
+        min-width: 45%;
+    }
+
+    @include respond(phone) {
+        min-width: 100%;
+        margin: .7rem 0;
+        min-height: 28rem;
+    }
+}
+
+.star {
+    &::after {
+        content: "";
+        background: url("../../public/svgs/star.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-origin: content-box;
+        filter: var(--svg-color);
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        z-index: 4;
+        top: 0;
+        right: 0;
+        margin: 1rem 2rem;
     }
 }
