@@ -24,7 +24,7 @@ const ProgressTable = ({ skills }: Props) => {
                                     <h5 className="progressTable-item-title m-horizontal-2">{skill.title}<p>{skill.percentage}%</p></h5>
                                 </div>
                                 <div className="progressTable-item-progress">
-                                    <div className="progressTable-item-progress-bar" style={{ height: `${skill.percentage}%` }}></div>
+                                    <div className="progressTable-item-progress-bar" style={{ width: `${skill.percentage}%` }}></div>
                                 </div>
                             </i>
                         )
