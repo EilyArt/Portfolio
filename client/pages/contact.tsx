@@ -17,7 +17,7 @@ import calendar from "@/svgs/calendar.svg"
 
 interface Props {
     lastProject: any,
-    cv: Array<object>,
+    cv: any,
     pageMetas: Array<object>,
     lastThreePosts: Array<object>,
 }
@@ -163,17 +163,17 @@ const contact: NextPage<Props> = ({ lastProject, cv, pageMetas, lastThreePosts }
                         <StickyBarItem
                             src={phone}
                             title='ADDRESS POINT'
-                            content='123 Stree New York City '
+                            content={`${cv.address}`}
                         />
                         <StickyBarItem
                             src={phone}
                             title='MAIL ME'
-                            content='eilya@mail.com'
+                            content={`${cv.email}`}
                         />
                         <StickyBarItem
                             src={phone}
                             title='CALL ME'
-                            content='+90 533 838 0450'
+                            content={`${cv.phone}`}
                         />
                     </div>
                     <div className='contact-info-social'>
@@ -256,6 +256,10 @@ export async function getServerSideProps(context: any) {
             content
         }
         cv{
+            photo
+            CV
+            id
+            alt
             phone
             email
             address
