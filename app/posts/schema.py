@@ -69,8 +69,8 @@ class Query(graphene.ObjectType):
 
     def resolve_prevNextPosts(self, info, slug):
             post = Post.objects.get(slug=slug)
-            prevPost = Post.objects.filter(created_at__lt=post.created_at).all().last()
-            nextPost = Post.objects.filter(created_at__gt=post.created_at).all().first()
+            prevPost = Post.objects.filter(id__lt=post.id).all().last()
+            nextPost = Post.objects.filter(id__gt=post.id).all().first()
             if prevPost == None:
                 prevPost = Post.objects.all().last()
             if nextPost == None:
