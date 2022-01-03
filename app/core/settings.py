@@ -157,7 +157,10 @@ STATICFILES_DIRS = [
     '/var/www/static/',
 ]
 
-MEDIA_URL = '/media/'
+# Change the domain for production
+MEDIA_URL = 'http://localhost:8000/media/'
+
+
 MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL)
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
