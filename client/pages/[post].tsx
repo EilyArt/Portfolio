@@ -56,8 +56,8 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                             width={700}
                             alt={`${post.thumbnailAlt}`}
                             className="post-content-wrapper-img"
-                            loader={() => `${process.env.NEXT_PUBLIC_API}media/${post.thumbnail}`}
                             src={`${process.env.NEXT_PUBLIC_API}media/${post.thumbnail}`}
+                            loader={() => `${process.env.NEXT_PUBLIC_API}media/${post.thumbnail}`}
                         />
                     </div>
                     <div className="post-content-thumbnail">
@@ -89,7 +89,7 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                             </div>
                             {post.tags.map((tag: { name: string }, index: number) => {
                                 return (
-                                    <Tag size="sm-tag" name={tag.name} />
+                                    <Tag key={index} size="sm-tag" name={tag.name} id={index}/>
                                 )
                             })}
                         </div>

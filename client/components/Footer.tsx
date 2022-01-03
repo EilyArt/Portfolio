@@ -46,9 +46,10 @@ const Footer = ({ lastProject, lastThreePosts, cv }: Props) => {
                 </div>
                 <div className="col m-right-2">
                     <h4 className="m-bottom-2">LATEST POSTS</h4>
-                    {lastThreePosts.map((post: any) => {
+                    {lastThreePosts.map((post: any, index: number) => {
                         return (
                             <LatestNewsBox
+                                key={index}
                                 src={post.thumbnail}
                                 title={post.title}
                                 slug={post.slug}
@@ -74,8 +75,8 @@ const Footer = ({ lastProject, lastThreePosts, cv }: Props) => {
                         data-size="large"
                         data-related=""
                         data-lang="en"
-                        data-show-count="false"><FaTwitter/> Follow @EILYAAMIN
-                    </a> 
+                        data-show-count="false"><FaTwitter /> Follow @EILYAAMIN
+                    </a>
                     <div className="pad-vertical-2">
                         <h4 className="pad-vertical-2">My Newsletter</h4>
                         <aside className="pad-vertical-2">Please join my newsletter to get notifications for new posts and projects.<br /> It can make my day ;)</aside>

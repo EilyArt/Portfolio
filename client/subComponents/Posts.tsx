@@ -37,7 +37,7 @@ const Posts = ({ star, posts, myImage }: Props) => {
             <div className="posts">
                 {posts && posts.slice(0, viewIndex).map((post: any, index: number) => {
                     return (
-                        <Post post={post} index={index} myImage={myImage} star={star} />
+                        <Post key={index} post={post} index={index} myImage={myImage} star={star} />
                     )
                 })}
             </div>

@@ -4,7 +4,7 @@ import Tag from "./Tag"
 
 const Post = ({ post, index, myImage, star }: any) => {
     return (
-        <div className={`postItem ${index < 3 && star && "star"}`} onClick={() => document.getElementById(post.id)?.click()}
+        <div key={post.id} className={`postItem ${index < 3 && star && "star"}`} onClick={() => document.getElementById(post.id)?.click()}
             style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_API}media/${post.thumbnail})` }}>
             <a href={`/${post.slug}`} id={post.id} />
             <div className="postItem-content">
@@ -38,7 +38,7 @@ const Post = ({ post, index, myImage, star }: any) => {
                     </div>
                     {post.tags.slice(0, 3).map((tag: { name: string }, index: number) => {
                         return (
-                            <Tag size="sm-tag" name={tag.name} />
+                            <Tag key={index} size="sm-tag" name={tag.name} id={index}/>
                         )
                     })}
                 </div>
