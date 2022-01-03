@@ -1,6 +1,7 @@
 import Footer from "./Footer"
 import Navbar from "./Navbar"
 import Head from 'next/head'
+import { FaSortUp } from "react-icons/fa";
 
 interface Props {
     lastThreePosts: Array<object>,
@@ -13,6 +14,28 @@ interface Props {
 }
 
 const Layout = ({ lastThreePosts, cv, lastProject, title, postMetas, pageMetas, children }: Props) => {
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    if (typeof window !== "undefined") {
+        window.onscroll = function () { scrollFunction() };
+    }
+
+    function scrollFunction() {
+        if (typeof document !== "undefined") {
+            let mybutton: any = document.getElementById("myBtn");
+            if (typeof mybutton !== "undefined") {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    mybutton.style.display = "block";
+                } else {
+                    mybutton.style.display = "none";
+                }
+            }
+        }
+    }
+
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     return (
         <div>
@@ -34,6 +57,11 @@ const Layout = ({ lastThreePosts, cv, lastProject, title, postMetas, pageMetas, 
 
             <Navbar />
             {children}
+            <button onClick={() => scrollToTop()} className="scrollUpButton" id="myBtn" title="Go to top">
+                <span>
+                    <FaSortUp />
+                </span>
+            </button>
             <Footer lastThreePosts={lastThreePosts} lastProject={lastProject} cv={cv} />
         </div>
     )
