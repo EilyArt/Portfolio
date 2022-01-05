@@ -27,14 +27,14 @@ const blog: NextPage<Props> = ({ posts, cv, tags, lastProject, pageMetas, lastTh
           <Header span="EILYA's Thoughts, stories and ideas." header="Blog" />
         </div>
         <div className="blog-posts pad-default-horizontal">
-          {posts && <Posts posts={posts} myImage={cv} star={true}/>}
+          {posts && <Posts posts={posts} myImage={cv} star={true} />}
         </div>
         <div className="pad-default">
           <Title title="Explore Tags" />
           <div className="blog-tags">
-            {tags.slice(0, 30).map((tag: any) => {
+            {tags.slice(0, 30).map((tag: any, index: number) => {
               return (
-                <Tag name={tag.name} />
+                <Tag name={tag.name} id={index}/>
               )
             })}
           </div>

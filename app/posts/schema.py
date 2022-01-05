@@ -42,7 +42,7 @@ class Query(graphene.ObjectType):
 
     def resolve_allPosts(self, info, **kwargs):
         try:
-            return Post.objects.order_by('-id').all()
+            return Post.objects.filter(published=True).order_by('-id').all()
         except Post.DoesNotExist:
             return None
 
@@ -55,12 +55,12 @@ class Query(graphene.ObjectType):
         except Post.DoesNotExist:
             return None
 
-    # ANCHOR -  GET POST BY SLUG
+    # ANCHOR -  GET LAST N POSTS
     lastNPosts = graphene.List(PostType, N=graphene.Int())
 
     def resolve_lastNPosts(self, info, N):
         try:
-            return Post.objects.order_by('-id')[:N]
+            return Post.objects.filter(published=True).order_by('-id')[:N]
         except Post.DoesNotExist:
             return None
 
@@ -69,8 +69,8 @@ class Query(graphene.ObjectType):
 
     def resolve_prevNextPosts(self, info, slug):
             post = Post.objects.get(slug=slug)
-            prevPost = Post.objects.filter(id__lt=post.id).all().last()
-            nextPost = Post.objects.filter(id__gt=post.id).all().first()
+            prevPost = Post.objects.filter(published=True).filter(id__lt=post.id).all().last()
+            nextPost = Post.objects.filter(published=True).filter(id__gt=post.id).all().first()
             if prevPost == None:
                 prevPost = Post.objects.all().last()
             if nextPost == None:
@@ -83,7 +83,7 @@ class Query(graphene.ObjectType):
     def resolve_allTaggedPosts(self, info, tag):
         try:
             tagObject = Tag.objects.get(name=tag)
-            return Post.objects.all().filter(tags__in=[tagObject.id])
+            return Post.objects.filter(published=True).filter(tags__in=[tagObject.id]).all()
         except Tag.DoesNotExist:
             return None
 
@@ -114,7 +114,7 @@ class Query(graphene.ObjectType):
     def resolve_allComments(self, info, slug):
         try:
             post = Post.objects.get(slug=slug)
-            return Comment.objects.all().filter(parent__isnull=True, post=post.id)
+            return Comment.objects.filter(is_approved=True).all().filter(parent__isnull=True, post=post.id)
         except Post.DoesNotExist:
             return None
 
@@ -140,7 +140,7 @@ class Query(graphene.ObjectType):
 
     # SECTION - POST META
 
-    # ANCHOR -  GET ALL POST COMMENTS
+    # ANCHOR -  GET ALL POST METAS
     postMetas = graphene.List(PostMetaType, slug=graphene.String())
 
     def resolve_postMetas(self, info, slug):

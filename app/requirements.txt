@@ -13,3 +13,4 @@ sendgrid==5.4.0
 django-user-visit==0.4
 django-phonenumber-field[phonenumbers]
 tweepy[async]
+django-sendgrid-v5==1.2.0

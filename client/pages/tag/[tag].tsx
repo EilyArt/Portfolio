@@ -18,7 +18,7 @@ const tag: NextPage<Props> = ({ tag, cv, posts, lastProject, title, lastThreePos
 
     return (
         <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} title={`#${title}`}>
-            <div className="contact pad-default">
+            <div className="pad-default">
                 <Header span="you can view posts related to " header={`#${tag}`} />
             </div>
             <div className="blog-posts pad-default-horizontal">
@@ -45,6 +45,7 @@ export async function getServerSideProps(context: any) {
             address
         }
         allTaggedPosts(tag: "${context.resolvedUrl.substring(5)}") {
+            id
             title
             slug
             thumbnail

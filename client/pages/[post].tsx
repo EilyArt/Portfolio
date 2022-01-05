@@ -47,7 +47,7 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
 
     return (
         <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} postMetas={postMetas} title={post.title}>
-            <div className="post pad-default">
+            <div className="post pad-default pad-bottom-0">
                 <div className="post-content">
                     <div className="post-content-wrapper">
                         <Image
