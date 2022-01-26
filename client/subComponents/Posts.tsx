@@ -42,7 +42,7 @@ const Posts = ({ star, posts, myImage }: Props) => {
                     )
                 })}
             </div>
-            {posts.length >= 12 && <div id="load-more-button" className={`loadMore ${(postsLength + 1 > 16 && viewIndex <= postsLength) && "show"}`}>
+            {posts.length >= 12 && <div id="load-more-button" className={`${(postsLength + 1 < 16 || viewIndex >= postsLength) && "hidden"} loadMore`}>
                 <button onClick={() => viewMoreposts()}
                     className="button">
                     <span className="button-span" >
