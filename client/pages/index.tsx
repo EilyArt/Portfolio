@@ -12,7 +12,6 @@ interface Props {
 }
 
 const index: NextPage<Props> = ({ lastProject, cv, pageMetas, lastThreePosts }: Props) => {
-  console.log(cv);
 
   return (
     <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>

@@ -7,7 +7,6 @@ import StickyBarItem from "./StickyBarItem";
 import arrow from "@/svgs/arrow.svg"
 
 const StickyBar = (cv: any) => {
-    console.log(cv);
     
     const showContent = () => {
         document.getElementById("stickyBar-information")?.classList.toggle("show");

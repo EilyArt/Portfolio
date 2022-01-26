@@ -15,15 +15,16 @@ interface Props {
 }
 
 const Posts = ({ star, posts, myImage }: Props) => {
+    
     const initialState = {
         postsLength: posts.length - 1,
         viewIndex: 16
     }
-
+    
     const [reply, setReply] = useState(initialState);
-
+    
     const { postsLength, viewIndex } = reply;
-
+    
     const viewMoreposts = () => {
         const newState = {
             postsLength: postsLength,
@@ -41,7 +42,7 @@ const Posts = ({ star, posts, myImage }: Props) => {
                     )
                 })}
             </div>
-            {posts.length >= 12 && <div id="load-more-button" className="loadMore">
+            {posts.length >= 12 && <div id="load-more-button" className={`loadMore ${(postsLength + 1 > 16 && viewIndex <= postsLength) && "show"}`}>
                 <button onClick={() => viewMoreposts()}
                     className="button">
                     <span className="button-span" >
