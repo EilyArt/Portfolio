@@ -17,7 +17,7 @@ const About: NextPage<Props> = ({ lastThreePosts, cv, lastProject, pageMetas, ch
     return (
         <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
             <div className="pad-default">
-          <Header span="EILYA's Thoughts, stories and ideas." header="About" />
+          <Header span="EILYA's history and accomplishments." header="About" />
         </div>
             <div className="about pad-default-horizontal">
                 <StickyBar cv={cv}/>

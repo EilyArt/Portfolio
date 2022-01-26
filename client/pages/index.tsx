@@ -3,6 +3,7 @@ import Layout from '@/components/Layout'
 import { gql } from "@apollo/client"
 import client from "./api/apollo-client"
 import Image from "next/image"
+import Header from '@/subComponents/Header'
 
 interface Props {
   lastProject: any,
@@ -15,6 +16,9 @@ const index: NextPage<Props> = ({ lastProject, cv, pageMetas, lastThreePosts }: 
 
   return (
     <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
+      <div className='pad-default pad-bottom-0'>
+        <Header span='' header="Hi, I'm EILYA" />
+      </div>
       <div className='pad-default homepage'>
         <div className='homepage-img'>
           <div className='homepage-img-container'>
