@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.html import mark_safe
 from phonenumber_field.modelfields import PhoneNumberField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # SECTION - MODELS
 
@@ -91,12 +92,15 @@ class Skill(models.Model):
 # ANCHOR - CV
 class Cv(models.Model):
     alt = models.CharField(max_length=54)
-    about_me = models.CharField(max_length=500)
+    about_me = RichTextUploadingField()
     address = models.CharField(max_length=80)
     photo = models.ImageField(upload_to="static/images/", default=None)
     CV = models.FileField(upload_to="static/cv/", default=None)
-    phone = PhoneNumberField(null=False, blank=False, unique=True)
+    phone = PhoneNumberField()
     email = models.EmailField()
+    post_photo = models.ImageField(upload_to="static/images/", default=None)
+    homepage_photo = models.ImageField(upload_to="static/images/", default=None)
+    homepage_paragraph = RichTextUploadingField()
 
     def __str__(self):
         return self.alt

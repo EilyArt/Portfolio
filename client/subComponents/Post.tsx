@@ -13,22 +13,21 @@ const Post = ({ post, index, myImage, star }: any) => {
                         <aside className="postItem-content-duration">{post.duration} min read&nbsp;</aside>
                     </small>
                 </div>
+                <time className="postItem-content-time" dateTime="2020-11-12"> {new Date(post.createdAt).toDateString()}</time>
                 <h3 className="postItem-content-title">
                     {post.title}
                 </h3>
-                <em className="postItem-content-excerpt">- {post.excerpt.slice(0, 100) + `...`}</em>
-                <time className="postItem-content-time" dateTime="2020-11-12"> {new Date(post.createdAt).toDateString()}</time>
+                <em className="postItem-content-excerpt">{post.excerpt.slice(0, 100) + `...`}</em>
                 <div className="postItem-content-bottom">
                     <div className="postItem-content-bottom-eilya">
                         <div className="postItem-content-bottom-eilya-img">
-                            <div className="">
+                            <div className="postItem-content-bottom-eilya-img-container">
                                 {myImage &&
                                     <Image
                                         objectFit="cover"
-                                        height={80}
-                                        width={80}
-                                        loader={() => `${process.env.NEXT_PUBLIC_API}media/${myImage.photo}`}
-                                        src={`${process.env.NEXT_PUBLIC_API}media/${myImage.photo}`}
+                                        layout="fill"
+                                        loader={() => `${process.env.NEXT_PUBLIC_API}media/${myImage.postPhoto}`}
+                                        src={`${process.env.NEXT_PUBLIC_API}media/${myImage.postPhoto}`}
                                         alt={myImage.alt}
                                         id={myImage.id}
                                     />}

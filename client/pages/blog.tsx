@@ -62,7 +62,7 @@ export async function getServerSideProps(context: any) {
         }
       }
       cv{
-        photo
+        postPhoto
         id
         alt
         email

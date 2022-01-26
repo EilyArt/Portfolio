@@ -19,7 +19,7 @@
     cursor: pointer;
     box-shadow: var(--box-shadow-20);
     color: var(--color-heading);
-    
+
 
     &-content {
         height: 100%;
@@ -37,6 +37,8 @@
 
         &-title {
             letter-spacing: -.1rem;
+            line-height: 2.7rem;
+            margin-bottom: .2rem;
         }
 
         &-duration {
@@ -48,8 +50,6 @@
             font-weight: 800;
             font-size: 1.1rem;
             color: var(--color-paragraph);
-            text-decoration: underline solid;
-            text-underline-offset: .40rem;
         }
 
         &-bottom {
@@ -64,13 +64,25 @@
                 align-items: center;
 
                 &-img {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: .3rem;
+                    margin: .7rem;
+                    margin-left: 0;
                     border-radius: 50%;
                     border: 2px solid var(--color-error);
-                    max-height: 3.25rem;
-                    max-width: 3.25rem;
-                    padding: .5rem;
-                    margin: .5rem;
-                    margin-left: 0;
+
+                    &-container {
+                        position: relative;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 3.5rem;
+                        width: 3.5rem;
+                        overflow: hidden;
+                        border-radius: 50%;
+                    }
                 }
             }
         }

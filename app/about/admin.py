@@ -14,7 +14,7 @@ class EducationAdmin(admin.ModelAdmin):
 
 @admin.register(Hobby)
 class HobbyAdmin(admin.ModelAdmin):
-    list_display = ("id", "name" )
+    list_display = ("id", "name")
 
 
 # ANCHOR -  EXPERIENCE
@@ -58,10 +58,12 @@ class SkillAdmin(admin.ModelAdmin):
 # ANCHOR -  CV
 @admin.register(Cv)
 class CvAdmin(admin.ModelAdmin):
-    list_display = ("id","Photo", "CV", "alt", "phone", "email", "address", "about_me")
+    list_display = ("id", "Photo", "CV", "alt", "phone",
+                    "email", "address", "about_me")
+    readonly_fields = ('Photo', )
 
 
 # ANCHOR -  JOB
 @admin.register(Job)
 class JobAdmin(admin.ModelAdmin):
-    list_display = ("id", "title" ,"Svg", "alt", "description")
+    list_display = ("id", "title", "Svg", "alt", "description")
