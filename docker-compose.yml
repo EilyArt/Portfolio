@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  db:
+  postgres:
     image: postgres:13.0-alpine
     user: 1000:1000
     container_name: Database
