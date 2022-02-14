@@ -1,8 +1,9 @@
 version: "3.8"
 
 services:
-  postgres:
+  db:
     image: postgres:13.0-alpine
+    user: 1000:1000
     container_name: Database
     volumes:
       - postgres_data:/var/lib/postgresql/data/
