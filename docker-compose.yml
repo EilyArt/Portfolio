@@ -3,7 +3,6 @@ version: "3.8"
 services:
   postgres:
     image: postgres:13.0-alpine
-    user: 1000:1000
     container_name: Database
     volumes:
       - postgres_data:/var/lib/postgresql/data/
@@ -29,17 +28,17 @@ services:
     depends_on:
       - postgres
 
-  nextjs:
-    restart: always
-    command: npm run dev
-    container_name: Nextjs
-    build:
-      context: ./client/
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    depends_on:
-      - web
+  # nextjs:
+  #   restart: always
+  #   command: npm run dev
+  #   container_name: Nextjs
+  #   build:
+  #     context: ./client/
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - web
   
   nginx:
     build: ./nginx
