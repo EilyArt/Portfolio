@@ -1,4 +1,3 @@
-import src from "@/images/design.png"
 import Image from "next/dist/client/image"
 
 type Props = {
