@@ -30,7 +30,7 @@ services:
 
   nextjs:
     restart: always
-    command: npm run build && npm start
+    command: npm run dev
     container_name: Nextjs
     build:
       context: ./client/
