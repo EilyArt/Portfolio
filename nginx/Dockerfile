@@ -1,6 +1,6 @@
 FROM nginx:1.21-alpine
 
-RUN mkdir /app/nginx
+RUN mkdir /app
 
 RUN rm /etc/nginx/conf.d/default.conf
 

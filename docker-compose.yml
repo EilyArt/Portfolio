@@ -38,7 +38,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./client/:/app/frontend
+      - .:/frontend
     depends_on:
       - web
   
@@ -46,7 +46,8 @@ services:
     build: ./nginx
     container_name: nginx
     volumes:
-      - ./nginx/:/app/nginx ports:
+      - ./app/:/nginx/nginx.conf
+    ports:
       - 8008:80
     depends_on:
       - web
