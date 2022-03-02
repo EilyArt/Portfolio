@@ -37,6 +37,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    volumes:
+      - ./client/:/app/frontend
     depends_on:
       - web
   
@@ -44,8 +46,7 @@ services:
     build: ./nginx
     container_name: nginx
     volumes:
-      - ./app/:/nginx/nginx.conf
-    ports:
+      - ./nginx/:/app/nginx ports:
       - 8008:80
     depends_on:
       - web
