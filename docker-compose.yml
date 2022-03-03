@@ -48,7 +48,7 @@ services:
     volumes:
       - ./app/:/nginx/nginx.conf
     ports:
-      - 8008:80
+      - 80:80
     depends_on:
       - web
     
