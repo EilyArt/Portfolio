@@ -2,8 +2,6 @@ FROM node:13.12.0-alpine
 
 WORKDIR /app/frontend
 
-ENV NODE_ENV=production
-
 COPY package.json package-lock.json ./
 
 RUN npm install 
