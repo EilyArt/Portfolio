@@ -41,18 +41,6 @@ services:
       - .:/frontend
     depends_on:
       - web
-      
-  nginx:
-    build: ./nginx
-    container_name: nginx
-    hostname: nginx
-    image: nginx
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ./app/:/nginx/nginx.conf
-      # - <path/to/your/certs>:/etc/ssl/private
 
 volumes:
   postgres_data:
