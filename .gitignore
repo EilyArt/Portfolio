@@ -8,4 +8,3 @@ media
 # frontend
 node_modules/
 .next
-.env
