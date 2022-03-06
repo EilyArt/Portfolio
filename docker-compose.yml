@@ -12,7 +12,7 @@ services:
       - POSTGRES_DB=PostgresSQL
       
   web:
-    restart: always
+    restart: on-failure
     build: ./app
     container_name: Django
     command: >
@@ -22,14 +22,14 @@ services:
     volumes:
       - ./app/:/app/api
     ports:
-      - 8000:8000
+      - 8080:80
     env_file:
       - ./.env.dev
     depends_on:
       - postgres
 
   nextjs:
-    restart: always
+    restart: on-failure
     command: npm run dev
     container_name: Nextjs
     build:
@@ -41,17 +41,18 @@ services:
       - .:/frontend
     depends_on:
       - web
-  
+      
   nginx:
     build: ./nginx
     container_name: nginx
-    volumes:
-      - ./app/:/nginx/nginx.conf
+    hostname: nginx
+    image: nginx
     ports:
       - 80:80
-    depends_on:
-      - web
-    
+      - 443:443
+    volumes:
+      - ./app/:/nginx/nginx.conf
+      # - <path/to/your/certs>:/etc/ssl/private
 
 volumes:
   postgres_data:
