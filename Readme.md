@@ -9,3 +9,5 @@
 * Migrations $ docker-compose -f docker-compose.prod.yml exec web python manage.py migrate
 
 * Seed Data $ docker-compose -f docker-compose.prod.yml exec web python3 manage.py seed APP-NAME --number=200
+
+* docker command for production $ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d 

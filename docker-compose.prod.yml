@@ -12,8 +12,10 @@ services:
       - POSTGRES_DB=PostgresSQL
       
   web:
-    restart: on-failure
-    build: ./app
+    restart: always
+    build:
+      context: ./app/
+      dockerfile: Dockerfile.prod
     container_name: Django
     command: >
       sh -c "python manage.py makemigrations &&
@@ -24,12 +26,12 @@ services:
     ports:
       - 8000:8000
     env_file:
-      - ./app/.env.dev
+      - ./app/.env.prod
     depends_on:
       - postgres
 
   nextjs:
-    restart: on-failure
+    restart: always
     command: npm run dev
     container_name: Nextjs
     build:

@@ -1,6 +1,4 @@
 #backend
-.env.dev
-.env.prod
 migrations
 media
 
