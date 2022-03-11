@@ -34,7 +34,7 @@ const index: NextPage<Props> = ({ lastProject, cv, pageMetas, lastThreePosts }: 
         </div>
         <div className='homepage-story'>
 
-          <div className="post-content-excerpt-description" dangerouslySetInnerHTML={{ __html: cv.homepageParagraph }} />
+          {cv && cv.homepageParagraph && <div className="post-content-excerpt-description" dangerouslySetInnerHTML={{ __html: cv.homepageParagraph }} />}
 
           {/* Hi, I'm Sarah.
 

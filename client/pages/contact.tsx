@@ -163,17 +163,17 @@ const contact: NextPage<Props> = ({ lastProject, cv, pageMetas, lastThreePosts }
                         <StickyBarItem
                             src={phone}
                             title='ADDRESS POINT'
-                            content={`${cv.address}`}
+                            content={`${cv && cv.address}`}
                         />
                         <StickyBarItem
                             src={phone}
                             title='MAIL ME'
-                            content={`${cv.email}`}
+                            content={`${cv && cv.email}`}
                         />
                         <StickyBarItem
                             src={phone}
                             title='CALL ME'
-                            content={`${cv.phone}`}
+                            content={`${cv && cv.phone}`}
                         />
                     </div>
                     <div className='contact-info-social'>

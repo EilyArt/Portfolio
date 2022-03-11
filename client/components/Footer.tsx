@@ -35,13 +35,13 @@ const Footer = ({ lastProject, lastThreePosts, cv }: Props) => {
                 <div className="col m-right-2">
                     <h4 className="m-bottom-2">CONTACT</h4>
                     <div className="pad-vertical-2">
-                        <address><FaMapMarkerAlt className="m-right-2" />{cv.address && cv.address}</address>
+                        <address><FaMapMarkerAlt className="m-right-2" />{cv && cv.address && cv.address}</address>
                     </div>
                     <div className="pad-vertical-2">
-                        <a><FaWhatsapp className="m-right-2" />{cv.phone && cv.phone}</a>
+                        <a><FaWhatsapp className="m-right-2" />{cv && cv.phone && cv.phone}</a>
                     </div>
                     <div className="pad-vertical-2">
-                        <a><FaPaperPlane className="m-right-2" />{cv.email && cv.email}</a>
+                        <a><FaPaperPlane className="m-right-2" />{cv && cv.email && cv.email}</a>
                     </div>
                 </div>
                 <div className="col m-right-2">
@@ -62,10 +62,10 @@ const Footer = ({ lastProject, lastThreePosts, cv }: Props) => {
                 </div>
                 <div className="col m-right-2">
                     <h4 className="m-bottom-2">PROJECTS</h4>
-                    <BestSellerProject
+                    {lastProject &&  <BestSellerProject
                         src={lastProject.images[0].image}
                         alt={`${lastProject.images[0].alt}`}
-                        title={`${lastProject.name}`} />
+                        title={`${lastProject.name}`} />}
                 </div>
                 <div className="col m-right-2">
                     <h4 className="m-bottom-2">TWITTER</h4>

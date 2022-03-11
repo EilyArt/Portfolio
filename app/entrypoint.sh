@@ -11,8 +11,8 @@ then
     echo "PostgreSQL started"
 fi
 
-python manage.py flush --no-input
-python manage.py migrate
+# python manage.py flush --no-input
+# python manage.py migrate
 # python manage.py seed clients --number=25
 # python manage.py seed pages --number=10
 # python manage.py seed about --number=5

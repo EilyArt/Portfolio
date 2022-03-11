@@ -7,7 +7,7 @@ import StickyBarItem from "./StickyBarItem";
 import arrow from "@/svgs/arrow.svg"
 
 const StickyBar = (cv: any) => {
-    
+
     const showContent = () => {
         document.getElementById("stickyBar-information")?.classList.toggle("show");
     }
@@ -19,8 +19,8 @@ const StickyBar = (cv: any) => {
             <div className="stickyBar-container">
                 <div className="stickyBar-container-img">
                     {cv.cv && <Image
-                        loader={() => `${process.env.NEXT_PUBLIC_API}media/${cv.cv.photo}`}
-                        src={`${process.env.NEXT_PUBLIC_API}media/${cv.cv.photo}`}
+                        loader={() => `${process.env.NEXT_PUBLIC_API}media/${cv.cv.photo && cv.cv.photo}`}
+                        src={`${process.env.NEXT_PUBLIC_API}media/${cv.cv.photo && cv.cv.photo}`}
                         alt={cv.cv.alt}
                         id={cv.cv.id}
                         objectFit="cover"
@@ -37,8 +37,12 @@ const StickyBar = (cv: any) => {
             <div id="stickyBar-information" className="stickyBar-resHandler">
                 <div className="separation-2" />
                 <div className="stickyBar-items">
-                    <StickyBarItem src={email} title="email" content={`${cv.cv.email}`} />
-                    <StickyBarItem src={phone} title="phone" content={`${cv.cv.phone}`} />
+                    {cv.cv &&
+                        <>
+                            <StickyBarItem src={email} title="email" content={`${cv.cv.email && cv.cv.email}`} />
+                            <StickyBarItem src={phone} title="phone" content={`${cv.cv.photo && cv.cv.phone}`} />
+                        </>
+                    }
                     <StickyBarItem src={calendar} title="birthday" content="April 5th, 1998" />
                 </div>
                 <div className="stickyBar-button" onClick={() => document.getElementById("downloadCV")?.click}>
