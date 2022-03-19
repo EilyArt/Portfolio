@@ -13,29 +13,26 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR=Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY=os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG=int(os.environ.get("DEBUG", default=0))
+DEBUG = int(os.environ.get("DEBUG", default=0))
 
 # 'ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 # For example: 'ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
-if type(os.environ.get("ALLOWED_HOSTS")) == type(None):
-    ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOSTS")]
-else:
-    ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOSTS").split(' ')]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(' ')
 
 
 # Application definition
 
-INSTALLED_APPS=[
+INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -59,7 +56,7 @@ INSTALLED_APPS=[
     'django_cleanup'
 ]
 
-MIDDLEWARE=[
+MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -72,11 +69,11 @@ MIDDLEWARE=[
     'user_visit.middleware.UserVisitMiddleware',
 ]
 
-ROOT_URLCONF='core.urls'
+ROOT_URLCONF = 'core.urls'
 
-CORS_ORIGIN_ALLOW_ALL=True
+CORS_ORIGIN_ALLOW_ALL = True
 
-TEMPLATES=[
+TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
@@ -92,13 +89,13 @@ TEMPLATES=[
     },
 ]
 
-WSGI_APPLICATION='core.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES={
+DATABASES = {
     "default": {
         "ENGINE": os.environ.get("SQL_ENGINE"),
         "NAME": os.environ.get("SQL_DATABASE"),
@@ -113,7 +110,7 @@ DATABASES={
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS=[
+AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
@@ -132,43 +129,43 @@ AUTH_PASSWORD_VALIDATORS=[
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE='en-us'
+LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE='UTC'
+TIME_ZONE = 'UTC'
 
-USE_I18N=True
+USE_I18N = True
 
-USE_L10N=True
+USE_L10N = True
 
-USE_TZ=True
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL='/static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD='django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-GRAPHENE={
+GRAPHENE = {
     "SCHEMA": "core.schema.schema",
 }
 
-# STATICFILES_DIRS=[
+# STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, "static"),
 #     '/var/www/static/',
 # ]
 
-MEDIA_URL='/media/'
-MEDIA_ROOT=os.path.join(BASE_DIR, MEDIA_URL)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL)
 
-CKEDITOR_UPLOAD_PATH="uploads/"
-CKEDITOR_IMAGE_BACKEND='pillow'
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = 'pillow'
 
-CKEDITOR_CONFIGS={
+CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
         'height': 700,
@@ -177,7 +174,7 @@ CKEDITOR_CONFIGS={
     },
 }
 
-LOGGING={
+LOGGING = {
    'version': 1,
    'disable_existing_loggers': False,
    'handlers': {
@@ -197,5 +194,5 @@ LOGGING={
 }
 
 # ANCHOR ~ THIS CODE FIXES DJANGO PROD STATIC FILES (CSS, JS, IMAGES)
-STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
-STATIC_ROOT=os.path.join(BASE_DIR, "static")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
