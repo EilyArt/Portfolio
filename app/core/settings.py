@@ -28,7 +28,7 @@ DEBUG=int(os.environ.get("DEBUG", default=0))
 # 'ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 # For example: 'ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
 if type(os.environ.get("ALLOWED_HOSTS")) == type(None):
-    ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
+    ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOSTS")]
 else:
     ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOSTS").split(' ')]
 
