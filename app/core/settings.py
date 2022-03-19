@@ -30,7 +30,7 @@ DEBUG=int(os.environ.get("DEBUG", default=0))
 if type(os.environ.get("ALLOWED_HOSTS")) == type(None):
     ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
 else:
-    ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(' ')
+    ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOSTS").split(' ')]
 
 
 # Application definition
