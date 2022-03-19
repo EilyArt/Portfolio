@@ -28,7 +28,7 @@ services:
     ports:
       - 8000:8000
     env_file:
-      - ./app/core/.env.prod
+      - ./app/.env.prod
     depends_on:
       - postgres
 
