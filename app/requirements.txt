@@ -1,4 +1,4 @@
-Django
+Django>=3.2.11
 gunicorn
 psycopg2-binary
 graphene-django
