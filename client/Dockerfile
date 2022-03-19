@@ -6,7 +6,9 @@ COPY package.json package-lock.json ./
 
 RUN npm install 
 
-RUN npm install react-scripts@3.4.1 -g 
+RUN npm install install react@latest react-scripts@latest react-dom@latest -g 
+
+RUN npm install next@12 -g 
 
 COPY . ./
 
