@@ -196,3 +196,7 @@ LOGGING = {
 # ANCHOR ~ THIS CODE FIXES DJANGO PROD STATIC FILES (CSS, JS, IMAGES)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+import django
+from django.utils.encoding import force_str
+django.utils.encoding.force_text = force_str
