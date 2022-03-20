@@ -2,6 +2,7 @@
 migrations
 media
 static
+backup
 
 # frontend
 node_modules/

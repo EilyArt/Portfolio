@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'graphene_django',
     'ckeditor',
     'ckeditor_uploader',
+    'django_archive',
 
     'posts',
     'about',
@@ -53,7 +54,7 @@ INSTALLED_APPS = [
     'projects',
     'phonenumber_field',
     'django_seed',
-    'django_cleanup'
+    'django_cleanup',
 ]
 
 MIDDLEWARE = [
@@ -205,3 +206,20 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 import django
 from django.utils.encoding import force_str
 django.utils.encoding.force_text = force_str
+
+
+
+# ANCHOR ~ DB BACKEUP CONFIG
+import datetime
+now = datetime.datetime.now()
+from django_archive import archivers
+
+try:
+    os.makedirs(os.path.join(BASE_DIR, "backup"))
+except FileExistsError:
+    pass
+
+ARCHIVE_FORMAT = archivers.ZIP
+ARCHIVE_DIRECTORY = os.path.join(BASE_DIR, "backup")
+ARCHIVE_FILENAME = 'DB_BACKUP_' + now.strftime("%H:%M:%S_%Y-%m-%d")
+
