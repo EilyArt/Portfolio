@@ -10,6 +10,7 @@ module.exports = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   images: {
-    loader: 'custom',
+    loader: 'imgix',
+    path: [process.env.NEXT_PUBLIC_API],
   },
 }
