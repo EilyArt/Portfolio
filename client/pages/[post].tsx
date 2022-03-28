@@ -3,13 +3,11 @@ import axios from "axios";
 import Layout from "@/components/Layout"
 import Posts from "@/subComponents/Posts"
 import Title from "@/subComponents/Title"
-import img from "@/images/sample3.jpeg"
 import Image from "next/dist/client/image"
 import Tag from "@/subComponents/Tag"
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import MediaIcon from "@/subComponents/MediaIcon"
 import DiscussionForm from "@/subComponents/DiscussionForm"
-import Link from "next/dist/client/link"
 import { gql } from "@apollo/client"
 import client from "./api/apollo-client"
 

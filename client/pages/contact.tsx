@@ -6,14 +6,11 @@ import StickyBarItem from '@/subComponents/StickyBarItem'
 import MediaIcon from '@/subComponents/MediaIcon'
 import { FaPaperPlane } from "react-icons/fa";
 import React, { useState } from 'react'
-import boxLogo from "@/images/star.png"
 import { gql } from "@apollo/client"
 import client from "./api/apollo-client"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import email from "@/svgs/email.svg"
 import phone from "@/svgs/phone.svg"
-import calendar from "@/svgs/calendar.svg"
 
 interface Props {
     lastProject: any,

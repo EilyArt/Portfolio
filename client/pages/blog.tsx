@@ -1,7 +1,5 @@
 import type { NextPage } from 'next'
 import Layout from '@/components/Layout'
-import Image from 'next/dist/client/image';
-import hero from "@/images/blog-dark.jpeg"
 import Posts from '../subComponents/Posts';
 import Title from '@/subComponents/Title';
 import Tag from '@/subComponents/Tag';

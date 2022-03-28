@@ -3,7 +3,6 @@ import type { NextPage } from 'next'
 import Title from '@/subComponents/Title'
 import AboutSection from '@/subComponents/AboutSection';
 import SkillBox from "@/subComponents/SkillBox";
-import ProgressTable from '@/subComponents/ProgressTable';
 import pin from "@/svgs/pin.svg"
 import { gql } from "@apollo/client"
 import client from "./api/apollo-client"
