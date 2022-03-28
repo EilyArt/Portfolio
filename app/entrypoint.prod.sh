@@ -11,7 +11,8 @@ then
     echo "PostgreSQL started"
 fi
 
-
+python manage.py makemigrations 
+python manage.py migrate
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('root', '', '0')" | python manage.py shell
 
 exec "$@"
