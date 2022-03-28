@@ -23,6 +23,8 @@ services:
              python manage.py migrate &&
              python manage.py check --deploy &&
              gunicorn -c conf/gunicorn_config.py core.wsgi"
+    expose:
+      - 8000
     volumes:
       - ./app/:/app/api
     ports:
@@ -43,6 +45,14 @@ services:
       - "3000:3000"
     volumes:
       - .:/frontend
+    depends_on:
+      - web
+
+
+  nginx:
+    build: ./nginx
+    ports:
+      - 1337:80
     depends_on:
       - web
 
