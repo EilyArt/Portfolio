@@ -55,6 +55,7 @@ services:
       - 1337:80
     depends_on:
       - web
+    command: "sudo service nginx restart"
 
 volumes:
   postgres_data:
