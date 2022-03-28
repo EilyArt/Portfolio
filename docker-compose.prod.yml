@@ -22,7 +22,7 @@ services:
              python manage.py makemigrations &&
              python manage.py migrate &&
              python manage.py check --deploy &&
-             python manage.py runserver 0.0.0.0:8000"
+             gunicorn -c conf/gunicorn_config.py core.wsgi"
     volumes:
       - ./app/:/app/api
     ports:
