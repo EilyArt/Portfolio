@@ -1,19 +1,19 @@
-FROM node:latest
-
+FROM node:alpine as BUILD_IMAGE
 WORKDIR /client
-
-COPY package.json package-lock.json ./
-
-RUN npm install 
-
-RUN npm install install react@latest react-scripts@latest react-dom@latest -g 
-
-RUN npm install next@12 -g 
-
-COPY . ./
-
-RUN npm run build
-
+COPY package.json npm.lock ./
+# install dependencies
+RUN npm install --frozen-lockfile
+COPY . .
+# build
+RUN npm build
+# remove dev dependencies
+RUN npm prune --production
+FROM node:alpine
+WORKDIR /client
+# copy from build image
+COPY --from=BUILD_IMAGE /client/package.json ./package.json
+COPY --from=BUILD_IMAGE /client/node_modules ./node_modules
+COPY --from=BUILD_IMAGE /client/.next ./.next
+COPY --from=BUILD_IMAGE /client/public ./public
 EXPOSE 3000
-
-CMD ["npm", "run", "start"]
+CMD ["npm", "start"]
