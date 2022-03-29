@@ -33,6 +33,7 @@ ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(' ')
 # Application definition
 
 INSTALLED_APPS = [
+    'django_crontab',
     'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,6 +56,10 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'django_seed',
     'django_cleanup',
+]
+
+CRONJOBS = [
+    ('*/1 * * * *', 'core.cron.my_scheduled_job'),
 ]
 
 MIDDLEWARE = [
