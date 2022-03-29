@@ -15,3 +15,9 @@ module.exports = {
     path: [process.env.NEXT_PUBLIC_API],
   },
 }
+
+module.exports = {
+  env: {
+    NEXT_PUBLIC_API: 'http://3.83.150.121:8000/'
+  }
+}

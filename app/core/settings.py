@@ -74,6 +74,38 @@ ROOT_URLCONF = 'core.urls'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+CORS_ALLOWED_ORIGINS = [
+"https://eilyaamin.com",
+"https://www.eilyaamin.com",
+"http://localhost:8080",
+"http://127.0.0.1:3000"
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+r"^https://\w+\.eilyaamin\.com$",
+]
+
+CORS_ALLOW_METHODS = [
+'DELETE',
+'GET',
+'OPTIONS',
+'PATCH',
+'POST',
+'PUT',
+]
+
+CORS_ALLOW_HEADERS = [
+'accept',
+'accept-encoding',
+'authorization',
+'content-type',
+'dnt',
+'origin',
+'user-agent',
+'x-csrftoken',
+'x-requested-with',
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
