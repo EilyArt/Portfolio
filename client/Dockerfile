@@ -1,6 +1,6 @@
 FROM node:alpine as BUILD_IMAGE
 WORKDIR /client
-COPY package.json npm.lock ./
+COPY package.json ./
 # install dependencies
 RUN npm install --frozen-lockfile
 COPY . .
