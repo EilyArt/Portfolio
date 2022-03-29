@@ -5,7 +5,7 @@ COPY package.json ./
 RUN npm install --frozen-lockfile
 COPY . .
 # build
-RUN npm build
+RUN npm run build
 # remove dev dependencies
 RUN npm prune --production
 FROM node:alpine
@@ -16,4 +16,4 @@ COPY --from=BUILD_IMAGE /client/node_modules ./node_modules
 COPY --from=BUILD_IMAGE /client/.next ./.next
 COPY --from=BUILD_IMAGE /client/public ./public
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
