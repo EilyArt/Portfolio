@@ -16,4 +16,4 @@ tweepy[async]
 django-sendgrid-v5
 whitenoise
 django-archive
-django-crontab==0.7.1
+django-crontab
