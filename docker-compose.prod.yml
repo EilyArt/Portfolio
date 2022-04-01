@@ -32,19 +32,19 @@ services:
     depends_on:
       - postgres
 
-  # nextjs:
-  #   restart: always
-  #   command: npm run start
-  #   container_name: Nextjs
-  #   build:
-  #     context: ./client/
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - .:/frontend
-  #   depends_on:
-  #     - web
+  nextjs:
+    restart: always
+    command: npm run start
+    container_name: Nextjs
+    build:
+      context: ./client/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/frontend
+    depends_on:
+      - web
 
 volumes:
   postgres_data:
