@@ -18,6 +18,6 @@ module.exports = {
 
 module.exports = {
   env: {
-    NEXT_PUBLIC_API: 'http://3.87.21.34:8000/'
+    NEXT_PUBLIC_API: 'http://0.0.0.0:8000/'
   }
 }
