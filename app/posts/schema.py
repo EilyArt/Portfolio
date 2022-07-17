@@ -38,9 +38,9 @@ class Query(graphene.ObjectType):
     # SECTION - POST
 
     # ANCHOR -  GET ALL POSTS
-    allPosts = graphene.List(PostType)
+    posts = graphene.List(PostType)
 
-    def resolve_allPosts(self, info, **kwargs):
+    def resolve_posts(self, info, **kwargs):
         try:
             return Post.objects.filter(published=True).order_by('-id').all()
         except Post.DoesNotExist:

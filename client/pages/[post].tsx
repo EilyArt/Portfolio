@@ -9,7 +9,8 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import MediaIcon from "@/subComponents/MediaIcon"
 import DiscussionForm from "@/subComponents/DiscussionForm"
 import { gql } from "@apollo/client"
-import client from "./api/apollo-client"
+import { getApolloClient } from "./api/apollo-client"
+import Head from 'next/head'
 
 interface Props {
     post: any,
@@ -17,34 +18,35 @@ interface Props {
     comments: any,
     prevPost: any,
     nextPost: any,
-    lastThreePosts: Array<object>,
-    lastProject: any,
     postMetas: Array<object>,
     threeRelatedPosts: Array<object>,
 }
 
-const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProject, postMetas, threeRelatedPosts }: Props) => {
+const post = ({ post, cv, comments, prevPost, nextPost, postMetas, threeRelatedPosts }: Props) => {
 
-    useEffect(() => {
-        axios({
-            url: `${process.env.NEXT_PUBLIC_API}graphql/`,
-            method: 'post',
-            data: {
-                query: `
-                mutation {
-                    addView(postId: ${post.id}){
-                      post{
-                        id
-                      }
-                    }
-                  }                  
-                  `
-            }
-        })
-    })
+    // useEffect(() => {
+    //     axios({
+    //         url: `${process.env.NEXT_PUBLIC_API}graphql/`,
+    //         method: 'post',
+    //         data: {
+    //             query: `
+    //             mutation {
+    //                 addView(postId: ${post.id}){
+    //                   post{
+    //                     id
+    //                   }
+    //                 }
+    //               }                  
+    //               `
+    //         }
+    //     })
+    // })
 
     return (
-        <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} postMetas={postMetas} title={post.title}>
+        <>
+        <Head>
+            <title>{post?.title}</title>
+        </Head>
             <div className="post pad-default pad-bottom-0">
                 <div className="post-content">
                     <div className="post-content-wrapper">
@@ -52,21 +54,21 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                             objectFit="cover"
                             height={450}
                             width={700}
-                            alt={`${post.thumbnailAlt}`}
+                            alt={`${post?.thumbnailAlt}`}
                             className="post-content-wrapper-img"
-                            src={`${process.env.NEXT_PUBLIC_API}media/${post.thumbnail}`}
-                            loader={() => `${process.env.NEXT_PUBLIC_API}media/${post.thumbnail}`}
+                            src={`${process.env.NEXT_PUBLIC_API}media/${post?.thumbnail}`}
+                            loader={() => `${process.env.NEXT_PUBLIC_API}media/${post?.thumbnail}`}
                         />
                     </div>
                     <div className="post-content-thumbnail">
                         <div className="post-content-thumbnail-meta">
                             <span className="post-content-thumbnail-meta-minutes">
-                                {post.duration} min read
+                                {post?.duration} min read
                             </span>
-                            <time className="post-content-thumbnail-meta-date" dateTime="2020-11-12"> {new Date(post.createdAt).toDateString()}</time>
+                            <time className="post-content-thumbnail-meta-date" dateTime="2020-11-12"> {new Date(post?.createdAt).toDateString()}</time>
                         </div>
                         <h2 className="post-content-thumbnail-title">
-                            {post.title}
+                            {post?.title}
                         </h2>
                         <div className="post-content-thumbnail-bottom">
                             <div className="post-content-thumbnail-bottom-writer">
@@ -85,7 +87,7 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                                 </div>
                                 <h6 className="post-content-thumbnail-bottom-writer-name">Eilya Amin in</h6>
                             </div>
-                            {post.tags.map((tag: { name: string }, index: number) => {
+                            {post?.tags.map((tag: { name: string }, index: number) => {
                                 return (
                                     <Tag key={index} size="sm-tag" name={tag.name} id={index}/>
                                 )
@@ -94,7 +96,7 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                     </div>
                 </div>
                 <div className="pad-default-horizontal post-content-excerpt">
-                    <article className="post-content-excerpt-description" dangerouslySetInnerHTML={{ __html: post.description }} />
+                    <article className="post-content-excerpt-description" dangerouslySetInnerHTML={{ __html: post?.description }} />
                 </div>
                 <div className="post-socialMedia">
                     <div className="post-socialMedia-container">
@@ -105,52 +107,53 @@ const post = ({ post, cv, comments, prevPost, nextPost, lastThreePosts, lastProj
                     </div>
                 </div>
                 <div className="post-prevNext">
-                    <a href={`/${prevPost.slug}`} className="post-prevNext-container previusPost">
+                    <a href={`/${prevPost?.slug}`} className="post-prevNext-container previusPost">
                         <div className="post-prevNext-container-wrapper">
                             <Image objectFit="cover" layout="fill"
-                                loader={() => `${process.env.NEXT_PUBLIC_API}media/${prevPost.thumbnail}`}
-                                src={`${process.env.NEXT_PUBLIC_API}media/${prevPost.thumbnail}`}
-                                alt={prevPost.thumbnailAlt}
+                                loader={() => `${process.env.NEXT_PUBLIC_API}media/${prevPost?.thumbnail}`}
+                                src={`${process.env.NEXT_PUBLIC_API}media/${prevPost?.thumbnail}`}
+                                alt={prevPost?.thumbnailAlt}
                             />
                         </div>
                         <div className="post-prevNext-container-info">
                             <span><FaAngleLeft /> Previus Post</span>
                             <h3 className="posts-post-content-title">
-                                {prevPost.title}
+                                {prevPost?.title}
                             </h3>
                         </div>
                     </a>
-                    <a href={`/${nextPost.slug}`} className="post-prevNext-container nextPost">
+                    <a href={`/${nextPost?.slug}`} className="post-prevNext-container nextPost">
                         <div className="post-prevNext-container-wrapper">
                             <Image objectFit="cover" layout="fill"
-                                loader={() => `${process.env.NEXT_PUBLIC_API}media/${nextPost.thumbnail}`}
-                                src={`${process.env.NEXT_PUBLIC_API}media/${nextPost.thumbnail}`}
-                                alt={nextPost.thumbnailAlt}
+                                loader={() => `${process.env.NEXT_PUBLIC_API}media/${nextPost?.thumbnail}`}
+                                src={`${process.env.NEXT_PUBLIC_API}media/${nextPost?.thumbnail}`}
+                                alt={nextPost?.thumbnailAlt}
                             />
                         </div>
                         <div className="post-prevNext-container-info">
                             <span id="nextPost">Next Post <FaAngleRight /></span>
                             <h3 className="posts-post-content-title">
-                                {nextPost.title}
+                                {nextPost?.title}
                             </h3>
                         </div>
                     </a>
                 </div>
-                {threeRelatedPosts.length !== 0 && <div className="pad-default-horizontal">
+                {threeRelatedPosts?.length !== 0 && <div className="pad-default-horizontal">
                     <Title title="You may also like" />
                     <Posts posts={threeRelatedPosts} myImage={cv} star={false} />
                 </div>}
                 <div className="post-discussion">
-                    <DiscussionForm post={post} comments={comments} />
+                    {/* <DiscussionForm post={post} comments={comments} /> */}
                 </div>
             </div>
-        </Layout>
+        </>
     )
 }
 
 
 export async function getServerSideProps(context: any) {
 
+    const client = getApolloClient();
 
     const { data } = await client.query({
         query: gql`
@@ -214,24 +217,10 @@ export async function getServerSideProps(context: any) {
                   name
                 }
             }
-            lastProject {
-                name
-                images{
-                  image
-                  alt
-                }
-            }
             postMetas(slug: "${context.resolvedUrl.substring(1)}") {
                 name
                 content
             } 
-            lastNPosts(N: 3) {
-                id
-                title
-                slug
-                thumbnail
-                createdAt
-            }
         }
       `
     })
@@ -250,8 +239,6 @@ export async function getServerSideProps(context: any) {
                 comments: data.allComments,
                 prevPost: data.prevNextPosts[0],
                 nextPost: data.prevNextPosts[1],
-                lastThreePosts: data.lastNPosts,
-                lastProject: data.lastProject,
                 threeRelatedPosts: data.threeRelatedPosts
             }
         }

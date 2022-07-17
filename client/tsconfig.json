@@ -41,7 +41,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "pages/_app.tsx", "pages/api/apollo-client.js", "pages/queries/queries.js", "pages/api/[post].js"  ],
   "exclude": [
     "node_modules"
   ]

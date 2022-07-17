@@ -1,4 +1,3 @@
-import { FaLinkedinIn, FaGithub, FaTwitter, FaYoutube } from "react-icons/fa";
 import Link from "next/link"
 import { useRouter } from "next/dist/client/router";
 import MediaIcon from '../subComponents/MediaIcon';
@@ -11,10 +10,10 @@ const Navbar = () => {
     return (
         <div className="navbar pad-default-horizontal">
             <div className="navbar-socialLinks">
-                <MediaIcon media="linkedin" />
-                <MediaIcon media="twitter" />
-                <MediaIcon media="youtube" />
-                <MediaIcon media="github" />
+                <MediaIcon media="linkedin" link={""}/>
+                <MediaIcon media="twitter" link={""}/>
+                <MediaIcon media="youtube" link={""}/>
+                <MediaIcon media="github" link={""}/>
             </div>
             <div className="navbar-links">
                         <Link href="/"><a className={`${router.pathname.toString() === "/" && "linkActive"}  pad-2`}>Home</a></Link>
