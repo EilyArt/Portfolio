@@ -14,9 +14,9 @@ const Footer = () => {
         query
     );
 
-    if (loading) return "Loading...";
+    if (loading) return null;
 
-    if (error) return `Error! ${error.message}`;
+    if (error) return null;
 
     const { lastProject, cv, lastNPosts } = data
 

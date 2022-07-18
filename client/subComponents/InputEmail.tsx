@@ -1,7 +1,6 @@
 import axios from "axios";
 import { FaPaperPlane } from "react-icons/fa";
 import { gql } from "apollo-boost";
-import client from "pages/api/apollo-client";
 import React, { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
