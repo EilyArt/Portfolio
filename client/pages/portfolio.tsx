@@ -3,26 +3,39 @@ import Layout from '@/components/Layout'
 import Header from '@/subComponents/Header'
 import Gallery from '@/subComponents/Gallery'
 import { FaExternalLinkAlt, FaStar } from "react-icons/fa";
-import { gql } from "@apollo/client"
-import client from "./api/apollo-client"
+import { queryPortfolio as query } from './queries/queries'
+import { useQuery } from "@apollo/client";
+import Head from 'next/head'
 
-interface Props {
-    projects: Array<object>,
-    cv: Array<object>,
-    lastProject: any,
-    pageMetas: Array<object>,
-    lastThreePosts: Array<object>,
-}
 
-const portfolio: NextPage<Props> = ({ projects, cv, lastProject, pageMetas, lastThreePosts }: Props) => {
+const portfolio = () => {
+
+    const { data, loading, error } = useQuery(
+        query
+    );
+
+    if (loading) return "Loading...";
+
+    if (error) return `Error! ${error.message}`;
+
+    const { page, allProjects, pageMetas } = data
 
     return (
-        <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
+        <>
+            <Head>
+                <title>{`${page?.title}`}</title>
+                {pageMetas?.map((meta: any, index: number) => {
+                    return (
+                        <meta key={index} name={`${meta.name}`} content={`${meta.content}`} />
+                    )
+                })}
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            </Head>
             <div className="portfolio pad-default">
                 <Header span="Showcasing some of my best work" header="Portfolio" />
             </div>
             <div className="portfolio pad-default-horizontal">
-                {projects.map((project: any, index: number) => {
+                {allProjects?.map((project: any, index: number) => {
                     return (
                         <div className="portfolio-project">
                             <Gallery id={index} images={project.images} />
@@ -59,68 +72,9 @@ const portfolio: NextPage<Props> = ({ projects, cv, lastProject, pageMetas, last
                     );
                 })}
             </div>
-        </Layout>
+        </>
     )
 }
 
-export async function getServerSideProps(context: any) {
-
-    const { data } = await client.query({
-        query: gql`
-      {
-        allProjects {
-            name
-            price
-            label
-            link
-            description
-            features {
-              feature
-            }
-            images {
-              image
-              alt
-            }
-        }
-        cv{
-            phone
-            email
-            address
-        }
-        lastProject {
-            name
-            images{
-              image
-              alt
-            }
-        }
-        pageMetas(page: "${context.resolvedUrl.substring(1)}") {
-            page{
-                title
-            }
-            name
-            content
-        }
-        lastNPosts(N: 3) {
-            id
-            title
-            slug
-            thumbnail
-            createdAt
-        }
-      }
-      `
-    })
-
-    return {
-        props: {
-            projects: data.allProjects,
-            cv: data.cv,
-            lastProject: data.lastProject,
-            pageMetas: data.pageMetas,
-            lastThreePosts: data.lastNPosts,
-        }
-    }
-}
 
 export default portfolio

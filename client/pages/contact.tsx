@@ -1,25 +1,18 @@
-import axios from "axios";
-import { NextPage } from 'next'
-import Layout from '@/components/Layout'
 import Header from '@/subComponents/Header'
 import StickyBarItem from '@/subComponents/StickyBarItem'
 import MediaIcon from '@/subComponents/MediaIcon'
 import { FaPaperPlane } from "react-icons/fa";
 import React, { useState } from 'react'
-import { gql } from "@apollo/client"
-import client from "./api/apollo-client"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import phone from "@/svgs/phone.svg"
+import { queryBlog as query } from './queries/queries'
+import { useQuery } from "@apollo/client";
+import Head from 'next/head'
 
-interface Props {
-    lastProject: any,
-    cv: any,
-    pageMetas: Array<object>,
-    lastThreePosts: Array<object>,
-}
 
-const contact: NextPage<Props> = ({ lastProject, cv, pageMetas, lastThreePosts }: Props) => {
+
+const contact = () => {
 
     const initialState = {
         name: '',
@@ -28,110 +21,31 @@ const contact: NextPage<Props> = ({ lastProject, cv, pageMetas, lastThreePosts }
         content: ''
     };
 
-
     const [formData, setFormData] = useState(initialState);
 
     const { name, email, subject, content } = formData;
 
-    const validateEmail = (email: String) => {
-        return String(email)
-            .toLowerCase()
-            .match(
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            );
-    };
+    const { data, loading, error } = useQuery(
+        query
+    );
 
-    const notify = (message: string, status: string) => {
-        switch (status) {
-            case "success":
-                toast.success(`${message}`, {
-                    position: "top-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark"
-                });
-                break;
-            case "danger":
-                toast.error(`${message}`, {
-                    position: "top-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark"
-                });
-                break;
-            case "warning":
-                toast.warn(`${message}`, {
-                    position: "top-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark"
-                });
-                break;
-            case "info":
-                toast.info(`${message}`, {
-                    position: "top-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark"
-                });
-                break;
-            default:
-                break;
-        }
-    }
+    if (loading) return "Loading...";
 
-    const submitContact = async (event: any) => {
-        event.preventDefault();
-        if (!validateEmail(email))
-            return notify("Please enter a valid email address!", "warning");
-        if (subject.length === 0 || content.length === 0 || name.length === 0)
-            return notify("Please fill all the fields of the form!", "warning");
-        await axios({
-            url: `${process.env.NEXT_PUBLIC_API}graphql/`,
-            method: 'post',
-            data: {
-                query: `
-                mutation{
-                    createContact(email:"${email}", name:"${name}", description: "${content}", subject: "${subject}") {
-                          contact{
-                            name
-                        }
-                    }
-                  }
-                  `
-            }
-        }).then((res: any) => {
-            return notify(`Thank You dear ${res.data.data.createContact.contact.name} for contacting me. I will get back to you in less than 24 hours.`, "success");
-        }).catch((err: any) => {
-            return notify("An Error has occured. Sorry for inconvenience", "danger")
-        });
+    if (error) return `Error! ${error.message}`;
 
-        return setFormData(initialState);
-    }
-
-    const onChange = (event: any) => {
-        event.preventDefault();
-        setFormData({ ...formData, [event.target.name]: event.target.value });
-    }
+    const { page, cv, pageMetas } = data
 
     return (
-        <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
+        <>
+            <Head>
+                <title>{`${page?.title}`}</title>
+                {pageMetas?.map((meta: any, index: number) => {
+                    return (
+                        <meta key={index} name={`${meta.name}`} content={`${meta.content}`} />
+                    )
+                })}
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            </Head>
             <div>
                 <ToastContainer
                     position="bottom-right"
@@ -188,7 +102,7 @@ const contact: NextPage<Props> = ({ lastProject, cv, pageMetas, lastThreePosts }
                             name="name"
                             minLength={3}
                             value={name}
-                            onChange={(event) => onChange(event)}
+                            // onChange={(event) => onChange(event)}
                             className="contact-form-input"
                             placeholder="full Name"
                             required />
@@ -196,7 +110,7 @@ const contact: NextPage<Props> = ({ lastProject, cv, pageMetas, lastThreePosts }
                             name="email"
                             type="email"
                             value={email}
-                            onChange={(event) => onChange(event)}
+                            // onChange={(event) => onChange(event)}
                             className="contact-form-input"
                             placeholder="E-mail address"
                             required />
@@ -205,14 +119,14 @@ const contact: NextPage<Props> = ({ lastProject, cv, pageMetas, lastThreePosts }
                         name="subject"
                         type="text"
                         value={subject}
-                        onChange={(event) => onChange(event)}
+                        // onChange={(event) => onChange(event)}
                         className="contact-form-input"
                         placeholder="subject"
                         required />
                     <textarea
                         name="content"
                         value={content}
-                        onChange={(event) => onChange(event)}
+                        // onChange={(event) => onChange(event)}
                         className="contact-form-input"
                         placeholder="message"
                         required />
@@ -221,7 +135,9 @@ const contact: NextPage<Props> = ({ lastProject, cv, pageMetas, lastThreePosts }
                         <span className="contact-form-submitFormButton-span">
                             <h5>Send Message</h5>
                         </span>
-                        <button id="contactSubmitButton" type="button" className="contact-form-submitFormButton-button" onClick={(event) => submitContact(event)}>
+                        <button id="contactSubmitButton" type="button" className="contact-form-submitFormButton-button"
+                            // onClick={(event) => submitContact(event)}
+                        >
                             <span className="contact-form-submitFormButton-button-span">
                                 <FaPaperPlane />
                             </span>
@@ -229,58 +145,110 @@ const contact: NextPage<Props> = ({ lastProject, cv, pageMetas, lastThreePosts }
                     </div>
                 </div>
             </div>
-        </Layout>
+        </>
     )
 }
 
-export async function getServerSideProps(context: any) {
-
-    const { data } = await client.query({
-        query: gql`
-      {
-        lastProject {
-            name
-            images{
-              image
-              alt
-            }
-        }
-        pageMetas(page: "${context.resolvedUrl.substring(1)}") {
-            page{
-                title
-            }
-            name
-            content
-        }
-        cv{
-            photo
-            CV
-            id
-            alt
-            phone
-            email
-            address
-        }
-        lastNPosts(N: 3) {
-            id
-            title
-            slug
-            thumbnail
-            createdAt
-        }
-      }
-      `
-    })
-
-    return {
-        props: {
-            lastProject: data.lastProject,
-            cv: data.cv,
-            pageMetas: data.pageMetas,
-            lastThreePosts: data.lastNPosts,
-        }
-    }
-}
 
 
 export default contact
+
+
+
+// const validateEmail = (email: String) => {
+//     return String(email)
+//         .toLowerCase()
+//         .match(
+//             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+//         );
+// };
+
+// const onChange = (event: any) => {
+//     event.preventDefault();
+//     setFormData({ ...formData, [event.target.name]: event.target.value });
+// }
+
+
+    // const notify = (message: string, status: string) => {
+    //     switch (status) {
+    //         case "success":
+    //             toast.success(`${message}`, {
+    //                 position: "top-right",
+    //                 autoClose: 3000,
+    //                 hideProgressBar: false,
+    //                 closeOnClick: true,
+    //                 pauseOnHover: true,
+    //                 draggable: true,
+    //                 progress: undefined,
+    //                 theme: "dark"
+    //             });
+    //             break;
+    //         case "danger":
+    //             toast.error(`${message}`, {
+    //                 position: "top-right",
+    //                 autoClose: 3000,
+    //                 hideProgressBar: false,
+    //                 closeOnClick: true,
+    //                 pauseOnHover: true,
+    //                 draggable: true,
+    //                 progress: undefined,
+    //                 theme: "dark"
+    //             });
+    //             break;
+    //         case "warning":
+    //             toast.warn(`${message}`, {
+    //                 position: "top-right",
+    //                 autoClose: 3000,
+    //                 hideProgressBar: false,
+    //                 closeOnClick: true,
+    //                 pauseOnHover: true,
+    //                 draggable: true,
+    //                 progress: undefined,
+    //                 theme: "dark"
+    //             });
+    //             break;
+    //         case "info":
+    //             toast.info(`${message}`, {
+    //                 position: "top-right",
+    //                 autoClose: 3000,
+    //                 hideProgressBar: false,
+    //                 closeOnClick: true,
+    //                 pauseOnHover: true,
+    //                 draggable: true,
+    //                 progress: undefined,
+    //                 theme: "dark"
+    //             });
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // }
+
+    // const submitContact = async (event: any) => {
+    //     event.preventDefault();
+    //     if (!validateEmail(email))
+    //         return notify("Please enter a valid email address!", "warning");
+    //     if (subject.length === 0 || content.length === 0 || name.length === 0)
+    //         return notify("Please fill all the fields of the form!", "warning");
+    //     await axios({
+    //         url: `${process.env.NEXT_PUBLIC_API}graphql/`,
+    //         method: 'post',
+    //         data: {
+    //             query: `
+    //             mutation{
+    //                 createContact(email:"${email}", name:"${name}", description: "${content}", subject: "${subject}") {
+    //                       contact{
+    //                         name
+    //                     }
+    //                 }
+    //               }
+    //               `
+    //         }
+    //     }).then((res: any) => {
+    //         return notify(`Thank You dear ${res.data.data.createContact.contact.name} for contacting me. I will get back to you in less than 24 hours.`, "success");
+    //     }).catch((err: any) => {
+    //         return notify("An Error has occured. Sorry for inconvenience", "danger")
+    //     });
+
+    //     return setFormData(initialState);
+    // }

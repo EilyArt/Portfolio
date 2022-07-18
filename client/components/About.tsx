@@ -5,10 +5,7 @@ import StickyBar from "@/subComponents/StickyBar";
 import Header from "@/subComponents/Header"
 
 interface Props {
-    lastThreePosts: Array<object>,
     cv: Array<object>,
-    pageMetas: Array<object>,
-    lastProject: any,
     children: any,
 }
 

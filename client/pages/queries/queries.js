@@ -155,20 +155,203 @@ query PostQuery($slug: String!) {
   }
 }
 `
-    // useEffect(() => {
-    //     axios({
-    //         url: `${process.env.NEXT_PUBLIC_API}graphql/`,
-    //         method: 'post',
-    //         data: {
-    //             query: `
-    //             mutation {
-    //                 addView(postId: ${post?.id}){
-    //                   post{
-    //                     id
-    //                   }
-    //                 }
-    //               }                  
-    //               `
-    //         }
-    //     })
-    // })
+// useEffect(() => {
+//     axios({
+//         url: `${process.env.NEXT_PUBLIC_API}graphql/`,
+//         method: 'post',
+//         data: {
+//             query: `
+//             mutation {
+//                 addView(postId: ${post?.id}){
+//                   post{
+//                     id
+//                   }
+//                 }
+//               }                  
+//               `
+//         }
+//     })
+// })
+
+export const queryResume = gql`
+{
+  educations {
+      institution
+        title
+      startDate
+      endDate
+      description
+  }
+  cv{
+      photo
+      CV
+      id
+      alt
+      phone
+      email
+      aboutMe
+      address
+  }
+  experiences{
+      job
+      company
+      startDate
+      endDate
+      description
+  }
+  languages{
+      language
+      level
+  }
+  certificates{
+      title
+      date
+  }
+  skillCategories {
+      title
+      skillSet {
+        id
+        title
+        logo
+        percentage
+      }
+  }
+  pageMetas(page: "resume") {
+      page{
+          title
+      }
+      name
+      content
+  }
+  page(page: "resume") {
+    title
+  }
+}
+`
+
+export const queryAbout = gql`
+{
+  hobbies {
+      name
+  }
+  jobs {
+      id
+      title
+      alt
+      svg
+      description
+  }
+  cv{
+      photo
+      CV
+      id
+      alt
+      phone
+      email
+      aboutMe
+      address
+  }
+  pageMetas(page: "about") {
+      page{
+          title
+      }
+      name
+      content
+  }
+  page(page: "about") {
+    title
+  }
+}
+`
+
+export const queryPortfolio = gql`
+{
+  allProjects {
+      name
+      price
+      label
+      link
+      description
+      features {
+        feature
+      }
+      images {
+        image
+        alt
+      }
+  }
+  pageMetas(page: "portfolio") {
+      page{
+          title
+      }
+      name
+      content
+  }
+  page(page: "portfolio") {
+    title
+  }
+}
+`
+
+export const queryContact = gql`
+{
+  pageMetas(page: "contact") {
+      page{
+          title
+      }
+      name
+      content
+  }
+  cv{
+      photo
+      CV
+      id
+      alt
+      phone
+      email
+      address
+  }
+  page(page: "contact") {
+    title
+  }
+}
+`
+
+export const queryTag = gql`
+  query TagQuery($tag: String!) {
+    tag(name: $tag) {
+        id
+        name
+    }
+    cv {
+      photo
+      id
+      alt
+      email 
+      phone
+      address
+    }
+    allTaggedPosts(tag: $tag) {
+      id
+      title
+      slug
+      thumbnail
+      excerpt
+      duration
+      createdAt
+      tags {
+          name
+      }
+    }
+    page(page: "tag") {
+      title
+    }
+    pageMetas(page: "tag") {
+      page{
+          title
+      }
+      name
+      content
+  }
+  }
+`

@@ -4,21 +4,35 @@ import Title from '@/subComponents/Title'
 import AboutSection from '@/subComponents/AboutSection';
 import SkillBox from "@/subComponents/SkillBox";
 import pin from "@/svgs/pin.svg"
-import { gql } from "@apollo/client"
-import client from "./api/apollo-client"
+import { queryAbout as query } from './queries/queries'
+import { useQuery } from "@apollo/client";
+import Head from 'next/head'
 
-interface Props {
-    hobbies: Array<object>,
-    jobs: Array<object>,
-    cv: any,
-    lastProject: any,
-    pageMetas: Array<object>,
-    lastThreePosts: Array<object>,
-}
 
-const about: NextPage<Props> = ({ hobbies, jobs, cv, lastProject, pageMetas, lastThreePosts }: Props) => {
+const about = () => {
+
+    const { data, loading, error } = useQuery(
+        query
+    );
+
+    if (loading) return "Loading...";
+
+    if (error) return `Error! ${error.message}`;
+
+    const { page, jobs, cv, hobbies, pageMetas } = data
+
+
     return (
-        <About cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
+        <About cv={cv}>
+            <Head>
+                <title>{`${page?.title}`}</title>
+                {pageMetas?.map((meta: any, index: number) => {
+                    return (
+                        <meta key={index} name={`${meta.name}`} content={`${meta.content}`} />
+                    )
+                })}
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            </Head>
             <Title title="about me" />
             <p>
                 {cv.aboutMe}
@@ -33,7 +47,7 @@ const about: NextPage<Props> = ({ hobbies, jobs, cv, lastProject, pageMetas, las
             </p>
             <div className="m-top-2 pad-vertical-2">
                 <h3 className="pad-vertical-2">What I'm Doing</h3>
-                <SkillBox jobs={jobs}/>
+                <SkillBox jobs={jobs} />
             </div>
             <div className="m-top-2 pad-vertical-2">
                 <AboutSection src={pin} title="HOBBIES"
@@ -49,68 +63,6 @@ const about: NextPage<Props> = ({ hobbies, jobs, cv, lastProject, pageMetas, las
             </div>
         </About>
     )
-}
-
-export async function getServerSideProps(context: any) {
-
-    const { data } = await client.query({
-        query: gql`
-      {
-        hobbies {
-            name
-        }
-        jobs {
-            id
-            title
-            alt
-            svg
-            description
-        }
-        cv{
-            photo
-            CV
-            id
-            alt
-            phone
-            email
-            aboutMe
-            address
-        }
-        lastProject {
-            name
-            images{
-              image
-              alt
-            }
-        }
-        pageMetas(page: "${context.resolvedUrl.substring(1)}") {
-            page{
-                title
-            }
-            name
-            content
-        }
-        lastNPosts(N: 3) {
-            id
-            title
-            slug
-            thumbnail
-            createdAt
-        }
-      }
-      `
-    })
-
-    return {
-        props: {
-            hobbies: data.hobbies,
-            jobs: data.jobs,
-            cv: data.cv,
-            lastProject: data.lastProject,
-            pageMetas: data.pageMetas,
-            lastThreePosts: data.lastNPosts
-        }
-    }
 }
 
 export default about

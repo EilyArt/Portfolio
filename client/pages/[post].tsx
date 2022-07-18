@@ -44,9 +44,14 @@ const post = ({ post, cv, comments, prevPost, nextPost, postMetas, threeRelatedP
 
     return (
         <>
-        <Head>
-            <title>{post?.title}</title>
-        </Head>
+            <Head>
+                <title>{post?.title}</title>
+                {postMetas?.map((meta: any, index: number) => {
+                    return (
+                        <meta key={index} name={`${meta.name}`} content={`${meta.content}`} />
+                    )
+                })}
+            </Head>
             <div className="post pad-default pad-bottom-0">
                 <div className="post-content">
                     <div className="post-content-wrapper">
@@ -89,7 +94,7 @@ const post = ({ post, cv, comments, prevPost, nextPost, postMetas, threeRelatedP
                             </div>
                             {post?.tags.map((tag: { name: string }, index: number) => {
                                 return (
-                                    <Tag key={index} size="sm-tag" name={tag.name} id={index}/>
+                                    <Tag key={index} size="sm-tag" name={tag.name} id={index} />
                                 )
                             })}
                         </div>
@@ -143,7 +148,7 @@ const post = ({ post, cv, comments, prevPost, nextPost, postMetas, threeRelatedP
                     <Posts posts={threeRelatedPosts} myImage={cv} star={false} />
                 </div>}
                 <div className="post-discussion">
-                    {/* <DiscussionForm post={post} comments={comments} /> */}
+                    <DiscussionForm post={post} comments={comments} />
                 </div>
             </div>
         </>

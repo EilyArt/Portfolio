@@ -7,8 +7,7 @@ import Head from 'next/head'
 const index = () => {
 
   const { data, loading, error } = useQuery(
-    query,
-    { ssr: true }
+    query
   );
 
   if (loading) return "Loading...";

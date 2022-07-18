@@ -9,21 +9,19 @@ import Head from 'next/head'
 const blog = () => {
 
   const { data, loading, error } = useQuery(
-    query,
-    { ssr: true }
+    query
   );
 
   if (loading) return "Loading...";
 
   if (error) return `Error! ${error.message}`;
 
-  const { page, posts, cv, tags, pageMetas } = data
+  const { page, posts, cv, allTags, pageMetas } = data
 
   return (
     <>
       <Head>
         <title>{`${page?.title}`}</title>
-        <link rel="icon" href="/favicon.ico" />
         {pageMetas?.map((meta: any, index: number) => {
           return (
             <meta key={index} name={`${meta.name}`} content={`${meta.content}`} />
@@ -41,7 +39,7 @@ const blog = () => {
         <div className="pad-default">
           <Title title="Explore Tags" />
           <div className="blog-tags">
-            {tags?.slice(0, 30).map((tag: any, index: number) => {
+            {allTags?.slice(0, 30).map((tag: any, index: number) => {
               return (
                 <Tag name={tag.name} id={index} />
               )
