@@ -1,21 +1,34 @@
-import type { NextPage } from 'next'
-import Layout from '@/components/Layout'
-import { gql } from "@apollo/client"
-import client from "./api/apollo-client"
+import { queryIndex as query } from './queries/queries'
+import { useQuery } from "@apollo/client";
 import Image from "next/image"
 import Header from '@/subComponents/Header'
+import Head from 'next/head'
 
-interface Props {
-  lastProject: any,
-  cv: any,
-  pageMetas: Array<object>,
-  lastThreePosts: Array<object>,
-}
+const index = () => {
 
-const index: NextPage<Props> = ({ lastProject, cv, pageMetas, lastThreePosts }: Props) => {
+  const { data, loading, error } = useQuery(
+    query
+  );
+
+  if (loading) return "Loading...";
+
+  if (error) return `Error! ${error.message}`;
+
+  const { cv, pageMetas, page } = data
+
 
   return (
-    <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
+    <>
+      <Head>
+        <title>{`${page?.title}`}</title>
+        {pageMetas?.map((meta: any, index: number) => {
+          return (
+            <meta key={index} name={`${meta.name}`} content={`${meta.content}`} />
+          )
+        })}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      </Head>
+
       <div className='pad-default pad-bottom-0'>
         <Header span='' header="Hi, I'm EILYA" />
       </div>
@@ -33,72 +46,11 @@ const index: NextPage<Props> = ({ lastProject, cv, pageMetas, lastThreePosts }: 
           </div>
         </div>
         <div className='homepage-story'>
-
-          {cv && cv.homepageParagraph && <div className="post-content-excerpt-description" dangerouslySetInnerHTML={{ __html: cv.homepageParagraph }} />}
-
-          {/* Hi, I'm Sarah.
-
-          Building startups and teams, currently based in 📍Hong Kong via San Francisco, New York City, London, and Chicago. Alumna of Columbia University and Oxford University.
-
-          Intrigued by design, traveling, photography, classical music, strategy, writing, art, armchair philosophy, fabulous food, and even better conversations.
-
-          Seeking to be inspired, to envision the unlikely, to work hard for things that are worth it, and to be surrounded by those who bring out the best in me.
-
-          Say hi on Twitter @sarahlichang */}
+          <div className="post-content-excerpt-description" dangerouslySetInnerHTML={{ __html: cv.homepageParagraph }} />
         </div>
       </div>
-    </Layout>
+    </>
   )
 }
-
-
-export async function getServerSideProps(context: any) {
-
-  const { data } = await client.query({
-    query: gql`
-    {
-      lastProject {
-        name
-        images{
-          image
-          alt
-        }
-      }
-      cv{
-        phone
-        email
-        address
-        homepagePhoto
-        alt
-        homepageParagraph
-      }
-      pageMetas(page: "") {
-        page{
-          title
-        }
-        name
-        content
-      }
-      lastNPosts(N: 3) {
-        id
-        title
-        slug
-        thumbnail
-        createdAt
-      }
-    }
-    `
-  })
-
-  return {
-    props: {
-      lastProject: data.lastProject,
-      cv: data.cv,
-      pageMetas: data.pageMetas,
-      lastThreePosts: data.lastNPosts,
-    }
-  }
-}
-
 
 export default index

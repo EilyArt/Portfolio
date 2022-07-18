@@ -1,19 +1,25 @@
 import { FaMapMarkerAlt, FaWhatsapp, FaPaperPlane, FaTwitter, FaHeart } from "react-icons/fa";
-import photo from "@/images/avatar.png"
-import Image from "next/dist/client/image";
 import InputEmail from "../subComponents/InputEmail";
 import LatestNewsBox from "../subComponents/LatestNewsBox";
 import BestSellerProject from "../subComponents/BestSellerProject";
 import MediaIcon from '../subComponents/MediaIcon';
+import { useQuery } from "@apollo/client";
+import { queryFooter as query } from "../pages/queries/queries"
 
 
-interface Props {
-    lastProject: any,
-    cv: any,
-    lastThreePosts: Array<object>,
-}
 
-const Footer = ({ lastProject, lastThreePosts, cv }: Props) => {
+const Footer = () => {
+
+    const { data, loading, error } = useQuery(
+        query
+    );
+
+    if (loading) return "Loading...";
+
+    if (error) return `Error! ${error.message}`;
+
+    const { lastProject, cv, lastNPosts } = data
+
     return (
         <footer className="pad-default pad-bottom-0">
             <div className="container container-top">
@@ -23,10 +29,10 @@ const Footer = ({ lastProject, lastThreePosts, cv }: Props) => {
                 </div>
                 <div className="col container-top-media">
                     <div>
-                        <MediaIcon media="linkedin" />
-                        <MediaIcon media="twitter" />
-                        <MediaIcon media="youtube" />
-                        <MediaIcon media="github" />
+                        <MediaIcon media="linkedin" link={""}/>
+                        <MediaIcon media="twitter" link={""}/>
+                        <MediaIcon media="youtube" link={""}/>
+                        <MediaIcon media="github" link={""}/>
                     </div>
                 </div>
             </div>
@@ -46,7 +52,7 @@ const Footer = ({ lastProject, lastThreePosts, cv }: Props) => {
                 </div>
                 <div className="col m-right-2">
                     <h4 className="m-bottom-2">LATEST POSTS</h4>
-                    {lastThreePosts.map((post: any, index: number) => {
+                    {lastNPosts.map((post: any, index: number) => {
                         return (
                             <LatestNewsBox
                                 key={index}

@@ -1,95 +1,49 @@
-import type { NextPage } from 'next'
-import Layout from '@/components/Layout'
 import Header from '@/subComponents/Header'
 import Posts from "@/subComponents/Posts"
-import { gql } from "@apollo/client"
-import client from "../api/apollo-client"
+import { queryTag as query } from '../queries/queries'
+import { useQuery } from "@apollo/client";
+import Head from 'next/head'
+import { useRouter } from 'next/router';
 
-interface Props {
-    tag: any,
-    cv: any,
-    posts: Array<object>,
-    lastProject: any,
-    title: string,
-    lastThreePosts: Array<object>,
-}
+const tag = () => {
 
-const tag: NextPage<Props> = ({ tag, cv, posts, lastProject, title, lastThreePosts }: Props) => {
+    const router = useRouter()
+
+    const { data, loading, error } = useQuery(
+        query, {
+            variables: {
+                tag: router?.query?.tag
+            }
+        }
+    );
+
+    if (loading) return "Loading...";
+
+    if (error) return `Error! ${error.message}`;
+
+    const { page, allTaggedPosts, cv, pageMetas, tag } = data
+
+    console.log(data);
 
     return (
-        <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} title={`#${title}`}>
+        <>
+            <Head>
+                <title>{`${page?.title}`}</title>
+                {pageMetas?.map((meta: any, index: number) => {
+                    return (
+                        <meta key={index} name={`${meta.name}`} content={`${meta.content}`} />
+                    )
+                })}
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            </Head>
             <div className="pad-default">
-                <Header span="you can view posts related to " header={`#${tag}`} />
+                <Header span="you can view posts related to " header={`#${tag.name}`} />
             </div>
             <div className="blog-posts pad-default-horizontal">
-                <Posts posts={posts} myImage={cv}/>
+                <Posts posts={allTaggedPosts} myImage={cv} />
             </div>
-        </Layout>
+        </>
     )
-}
-
-export async function getServerSideProps(context: any) {
-
-    const { data } = await client.query({
-        query: gql`
-      {
-        tag(name: "${context.resolvedUrl.substring(5)}") {
-            id
-        }
-        cv{
-            photo
-            id
-            alt
-            email 
-            phone
-            address
-        }
-        allTaggedPosts(tag: "${context.resolvedUrl.substring(5)}") {
-            id
-            title
-            slug
-            thumbnail
-            excerpt
-            duration
-            createdAt
-            tags {
-                name
-            }
-        }
-        lastProject {
-            name
-            images{
-              image
-              alt
-            }
-        }
-        lastNPosts(N: 3) {
-            id
-            title
-            slug
-            thumbnail
-            createdAt
-        }
-      }
-      `
-    })
-    if (!data.tag) {
-        return {
-            redirect: {
-                destination: '/'
-            }
-        }
-    } else
-    return {
-        props: {
-            tag: context.resolvedUrl.substring(5),
-            cv: data.cv,
-            posts: data.allTaggedPosts,
-            lastProject: data.lastProject,
-            title: context.resolvedUrl.substring(5),
-            lastThreePosts: data.lastNPosts
-        }
-    }
 }
 
 export default tag

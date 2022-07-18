@@ -1,111 +1,55 @@
-import type { NextPage } from 'next'
-import Layout from '@/components/Layout'
 import Posts from '../subComponents/Posts';
 import Title from '@/subComponents/Title';
 import Tag from '@/subComponents/Tag';
 import Header from '@/subComponents/Header'
-import { gql } from "@apollo/client"
-import client from "./api/apollo-client"
+import { queryBlog as query } from './queries/queries'
+import { useQuery } from "@apollo/client";
+import Head from 'next/head'
 
-interface Props {
-  posts: Array<object>,
-  cv: any,
-  tags: Array<object>,
-  lastProject: any,
-  pageMetas: Array<object>,
-  lastThreePosts: Array<object>,
-}
+const blog = () => {
 
-const blog: NextPage<Props> = ({ posts, cv, tags, lastProject, pageMetas, lastThreePosts }: Props) => {
+  const { data, loading, error } = useQuery(
+    query
+  );
+
+  if (loading) return "Loading...";
+
+  if (error) return `Error! ${error.message}`;
+
+  const { page, posts, cv, allTags, pageMetas } = data
 
   return (
-    <Layout cv={cv} lastThreePosts={lastThreePosts} lastProject={lastProject} pageMetas={pageMetas}>
+    <>
+      <Head>
+        <title>{`${page?.title}`}</title>
+        {pageMetas?.map((meta: any, index: number) => {
+          return (
+            <meta key={index} name={`${meta.name}`} content={`${meta.content}`} />
+          )
+        })}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      </Head>
       <div className="blog">
         <div className="pad-default">
           <Header span="EILYA's Thoughts, stories and ideas." header="Blog" />
         </div>
         <div className="blog-posts pad-default-horizontal">
-          {posts && <Posts posts={posts} myImage={cv} star={true} />}
+          <Posts posts={posts} myImage={cv} star={true} />
         </div>
-        {tags.length > 0 &&
-          <div className="pad-default">
-            <Title title="Explore Tags" />
-            <div className="blog-tags">
-              {tags.slice(0, 30).map((tag: any, index: number) => {
-                return (
-                  <Tag name={tag.name} id={index} />
-                )
-              })}
-            </div>
-          </div>}
+        <div className="pad-default">
+          <Title title="Explore Tags" />
+          <div className="blog-tags">
+            {allTags?.slice(0, 30).map((tag: any, index: number) => {
+              return (
+                <Tag name={tag.name} id={index} />
+              )
+            })}
+          </div>
+        </div>
       </div>
-    </Layout>
+    </>
   )
 }
 
-export async function getServerSideProps(context: any) {
-
-  const { data } = await client.query({
-    query: gql`
-    {
-      allPosts {
-        id
-        title
-        slug
-        thumbnail
-        excerpt
-        duration
-        createdAt
-        tags {
-          name
-        }
-      }
-      cv{
-        postPhoto
-        id
-        alt
-        email
-        phone
-        address
-    }
-      allTags {
-        name
-      }
-      lastProject {
-        name
-        images{
-          image
-          alt
-        }
-      }
-      pageMetas(page: "${context.resolvedUrl.substring(1)}") {
-        page{
-          title
-        }
-        name
-        content
-      }
-      lastNPosts(N: 3) {
-        id
-        title
-        slug
-        thumbnail
-        createdAt
-      }
-    }
-    `
-  })
-
-  return {
-    props: {
-      posts: data.allPosts,
-      cv: data.cv,
-      tags: data.allTags,
-      lastProject: data.lastProject,
-      pageMetas: data.pageMetas,
-      lastThreePosts: data.lastNPosts
-    }
-  }
-}
 
 export default blog
