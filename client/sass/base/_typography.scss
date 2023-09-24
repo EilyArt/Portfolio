@@ -1,163 +1,163 @@
 a {
-    color: unset;
-    cursor: pointer;
-    text-decoration: none;
+  color: unset;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .col {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .align-start {
-    align-items: flex-start;
+  align-items: flex-start;
 }
 
 .m-1 {
-    margin: 10px;
+  margin: 10px;
 }
 
 .m-2 {
-    margin: 10px;
+  margin: 10px;
 }
 
 .m-right-2 {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 .m-left-2 {
-    margin-left: 5rem;
+  margin-left: 5rem;
 }
 
 .pad-2 {
-    padding: 10px;
+  padding: 10px;
 }
 
 .pad-top-2 {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
 .pad-bottom-0 {
-    padding-bottom: 0px !important;
+  padding-bottom: 0px !important;
 }
 
 .pad-vertical-2 {
-    padding: 10px 0;
+  padding: 10px 0;
 }
 
 .m-bottom-1 {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .m-bottom-2 {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .m-top-2 {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .m-horizontal-2 {
-    margin: 0 10px;
+  margin: 0 10px;
 }
 
 .img {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .b-radius {
-    border-radius: 8px;
+  border-radius: 8px;
 }
 
 .linkActive {
-    color: var(--color-primary-dark);
+  color: var(--color-primary-dark);
 }
 
 .pad-default {
-    padding: 80px 10% 80px 10%;
+  padding: 80px 10% 80px 10%;
 
-    @include respond(sm-desktop) {
-        padding: 30px 35px 30px 35px;
-    }
+  @include respond(sm-desktop) {
+    padding: 30px 35px 30px 35px;
+  }
 
-    @include respond(tablet) {
-        padding: 30px 15px 30px 15px;
-    }
+  @include respond(tablet) {
+    padding: 30px 15px 30px 15px;
+  }
 
-    @include respond(phone) {
-        padding: 30px 15px 30px 15px;
-    }
+  @include respond(phone) {
+    padding: 30px 15px 30px 15px;
+  }
 }
 
 .pad-default-horizontal {
-    padding: 0 10% 0 10%;
+  padding: 0 10% 0 10%;
 
-    @include respond(sm-desktop) {
-        padding: 0 55px 0 55px;
-    }
+  @include respond(sm-desktop) {
+    padding: 0 55px 0 55px;
+  }
 
-    @include respond(tablet) {
-        padding: 0 15px 0 15px;
-    }
+  @include respond(tablet) {
+    padding: 0 15px 0 15px;
+  }
 
-    // @include respond(phone) {
-    //     padding: 0;
-    // }
+  // @include respond(phone) {
+  //     padding: 0;
+  // }
 }
 
 .width-fit {
-    max-width: fit-content !important;
+  max-width: fit-content !important;
 }
 
 .justify-end {
-    justify-content: flex-end;
+  justify-content: flex-end;
 }
 
 .show {
-    display: block !important;
+  display: block !important;
 }
 
 .separation-1 {
-    background: var(--color-border);
-    margin: 1rem 0;
-    height: 1px;
-    width: 100%;
+  background: var(--color-border);
+  margin: 1rem 0;
+  height: 1px;
+  width: 100%;
 }
 
 .separation-2 {
-    background: var(--color-border);
-    margin: 2rem 0;
-    height: 1px;
-    width: 100%;
+  background: var(--color-border);
+  margin: 2rem 0;
+  height: 1px;
+  width: 100%;
 }
 
 #nprogress .bar {
-    background-color: var(--color-accent) !important;
+  background-color: var(--color-accent) !important;
 }
 
 .svgColor {
-    filter: var(--svg-color);
+  filter: var(--svg-color);
 }
 
 .hidden {
-    display: none !important;
+  display: none !important;
 }
 
 .twitterFolloButton {
-    display: flex;
-    align-items: center;
-    background-color: rgb(30, 182, 233);
-    color: #fff;
-    border-radius: var(--radius-18);
-    padding: .3rem 1rem;
-    width: fit-content;
+  display: flex;
+  align-items: center;
+  background-color: rgb(30, 182, 233);
+  color: #fff;
+  border-radius: var(--radius-18);
+  padding: 0.3rem 1rem;
+  width: fit-content;
 }
 
 .color-accent {
-    color: var(--color-accent);
-    &>* {
-        color: var(--color-accent) !important;
-    }
+  color: var(--color-accent);
+  & > * {
+    color: var(--color-accent) !important;
+  }
 }

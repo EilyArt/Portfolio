@@ -1,0 +1,30 @@
+.tag {
+  display: inline-block;
+  padding: 0.2rem;
+  margin: 0.13rem;
+  line-height: 10px;
+  font-weight: 600;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-8);
+  color: var(--color-paragraph-2);
+
+  &:hover {
+    border: 2px solid var(--color-error);
+  }
+}
+
+.sm-tag {
+  font-size: 1rem;
+  margin: 0.1rem;
+  display: inline-block;
+  padding: 0.2rem 0.4rem;
+  line-height: 10px;
+  font-weight: 600;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-8);
+  color: var(--color-paragraph-2);
+
+  &:hover {
+    border: 2px solid var(--color-error);
+  }
+}
