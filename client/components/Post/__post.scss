@@ -1,0 +1,117 @@
+.postItem {
+  position: relative;
+  background-repeat: no-repeat;
+  background-attachment: local;
+  background-position: center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding: 2.5rem;
+  margin: 0.5rem;
+  border-radius: var(--radius-16);
+  background-color: var(--blog-gradient);
+  background-blend-mode: overlay;
+  width: 100%;
+  min-width: 25%;
+  min-height: 30rem;
+  flex: 1;
+  cursor: pointer;
+  box-shadow: var(--box-shadow-20);
+  color: var(--color-heading);
+
+  &-content {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    &-excerpt {
+      line-height: 1.6;
+      text-indent: 0.1rem;
+      font-size: 1.15rem;
+    }
+
+    &-title {
+      letter-spacing: -0.1rem;
+      line-height: 2.7rem;
+      margin-bottom: 0.2rem;
+    }
+
+    &-duration {
+      font-style: italic;
+    }
+
+    &-time {
+      line-height: 2.5;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--color-paragraph);
+    }
+
+    &-bottom {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+
+      &-eilya {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        &-img {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0.3rem;
+          margin: 0.7rem;
+          margin-left: 0;
+          border-radius: 50%;
+          border: 2px solid var(--color-error);
+
+          &-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 3.5rem;
+            width: 3.5rem;
+            overflow: hidden;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+
+  @include respond(sm-desktop) {
+    min-width: 45%;
+  }
+
+  @include respond(phone) {
+    min-width: 100%;
+    margin: 0.7rem 0;
+    min-height: 28rem;
+  }
+}
+
+.star {
+  &::after {
+    content: "";
+    background: url("../../public/svgs/star.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-origin: content-box;
+    filter: var(--svg-color);
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    right: 0;
+    margin: 1rem 2rem;
+  }
+}

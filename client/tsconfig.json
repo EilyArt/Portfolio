@@ -2,28 +2,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/components/*": [
-        "components/*"
-      ],
-      "@/subComponents/*": [
-        "subComponents/*"
-      ],
-      "@/images/*": [
-        "public/images/*"
-      ],
-      "@/svgs/*": [
-        "public/svgs/*"
-      ],
-      "@/videos/*": [
-        "public/videos/*"
-      ]
+      "@/components/*": ["components/*"],
+      "@/images/*": ["public/images/*"],
+      "@/svgs/*": ["public/svgs/*"],
+      "@/videos/*": ["public/videos/*"]
     },
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -40,9 +25,11 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "pages/_app.tsx", "pages/api/apollo-client.js", "pages/queries/queries.js", "pages/api/[post].js"  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "**/*.tsx",
+    "pages/_app.tsx",
+    "middleware/apollo-client.js",
+    "middleware/queries.js",
+    "pages/api/[post].js"
+  ],
+  "exclude": ["node_modules"]
 }
