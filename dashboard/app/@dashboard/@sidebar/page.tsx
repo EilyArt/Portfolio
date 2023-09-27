@@ -8,16 +8,24 @@ import ModeToggle from "@/components/ui/mode.toggle";
 
 
 const SideBar = () => {
-  modelStore.getModels();
-  console.log(modelStore.models);
+
   return (
-    <div className=" bg-blue-500 text-white h-screen w-64 flex-col justify-center">
+    <div className=" bg-blue-500 dark:bg-amber-950 text-white h-screen w-64 flex-col justify-center">
       <div className="p-4">
         <h1 className="text-2xl font-bold">Admin Panel</h1>
       </div>
       <Separator />
       <nav className="p-2">
         <ul>
+          {modelStore.models?.map((model: any) => {
+            return (
+              <li className="mb-2">
+                <a href="#" className="block text-white hover:text-gray-400">
+                  {model}
+                </a>
+              </li>
+            );
+          })}
           <li className="mb-2">
             <a href="#" className="block text-white hover:text-gray-400">
               Users

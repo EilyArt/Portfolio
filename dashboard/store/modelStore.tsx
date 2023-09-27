@@ -11,20 +11,20 @@ class UserStore {
       getModels: action,
     });
 
-    // autorun(() => {
-    //   if (true) {
-    //   }
-    // });
+    autorun(() => {
+      if (true) {
+        this.getModels();
+      }
+    });
   }
 
   setModels = (models: any) => {
     this.models = models;
   };
 
-  getModels = () => {
-    const models = getAllModels();
+  getModels = async () => {
+    const models = await getAllModels();
     this.setModels(toJS(models));
-    return this.models;
   };
 }
 
