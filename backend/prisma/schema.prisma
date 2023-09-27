@@ -1,0 +1,203 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id       Int     @id @default(autoincrement())
+  username String
+  email    String  @unique
+  password String
+  isAdmin  Boolean @default(false)
+  posts    Post[]
+}
+
+model Page {
+  id        Int        @id @default(autoincrement())
+  title     String
+  slug      String?    @unique
+  metaDatas MetaData[]
+}
+
+model MetaData {
+  id      Int    @id @default(autoincrement())
+  name    String
+  content String
+  pageId  Int
+  page    Page   @relation(fields: [pageId], references: [id])
+}
+
+model Tag {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  posts Post[]
+}
+
+model IpAddress {
+  id    Int    @id @default(autoincrement())
+  ip    String @unique
+  posts Post[]
+}
+
+model Post {
+  id            Int         @id @default(autoincrement())
+  published     Boolean     @default(false)
+  title         String
+  excerpt       String
+  duration      Float       @default(3) // Assuming you meant decimal, not integer
+  description   String
+  slug          String      @unique
+  thumbnail     String?
+  thumbnail_alt String
+  view          IpAddress[]
+  author        User?       @relation(fields: [authorId], references: [id])
+  authorId      Int?
+  tags          Tag[]
+  createdAt     DateTime    @default(now()) @map(name: "created_at")
+  updatedAt     DateTime    @updatedAt @map(name: "updated_at")
+  post_meta     PostMeta[]
+}
+
+model PostMeta {
+  id      Int    @id @default(autoincrement())
+  post    Post   @relation(fields: [postId], references: [id])
+  postId  Int
+  name    String
+  content String
+}
+
+model Hobby {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model Education {
+  id          Int      @id @default(autoincrement())
+  title       String
+  institution String
+  start_date  DateTime
+  end_date    DateTime
+  description String
+}
+
+model Experience {
+  id          Int      @id @default(autoincrement())
+  job         String   @map(name: "job_title")
+  company     String
+  start_date  DateTime
+  end_date    DateTime
+  description String
+}
+
+model Certificate {
+  id    Int      @id @default(autoincrement())
+  title String
+  date  DateTime
+}
+
+model Language {
+  id       Int    @id @default(autoincrement())
+  language String
+  level    String
+}
+
+model SkillCategory {
+  id     Int     @id @default(autoincrement())
+  title  String
+  skills Skill[]
+}
+
+model Skill {
+  id         Int           @id @default(autoincrement())
+  title      String
+  logo       String
+  percentage Int
+  category   SkillCategory @relation(fields: [categoryId], references: [id])
+  categoryId Int
+}
+
+model Cv {
+  id                 Int    @id @default(autoincrement())
+  alt                String
+  about_me           String @map(name: "about_me")
+  address            String
+  photo              String
+  CV                 String
+  phone              String
+  email              String
+  post_photo         String
+  homepage_photo     String
+  homepage_paragraph String
+}
+
+model Job {
+  id          Int    @id @default(autoincrement())
+  title       String
+  svg         String
+  description String
+  alt         String
+}
+
+// model Comment {
+//   id          Int       @id @default(autoincrement())
+//   post        Post      @relation(fields: [postId], references: [id])
+//   postId      Int
+//   username    String
+//   email       String
+//   comment     String
+//   ip_address  String
+//   is_approved Boolean   @default(false)
+//   likes       IpAddress[]
+//   parent      Comment?  @relation("BlogOwnerHistory", fields: [parentId], references: [id])
+//   parentId    Int?      @unique
+//   deleted_on  DateTime?
+//   createdAt   DateTime  @default(now()) @map(name: "created_at")
+//   updatedAt   DateTime  @updatedAt @map(name: "updated_at")
+// }
+
+// model ProjectImage {
+//   id    Int      @id @default(autoincrement())
+//   image String
+//   alt   String
+// }
+
+// model ProjectFeature {
+//   id      Int      @id @default(autoincrement())
+//   feature String
+// }
+
+// model Project {
+//   id          Int             @id @default(autoincrement())
+//   name        String
+//   label       String
+//   price       Int
+//   description String
+//   link        String          @unique
+//   images      ProjectImage[]
+//   features    ProjectFeature[]
+// }
+
+// model Contact {
+//   id          Int      @id @default(autoincrement())
+//   name        String
+//   email       String
+//   description String
+//   subject     String
+//   created_at  DateTime @default(now())
+//   ip          String?
+// }
+
+// model Follower {
+//   id         Int      @id @default(autoincrement())
+//   email      String   @unique
+//   created_at DateTime @default(now())
+//   ip         String?
+// }
