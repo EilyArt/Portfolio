@@ -5,7 +5,7 @@ const nextConfig = {
   },
   env: {
     NEXT_PUBLIC_API: "http://0.0.0.0:8000/",
-    DEV: true
+    DEV: true,
   },
 };
 

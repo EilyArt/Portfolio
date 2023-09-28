@@ -13,7 +13,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-
 const Navbar = () => {
   return (
     <nav className="container p-4 mx-auto">

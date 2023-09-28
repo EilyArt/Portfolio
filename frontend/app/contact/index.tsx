@@ -154,7 +154,7 @@ const contact = () => {
               id="contactSubmitButton"
               type="button"
               className="contact-form-submitFormButton-button"
-            // onClick={(event) => submitContact(event)}
+              // onClick={(event) => submitContact(event)}
             >
               <span className="contact-form-submitFormButton-button-span">
                 <FaPaperPlane />

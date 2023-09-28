@@ -1,11 +1,13 @@
-const Layout = (props: {
-  sidebar: React.ReactNode;
-}) => {
+import Sidebar from "@/components/sidebar";
+export default function DashboardLayout({
+  children, // will be a page or nested layout
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <>
-      {props.sidebar}
-    </>
+    <div className="flex h-screen">
+      <Sidebar />
+      <div className="p-8 flex-1 flex flex-col overflow-hidden">{children}</div>
+    </div>
   );
 }
-
-export default Layout;
