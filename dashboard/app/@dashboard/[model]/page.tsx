@@ -17,13 +17,17 @@ export default async function DemoPage({
 }
 
 async function getData(model: string): Promise<Payment[]> {
-  const data = await fetch(`http://localhost:8000/admin/${model}`);
+  const data = await fetch(`http://localhost:8000/admin/models/${model}`);
   return data.json();
 }
 
-async function generateColumns(data: any) {
-  return Object.keys(data[0]).map((key) => ({
-    accessorKey: key,
-    header: key.charAt(0).toUpperCase() + key.slice(1),
-  }));
+async function generateColumns(data: object[]) {
+  if (data && data.length > 0) {
+    return Object.keys(data[0]).map((key) => ({
+      accessorKey: key,
+      header: key.charAt(0).toUpperCase() + key.slice(1),
+    }));
+  } else {
+    return [];
+  }
 }

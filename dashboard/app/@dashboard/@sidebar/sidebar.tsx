@@ -20,7 +20,7 @@ export default async function SideBar() {
       </div>
       {/* <Separator /> */}
       <ul className="p-3">
-        {data.map((model: any) => {
+        {data?.map((model: any) => {
           return (
             <li className="mb-3 list-none" key={model}>
               <Link

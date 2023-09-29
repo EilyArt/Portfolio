@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export const getAllUsers = async (): Promise<User[]> => {
   try {
-    const users = await prisma.user.findMany();
+    const users = await prisma["user"].findMany();
     return users;
   } catch (error: any) {
     throw new Error(`Error fetching users: ${error.message}`);

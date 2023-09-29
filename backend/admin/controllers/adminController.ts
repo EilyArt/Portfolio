@@ -1,10 +1,19 @@
 import { Request, Response } from "express";
-import { getAllModels } from "../models/admin.model";
+import { getAllModels, getModelRecords } from "../models/admin.model";
 
-export const getUsersController = async (req: Request, res: Response) => {
+export const getModelsController = async (req: Request, res: Response) => {
   try {
-    const users = await getAllModels();
-    res.json(users);
+    const models = await getAllModels();
+    res.json(models);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getModelRecordsController = async (req: Request, res: Response) => {
+  try {
+    const models = await getModelRecords(req.params.name);
+    res.json(models);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
