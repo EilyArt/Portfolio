@@ -1,13 +1,16 @@
-"use client";
-
 import React from "react";
-import { observer } from "mobx-react-lite";
-import modelStore from "@/store/modelStore";
 import { Separator } from "@/components/ui/separator";
 import ModeToggle from "@/components/ui/mode.toggle";
 import Link from "next/link";
 
-const SideBar = () => {
+async function getData(): Promise<any[]> {
+  const data = await fetch(`http://localhost:8000/admin/models`);
+  return data.json();
+}
+
+export default async function SideBar() {
+  const data = await getData();
+
   return (
     <aside className="bg-gray-800 w-64 h-screen">
       <div className="p-4">
@@ -15,9 +18,9 @@ const SideBar = () => {
           Admin Panel
         </h1>
       </div>
-      <Separator />
+      {/* <Separator /> */}
       <ul className="p-3">
-        {modelStore.models?.map((model: any) => {
+        {data.map((model: any) => {
           return (
             <li className="mb-3 list-none" key={model}>
               <Link
@@ -35,6 +38,4 @@ const SideBar = () => {
       </div>
     </aside>
   );
-};
-
-export default observer(SideBar);
+}
