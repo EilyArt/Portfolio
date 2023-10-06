@@ -10,20 +10,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
 
 model User {
-  id       Int     @id @default(autoincrement())
-  username String
-  email    String  @unique
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  name     String
   password String
-  isAdmin  Boolean @default(false)
+  role     Role   @default(USER)
   posts    Post[]
+}
+
+model Post {
+  id            Int        @id @default(autoincrement())
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  slug          String     @unique
+  title         String
+  content       String
+  duration      Int
+  published     Boolean    @default(false)
+  thumbnail     String?
+  thumbnail_alt String
+  author        User       @relation(fields: [authorId], references: [id])
+  authorId      Int
+  categories    Category[]
+  metaDatas     MetaData[]
+  view          Visitor[]
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String
+  posts Post[]
 }
 
 model Page {
   id        Int        @id @default(autoincrement())
   title     String
-  slug      String?    @unique
   metaDatas MetaData[]
 }
 
@@ -31,120 +58,99 @@ model MetaData {
   id      Int    @id @default(autoincrement())
   name    String
   content String
-  pageId  Int
-  page    Page   @relation(fields: [pageId], references: [id])
+  page    Page?   @relation(fields: [pageId], references: [id])
+  pageId  Int?
+  Post    Post?  @relation(fields: [postId], references: [id])
+  postId  Int?
 }
 
-model Tag {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-  posts Post[]
+model Visitor {
+  id        Int      @id @default(autoincrement())
+  ipAddress String
+  userAgent String
+  timestamp DateTime @default(now())
+  post      Post[]
 }
 
-model IpAddress {
-  id    Int    @id @default(autoincrement())
-  ip    String @unique
-  posts Post[]
-}
+// model PostMeta {
+//   id      Int    @id @default(autoincrement())
+//   post    Post   @relation(fields: [postId], references: [id])
+//   postId  Int
+//   name    String
+//   content String
+// }
 
-model Post {
-  id            Int         @id @default(autoincrement())
-  published     Boolean     @default(false)
-  title         String
-  excerpt       String
-  duration      Float       @default(3) // Assuming you meant decimal, not integer
-  description   String
-  slug          String      @unique
-  thumbnail     String?
-  thumbnail_alt String
-  view          IpAddress[]
-  author        User?       @relation(fields: [authorId], references: [id])
-  authorId      Int?
-  tags          Tag[]
-  createdAt     DateTime    @default(now()) @map(name: "created_at")
-  updatedAt     DateTime    @updatedAt @map(name: "updated_at")
-  post_meta     PostMeta[]
-}
+// model Hobby {
+//   id   Int    @id @default(autoincrement())
+//   name String
+// }
 
-model PostMeta {
-  id      Int    @id @default(autoincrement())
-  post    Post   @relation(fields: [postId], references: [id])
-  postId  Int
-  name    String
-  content String
-}
+// model Education {
+//   id          String @id @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   title       String
+//   institution String
+//   start_date  DateTime
+//   end_date    DateTime
+//   description String
+// }
 
-model Hobby {
-  id   Int    @id @default(autoincrement())
-  name String
-}
+// model Experience {
+//   id          String @id @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   job         String   @map(name: "job_title")
+//   company     String
+//   start_date  DateTime
+//   end_date    DateTime
+//   description String
+// }
 
-model Education {
-  id          Int      @id @default(autoincrement())
-  title       String
-  institution String
-  start_date  DateTime
-  end_date    DateTime
-  description String
-}
+// model Certificate {
+//   id    String @id @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   title String
+//   date  DateTime
+// }
 
-model Experience {
-  id          Int      @id @default(autoincrement())
-  job         String   @map(name: "job_title")
-  company     String
-  start_date  DateTime
-  end_date    DateTime
-  description String
-}
+// model Language {
+//   id       Int    @id @default(autoincrement())
+//   language String
+//   level    String
+// }
 
-model Certificate {
-  id    Int      @id @default(autoincrement())
-  title String
-  date  DateTime
-}
+// model SkillCategory {
+//   id     Int     @id @default(autoincrement())
+//   title  String
+//   skills Skill[]
+// }
 
-model Language {
-  id       Int    @id @default(autoincrement())
-  language String
-  level    String
-}
+// model Skill {
+//   id         Int           @id @default(autoincrement())
+//   title      String
+//   logo       String
+//   percentage Int
+//   category   SkillCategory @relation(fields: [categoryId], references: [id])
+//   categoryId Int
+// }
 
-model SkillCategory {
-  id     Int     @id @default(autoincrement())
-  title  String
-  skills Skill[]
-}
+// model Cv {
+//   id                 Int    @id @default(autoincrement())
+//   alt                String
+//   about_me           String @map(name: "about_me")
+//   address            String
+//   photo              String
+//   CV                 String
+//   phone              String
+//   email              String
+//   post_photo         String
+//   homepage_photo     String
+//   homepage_paragraph String
+// }
 
-model Skill {
-  id         Int           @id @default(autoincrement())
-  title      String
-  logo       String
-  percentage Int
-  category   SkillCategory @relation(fields: [categoryId], references: [id])
-  categoryId Int
-}
-
-model Cv {
-  id                 Int    @id @default(autoincrement())
-  alt                String
-  about_me           String @map(name: "about_me")
-  address            String
-  photo              String
-  CV                 String
-  phone              String
-  email              String
-  post_photo         String
-  homepage_photo     String
-  homepage_paragraph String
-}
-
-model Job {
-  id          Int    @id @default(autoincrement())
-  title       String
-  svg         String
-  description String
-  alt         String
-}
+// model Job {
+//   id          Int    @id @default(autoincrement())
+//   title       String
+//   svg         String
+//   description String
+//   alt         String
+// }
 
 // model Comment {
 //   id          Int       @id @default(autoincrement())
@@ -164,13 +170,13 @@ model Job {
 // }
 
 // model ProjectImage {
-//   id    Int      @id @default(autoincrement())
+//   id    String @id @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 //   image String
 //   alt   String
 // }
 
 // model ProjectFeature {
-//   id      Int      @id @default(autoincrement())
+//   id      String @id @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 //   feature String
 // }
 
@@ -186,7 +192,7 @@ model Job {
 // }
 
 // model Contact {
-//   id          Int      @id @default(autoincrement())
+//   id          String @id @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 //   name        String
 //   email       String
 //   description String
@@ -196,7 +202,7 @@ model Job {
 // }
 
 // model Follower {
-//   id         Int      @id @default(autoincrement())
+//   id         String @id @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 //   email      String   @unique
 //   created_at DateTime @default(now())
 //   ip         String?

@@ -1,5 +1,7 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 import * as React from "react";
 import {
   ColumnDef,
@@ -32,6 +34,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -68,6 +71,8 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  const pathname = usePathname();
+
   return (
     <div>
       <div className="flex items-center py-4">
@@ -79,6 +84,11 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         /> */}
+        <Button variant="outline" className="mx-1">
+          <Link href={`${pathname}/addnew`} replace className="mx-1">
+            Add New
+          </Link>
+        </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

@@ -17,7 +17,7 @@ export const getUsersController = async (req: Request, res: Response) => {
 };
 
 export const getUserByIdController = async (req: Request, res: Response) => {
-  const userId = parseInt(req.params.id, 10);
+  const userId = req.params.id;
 
   try {
     const user = await getUserById(userId);
@@ -43,7 +43,7 @@ export const createUserController = async (req: Request, res: Response) => {
 };
 
 export const updateUserByIdController = async (req: Request, res: Response) => {
-  const userId = parseInt(req.params.id, 10);
+  const userId = req.params.id;
   const userData = req.body;
 
   try {
@@ -59,7 +59,7 @@ export const updateUserByIdController = async (req: Request, res: Response) => {
 };
 
 export const deleteUserByIdController = async (req: Request, res: Response) => {
-  const userId = parseInt(req.params.id, 10);
+  const userId = req.params.id;
 
   try {
     const deletedUser = await deleteUser(userId);

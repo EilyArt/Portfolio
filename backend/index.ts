@@ -6,6 +6,7 @@ import adminRoutes from "./admin/routes/adminRoutes";
 const app = express();
 
 app.use(cors());
+app.use(express.json());
 
 app.use("/admin/user", userRoutes);
 app.use("/admin", adminRoutes);

@@ -20,8 +20,6 @@ const tag = () => {
 
   const { page, allTaggedPosts, cv, pageMetas, tag } = data;
 
-  console.log(data);
-
   return (
     <>
       <Head>

@@ -12,11 +12,9 @@ export default async function SideBar() {
   const data = await getData();
 
   return (
-    <aside className="bg-gray-800 w-64 h-screen">
+    <aside className="bg-gray-800 w-max h-screen">
       <div className="p-4">
-        <h1 className="text-2xl font-bold text-center text-white">
-          Admin Panel
-        </h1>
+        <h1 className="text-2xl font-bold text-left text-white">Admin Panel</h1>
       </div>
       {/* <Separator /> */}
       <ul className="p-3">
@@ -24,7 +22,7 @@ export default async function SideBar() {
           return (
             <li className="mb-3 list-none" key={model}>
               <Link
-                href={`${String(model).toLocaleLowerCase()}`}
+                href={`/${String(model).toLocaleLowerCase()}`}
                 className="block text-white hover:text-gray-400"
               >
                 {model}
