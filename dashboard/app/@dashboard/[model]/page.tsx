@@ -17,7 +17,9 @@ export default async function DemoPage({
 }
 
 async function getData(model: string): Promise<Payment[]> {
-  const data = await fetch(`http://localhost:8000/admin/models/${model}`);
+  const data = await fetch(`http://localhost:8000/admin/models/${model}`, {
+    cache: "no-cache",
+  });
   return data.json();
 }
 
