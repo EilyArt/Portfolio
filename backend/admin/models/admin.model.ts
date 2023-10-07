@@ -75,6 +75,7 @@ export const deleteRecords = async ({ model, where }: any): Promise<any[]> => {
   }
 };
 
+
 export const getModelFields = async (model: string): Promise<any[]> => {
   try {
     const models = await Prisma.dmmf.datamodel.models.filter(

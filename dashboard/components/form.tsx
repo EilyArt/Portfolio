@@ -115,7 +115,7 @@ export default function CreateForm({ defaultValues }: any) {
             </>
             :
             <>
-              <FormLabel>{dict.name}</FormLabel>
+               <FormLabel>{dict.name}</FormLabel>
               <Input
                 type={`${dict.name}`}
                 onChange={(e) =>
