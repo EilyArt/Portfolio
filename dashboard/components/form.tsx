@@ -86,14 +86,15 @@ export default function CreateForm({ defaultValues }: any) {
   );
 
   function renderField(key: string, dict: any) {
-    switch (String(dict.typeName).toLowerCase()) {
+    console.log(dict.name);
+
+    switch (String(dict.type).toLowerCase()) {
       case "string":
         return (
-          key === "content" ?
+          dict.name === "content" ?
             <>
-              <FormLabel>{key}</FormLabel>
+              <FormLabel>{dict.name}</FormLabel>
               <CKEditor
-
                 editor={ClassicEditor}
                 data=""
                 onReady={(editor) => {
@@ -114,45 +115,46 @@ export default function CreateForm({ defaultValues }: any) {
             </>
             :
             <>
-              <FormLabel>{key}</FormLabel>
+               <FormLabel>{dict.name}</FormLabel>
               <Input
                 type={`${dict.name}`}
                 onChange={(e) =>
                   handleInputChange(key, e.target.value, formData, setFormData)
                 }
-                placeholder={`${key}`}
+                placeholder={`${dict.name}`}
                 {...defaultValues}
               />
             </>
         );
-      case "datetime":
-        return (
-          <>
-            <FormLabel>{key}</FormLabel>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-[280px] justify-start text-left font-normal",
-                    !date && "text-muted-foreground",
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date ? format(date, "PPP") : <span>Pick a date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
-          </>
-        );
+      // case "datetime":
+      // return (
+      //   <>
+      //     <FormLabel>{dict.name}</FormLabel>
+      //     <Popover>
+      //       <PopoverTrigger asChild>
+      //         <Button
+      //           variant={"outline"}
+      //           className={cn(
+      //             "w-[280px] justify-start text-left font-normal",
+      //             !date && "text-muted-foreground",
+      //           )}
+      //         >
+      //           <CalendarIcon className="mr-2 h-4 w-4" />
+      //           {date ? format(date, "PPP") : <span>Pick a date</span>}
+      //         </Button>
+      //       </PopoverTrigger>
+      //       <PopoverContent className="w-auto p-0">
+      //         <Calendar
+      //           mode="single"
+      //           selected={date}
+      //           onSelect={setDate}
+      //           initialFocus
+      //         />
+      //       </PopoverContent>
+      //     </Popover>
+      //   </>
+      // );
+      
       case "boolean":
         return (
           <div className="flex items-center space-x-2">
@@ -161,10 +163,11 @@ export default function CreateForm({ defaultValues }: any) {
               htmlFor="terms2"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              {key}
+              {dict.name}
             </label>
           </div>
         );
+      case "datetime":
       default:
         return null; // If the type doesn't match any case
     }

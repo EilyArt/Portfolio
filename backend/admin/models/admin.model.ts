@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 import { withExclude } from "prisma-exclude";
 
 const prisma: any = withExclude(new PrismaClient());
@@ -6,7 +6,7 @@ const prisma: any = withExclude(new PrismaClient());
 export const getAllModels = async (): Promise<any[]> => {
   try {
     const models = Object.getOwnPropertyNames(prisma).filter((str) =>
-      /^[A-Z]/.test(str),
+      /^[A-Z]/.test(str)
     );
     return models;
   } catch (error: any) {
@@ -28,7 +28,7 @@ export const getModelRecords = async (model: string) => {
 // DeleteOne: prisma[model].findOne(record).delete();
 export const deleteRecordByID = async (
   model: string,
-  id: string,
+  id: string
 ): Promise<any[]> => {
   try {
     const models = await prisma[model].delete({ where: { id } });
@@ -75,10 +75,12 @@ export const deleteRecords = async ({ model, where }: any): Promise<any[]> => {
   }
 };
 
-// Get model's fields: prisma[model].getFields;
+
 export const getModelFields = async (model: string): Promise<any[]> => {
   try {
-    const models = await prisma[model].fields;
+    const models = await Prisma.dmmf.datamodel.models.filter(
+      (mod: any) => String(mod.name).toLowerCase() === String(model).toLowerCase()
+    )[0].fields;
     return models;
   } catch (error: any) {
     throw new Error(`Error fetching models: ${error.message}`);
