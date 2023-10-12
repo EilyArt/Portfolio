@@ -59,7 +59,7 @@ export default function CreateForm({ defaultValues }: any) {
 
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit} className="space-y-8">
+      <form onSubmit={onSubmit}>
         <FormField
           control={form.control}
           name="username"
@@ -86,90 +86,109 @@ export default function CreateForm({ defaultValues }: any) {
   );
 
   function renderField(key: string, dict: any) {
-    console.log(dict.name);
 
-    switch (String(dict.type).toLowerCase()) {
-      case "string":
-        return (
-          dict.name === "content" ?
-            <>
-              <FormLabel>{dict.name}</FormLabel>
-              <CKEditor
-                editor={ClassicEditor}
-                data=""
-                onReady={(editor) => {
-                  // You can store the "editor" and use when it is needed.
-                  console.log("Editor is ready to use!", editor);
-                }}
-                onChange={(event, editor) => {
-                  const data = editor.getData();
-                  console.log({ event, editor, data });
-                }}
-                onBlur={(event, editor) => {
-                  console.log("Blur.", editor);
-                }}
-                onFocus={(event, editor) => {
-                  console.log("Focus.", editor);
-                }}
-              />
-            </>
-            :
-            <>
-               <FormLabel>{dict.name}</FormLabel>
-              <Input
-                type={`${dict.name}`}
-                onChange={(e) =>
-                  handleInputChange(key, e.target.value, formData, setFormData)
-                }
-                placeholder={`${dict.name}`}
-                {...defaultValues}
-              />
-            </>
-        );
-      // case "datetime":
-      // return (
-      //   <>
-      //     <FormLabel>{dict.name}</FormLabel>
-      //     <Popover>
-      //       <PopoverTrigger asChild>
-      //         <Button
-      //           variant={"outline"}
-      //           className={cn(
-      //             "w-[280px] justify-start text-left font-normal",
-      //             !date && "text-muted-foreground",
-      //           )}
-      //         >
-      //           <CalendarIcon className="mr-2 h-4 w-4" />
-      //           {date ? format(date, "PPP") : <span>Pick a date</span>}
-      //         </Button>
-      //       </PopoverTrigger>
-      //       <PopoverContent className="w-auto p-0">
-      //         <Calendar
-      //           mode="single"
-      //           selected={date}
-      //           onSelect={setDate}
-      //           initialFocus
-      //         />
-      //       </PopoverContent>
-      //     </Popover>
-      //   </>
-      // );
+    if (String(dict.kind).toLowerCase() === "object") {
       
-      case "boolean":
-        return (
-          <div className="flex items-center space-x-2">
-            <Checkbox id="terms2" />
-            <label
-              htmlFor="terms2"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              {dict.name}
-            </label>
-          </div>
-        );
-      case "datetime":
-      default:
-        return null; // If the type doesn't match any case
+    }
+    else {
+      switch (String(dict.type).toLowerCase()) {
+        case "string":
+          return (
+            dict.name === "post_content" ?
+              <>
+                <FormLabel>{dict.name} {dict.isRequired ? "*" : ""}</FormLabel>
+                <CKEditor
+                  editor={ClassicEditor}
+                  data=""
+                  onReady={(editor) => {
+                    // You can store the "editor" and use when it is needed.
+                    console.log("Editor is ready to use!", editor);
+                  }}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    console.log({ event, editor, data });
+                  }}
+                  onBlur={(event, editor) => {
+                    console.log("Blur.", editor);
+                  }}
+                  onFocus={(event, editor) => {
+                    console.log("Focus.", editor);
+                  }}
+                />
+              </>
+              :
+              <>
+                <FormLabel>{dict.name} {dict.isRequired ? "*" : ""}</FormLabel>
+                <Input
+                  type={`${dict.name}`}
+                  onChange={(e) =>
+                    handleInputChange(key, e.target.value, formData, setFormData)
+                  }
+                  placeholder={`${dict.name}`}
+                  {...defaultValues}
+                />
+              </>
+          );
+        case "datetime":
+          return (
+            dict.hasDefaultValue || dict.isUpdatedAt ? null :
+              <>
+                <FormLabel>{dict.name} {dict.isRequired ? "*" : ""}</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-[280px] justify-start text-left font-normal",
+                        !date && "text-muted-foreground",
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date ? format(date, "PPP") : <span>Pick a date</span>}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+              </>
+          );
+        case "int":
+          return (
+            dict.isReadOnly || dict.isId ? null :
+              <>
+                <FormLabel>{dict.name} {dict.isRequired ? "*" : ""}</FormLabel>
+                <Input
+                  type="number"
+                  onChange={(e) =>
+                    handleInputChange(key, e.target.value, formData, setFormData)
+                  }
+                  placeholder={`${dict.name}`}
+                  {...defaultValues}
+                />
+              </>
+          );
+        case "boolean":
+          return (
+            <div className="flex items-center space-x-2">
+              <Checkbox id="terms2" />
+              <label
+                htmlFor="terms2"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                {dict.name} {dict.isRequired ? "*" : ""}
+              </label>
+            </div>
+          );
+        case "datetime":
+        default:
+          return null; // If the type doesn't match any case
+      }
     }
   }
 }

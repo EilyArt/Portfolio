@@ -76,12 +76,15 @@ export const deleteRecords = async ({ model, where }: any): Promise<any[]> => {
 };
 
 
-export const getModelFields = async (model: string): Promise<any[]> => {
+export const getModelFields = async (modelName: string): Promise<any[]> => {
   try {
-    const models = await Prisma.dmmf.datamodel.models.filter(
-      (mod: any) => String(mod.name).toLowerCase() === String(model).toLowerCase()
+    const models = await Prisma.dmmf.datamodel.models;
+
+    const model = models.filter(
+      (mod: any) => String(mod.name).toLowerCase() === String(modelName).toLowerCase()
     )[0].fields;
-    return models;
+
+    return model;
   } catch (error: any) {
     throw new Error(`Error fetching models: ${error.message}`);
   }

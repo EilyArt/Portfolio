@@ -26,17 +26,17 @@ model User {
 
 model Post {
   id            Int        @id @default(autoincrement())
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  post_content  String
   slug          String     @unique
   title         String
-  content       String
   duration      Int
-  published     Boolean    @default(false)
-  thumbnail     String?
-  thumbnail_alt String
+  published     Boolean?   @default(false)
   author        User       @relation(fields: [authorId], references: [id])
   authorId      Int
+  thumbnail     String?
+  thumbnail_alt String?
+  createdAt     DateTime?  @default(now())
+  updatedAt     DateTime?  @updatedAt
   categories    Category[]
   metaDatas     MetaData[]
   view          Visitor[]
@@ -58,17 +58,17 @@ model MetaData {
   id      Int    @id @default(autoincrement())
   name    String
   content String
-  page    Page?   @relation(fields: [pageId], references: [id])
+  page    Page?  @relation(fields: [pageId], references: [id])
   pageId  Int?
   Post    Post?  @relation(fields: [postId], references: [id])
   postId  Int?
 }
 
 model Visitor {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   ipAddress String
   userAgent String
-  timestamp DateTime @default(now())
+  timestamp DateTime? @default(now())
   post      Post[]
 }
 
