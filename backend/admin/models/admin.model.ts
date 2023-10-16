@@ -6,7 +6,7 @@ const prisma: any = withExclude(new PrismaClient());
 export const getAllModels = async (): Promise<any[]> => {
   try {
     const models = Object.getOwnPropertyNames(prisma).filter((str) =>
-      /^[A-Z]/.test(str)
+      /^[A-Z]/.test(str),
     );
     return models;
   } catch (error: any) {
@@ -28,7 +28,7 @@ export const getModelRecords = async (model: string) => {
 // DeleteOne: prisma[model].findOne(record).delete();
 export const deleteRecordByID = async (
   model: string,
-  id: string
+  id: string,
 ): Promise<any[]> => {
   try {
     const models = await prisma[model].delete({ where: { id } });
@@ -75,13 +75,13 @@ export const deleteRecords = async ({ model, where }: any): Promise<any[]> => {
   }
 };
 
-
 export const getModelFields = async (modelName: string): Promise<any[]> => {
   try {
     const models = await Prisma.dmmf.datamodel.models;
 
     const model = models.filter(
-      (mod: any) => String(mod.name).toLowerCase() === String(modelName).toLowerCase()
+      (mod: any) =>
+        String(mod.name).toLowerCase() === String(modelName).toLowerCase(),
     )[0].fields;
 
     return model;
