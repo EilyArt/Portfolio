@@ -6,7 +6,7 @@ const prisma: any = withExclude(new PrismaClient());
 export const getAllModels = async (): Promise<any[]> => {
   try {
     const models = Object.getOwnPropertyNames(prisma).filter((str) =>
-      /^[A-Z]/.test(str),
+      /^[A-Z]/.test(str)
     );
     return models;
   } catch (error: any) {
@@ -25,10 +25,9 @@ export const getModelRecords = async (model: string) => {
   }
 };
 
-// DeleteOne: prisma[model].findOne(record).delete();
 export const deleteRecordByID = async (
   model: string,
-  id: string,
+  id: string
 ): Promise<any[]> => {
   try {
     const models = await prisma[model].delete({ where: { id } });
@@ -38,7 +37,6 @@ export const deleteRecordByID = async (
   }
 };
 
-// UpdateOne: prisma[model].findOne(record).update(updatedRecord);
 export const updateRecordByID = async ({
   model,
   id,
@@ -55,17 +53,31 @@ export const updateRecordByID = async ({
   }
 };
 
-// CreateOne: prisma[model].createOne(record);
 export const createRecord = async ({ model, record }: any): Promise<any[]> => {
   try {
-    const models = await prisma[model].create({ data: record });
+    const newRecord: any = {};
+    const isIdRegex = /\b\w*id\b/i;
+    for (const [key, value] of Object.entries(record)) {
+      if (isIdRegex.test(key) || value === null) continue;
+      if (Array.isArray(value)) {
+        const relations = value.map((item: any) => {
+          return { id: item };
+        });
+        newRecord[key] = {
+          connect: record.hasOwnProperty(`${key}Id`) ? relations[0] : relations,
+        };
+      } else {
+        newRecord[key] = value;
+      }
+    }
+    const models = await prisma[model].create({ data: newRecord });
     return models;
   } catch (error: any) {
-    throw new Error(`Error fetching models: ${error.message}`);
+    console.log(error);
+    throw new Error(`Error creating record: ${error.message}`);
   }
 };
 
-// DeleteMany: prisma[model].find({where: {x = y}}).deleteMany();
 export const deleteRecords = async ({ model, where }: any): Promise<any[]> => {
   try {
     const models = await prisma[model].deleteMany({ where });
@@ -81,9 +93,18 @@ export const getModelFields = async (modelName: string): Promise<any[]> => {
 
     const model = models.filter(
       (mod: any) =>
-        String(mod.name).toLowerCase() === String(modelName).toLowerCase(),
+        String(mod.name).toLowerCase() === String(modelName).toLowerCase()
     )[0].fields;
 
+    // console.log(Prisma.dmmf.datamodel.enums);
+    // console.log(model);
+
+    for (const value of Object.values(model)) {
+      if (value.kind === "enum") {
+        const enums = await Prisma.dmmf.datamodel.enums.find(obj => obj.name === value.type);
+        value.values = enums?.values;
+      }
+    }
     return model;
   } catch (error: any) {
     throw new Error(`Error fetching models: ${error.message}`);

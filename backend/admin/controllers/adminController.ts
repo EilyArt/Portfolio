@@ -64,7 +64,7 @@ export const createRecordController = async (req: Request, res: Response) => {
   try {
     const record = {
       model: req.params.model,
-      record: req.body.data,
+      record: req.body,
     };
     const models = await createRecord(record);
     res.json(models);

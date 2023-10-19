@@ -4,7 +4,9 @@ import ModeToggle from "@/components/ui/mode.toggle";
 import Link from "next/link";
 
 async function getData(): Promise<any[]> {
-  const data = await fetch(`http://localhost:8000/admin/models`, { cache: "no-store" });
+  const data = await fetch(`http://localhost:8000/admin/models`, {
+    cache: "no-store",
+  });
   return data.json();
 }
 

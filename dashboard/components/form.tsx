@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useToast } from "@/components/ui/use-toast"
 
 import { Button } from "@/components/ui/button";
 import {
@@ -33,18 +34,22 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
+import { Label } from "@radix-ui/react-label";
+import { SelectLabel } from "@radix-ui/react-select";
 
-export default function CreateForm({ defaultValues }: any) {
+export default function CreateForm({ defaultValues, model }: any) {
+  const { toast } = useToast()
+
   const initialState = defaultValues.reduce((acc: any, item: any) => {
     acc[item.name] = item.kind === "object" ? [] : null;
     return acc;
   }, {});
   const [formData, setFormData] = useState(initialState);
-  const [date, setDate] = useState<Date>();
 
   const formSchema = z.object(defaultValues);
 
@@ -57,14 +62,52 @@ export default function CreateForm({ defaultValues }: any) {
     setFormData({ ...formData, [key]: value });
   }
 
-  function handleCheckboxChange(key: string, checked: boolean) {
-    console.log("Changed")
-    setFormData({ ...formData, [key]: checked });
+  function handleCheckboxChange(key: string) {
+    setFormData({
+      ...formData,
+      [key]: formData[key] === null ? true : !formData[key],
+    });
+  }
+
+  function handle(key: string, value: number) {
+    // Create a copy of the array
+    const newArray: Array<number> = formData[key];
+
+    // Make the desired changes to the copy
+    const index = newArray.indexOf(value);
+    if (index !== -1) {
+      newArray.splice(index, 1);
+    } else {
+      newArray.push(value);
+    }
+
+    // Update the state with the new array
+    setFormData({ ...formData, [key]: newArray });
   }
 
   function onSubmit() {
-    console.log(formData);
+    // console.log(formData)
+
+    return fetch(`http://localhost:8000/admin/models/${model}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      toast({
+        title: "Scheduled: Catch up",
+        description: "Friday, February 10, 2023 at 5:57 PM",
+      })
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
   }
+
 
   return (
     <Form {...form}>
@@ -83,7 +126,7 @@ export default function CreateForm({ defaultValues }: any) {
                 </FormItem>
               )}
             />
-          )
+          );
         })}
         <Button type="button" onClick={onSubmit}>
           Create
@@ -94,20 +137,64 @@ export default function CreateForm({ defaultValues }: any) {
 
   function renderField(key: string, dict: any) {
     if (String(dict.kind).toLowerCase() === "object") {
-      return <Select>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder={`${dict.name}`} />
-        </SelectTrigger>
-        <SelectContent>
-          {dict.records.map((key: any) => {
-            return (
-              <SelectItem key={key.id} value={key.id}>{key.id}</SelectItem>
-            )
-          })}
-        </SelectContent>
-      </Select>
-    }
-    else if (String(dict.type).toLowerCase() === "string") {
+      return (
+        <Select
+          key={dict.name}
+          name={dict.name}
+          value={formData[dict.name]}
+          onValueChange={(e: any) => handle(dict.name, e)}
+        >
+          <Label>{dict.name}</Label>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder={`${dict.name}`}>
+              {
+                formData[dict.name]
+              }
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {dict.records.map((key: any) => {
+                return (
+                  <SelectItem className="cursor-pointer" key={key.id} value={key.id}>
+                    {key.name ? key.name : key.title}
+                  </SelectItem>
+                );
+              })}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      );
+    } else if (String(dict.kind).toLowerCase() === "enum") {
+      return (
+        <Select
+          key={dict.name}
+          name={dict.name}
+          value={formData[dict.name]}
+          onValueChange={(e: any) => setFormData({ ...formData, [dict.name]: e })}
+        >
+          <Label>{dict.name}</Label>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder={`${dict.name}`}>
+              {
+                formData[dict.name]
+              }
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {dict.values.map((key: any) => {
+                return (
+                  <SelectItem className="cursor-pointer" key={key.name} value={key.name}>
+                    {key.name}
+                  </SelectItem>
+                );
+              })}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      );
+    } else if (String(dict.type).toLowerCase() === "string") {
       return dict.name === "post_content" ? (
         <>
           <FormLabel>
@@ -147,8 +234,7 @@ export default function CreateForm({ defaultValues }: any) {
           />
         </>
       );
-    }
-    else if (String(dict.type).toLowerCase() === "int") {
+    } else if (String(dict.type).toLowerCase() === "int") {
       return dict.isReadOnly || dict.isId ? null : (
         <>
           <FormLabel>
@@ -159,20 +245,22 @@ export default function CreateForm({ defaultValues }: any) {
             key={dict.name}
             name={dict.name}
             value={formData[dict.name] || ""}
-            onChange={(e) => handleInputChange(dict.name, Number(e.target.value))}
+            onChange={(e) =>
+              handleInputChange(dict.name, Number(e.target.value))
+            }
             placeholder={`${dict.name}`}
           />
         </>
       );
-    }
-    else if (String(dict.type).toLowerCase() === "boolean") {
+    } else if (String(dict.type).toLowerCase() === "boolean") {
       return (
         <div className="flex items-center space-x-2">
-          <Checkbox id="terms2"
+          <Checkbox
+            id="terms2"
             key={dict.name}
             name={dict.name}
             value={formData[dict.name] || false}
-            onChange={(e) => handleCheckboxChange(dict.name, e.target.value)}
+            onClick={(e) => handleCheckboxChange(dict.name)}
           />
           <label
             htmlFor="terms2"

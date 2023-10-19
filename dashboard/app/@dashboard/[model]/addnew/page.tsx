@@ -1,5 +1,3 @@
-"use client"
-
 import React from "react";
 import dynamic from "next/dynamic";
 
@@ -12,16 +10,18 @@ export default async function AddNew({
 }) {
   const data = await getData(params.model);
 
-  const newData = await Promise.all(data.map(async (object: any) => {
-    if (String(object.kind).toLowerCase() === "object") {
-      object["records"] = await getOptions(object.type);
-    }
-    return object;
-  }));
+  const newData = await Promise.all(
+    data.map(async (object: any) => {
+      if (String(object.kind).toLowerCase() === "object") {
+        object["records"] = await getOptions(object.type);
+      }
+      return object;
+    }),
+  );
 
   return (
     <section className=" overflow-y-auto">
-      <CreateForm defaultValues={newData} />
+      <CreateForm defaultValues={newData} model={params.model} />
     </section>
   );
 }
@@ -35,9 +35,8 @@ async function getData(model: string): Promise<any[]> {
 }
 
 async function getOptions(model: string): Promise<any[]> {
-  const data = await fetch(
-    `http://localhost:8000/admin/models/${model}`,
-    { cache: "no-store" },
-  );
+  const data = await fetch(`http://localhost:8000/admin/models/${model}`, {
+    cache: "no-store",
+  });
   return data.json();
 }
