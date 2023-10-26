@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useToast } from "@/components/ui/use-toast"
+import { useToast } from "@/components/ui/use-toast";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -43,7 +43,7 @@ import { Label } from "@radix-ui/react-label";
 import { SelectLabel } from "@radix-ui/react-select";
 
 export default function CreateForm({ defaultValues, model }: any) {
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const initialState = defaultValues.reduce((acc: any, item: any) => {
     acc[item.name] = item.kind === "object" ? [] : null;
@@ -89,25 +89,23 @@ export default function CreateForm({ defaultValues, model }: any) {
     // console.log(formData)
 
     return fetch(`http://localhost:8000/admin/models/${model}`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify(formData),
     })
-    .then(response => response.json())
-    .then(data => {
-      toast({
-        title: "Scheduled: Catch up",
-        description: "Friday, February 10, 2023 at 5:57 PM",
+      .then((response) => response.json())
+      .then((data) => {
+        toast({
+          title: "Scheduled: Catch up",
+          description: "Friday, February 10, 2023 at 5:57 PM",
+        });
       })
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }
-
 
   return (
     <Form {...form}>
@@ -147,16 +145,18 @@ export default function CreateForm({ defaultValues, model }: any) {
           <Label>{dict.name}</Label>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder={`${dict.name}`}>
-              {
-                formData[dict.name]
-              }
+              {formData[dict.name]}
             </SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
               {dict.records.map((key: any) => {
                 return (
-                  <SelectItem className="cursor-pointer" key={key.id} value={key.id}>
+                  <SelectItem
+                    className="cursor-pointer"
+                    key={key.id}
+                    value={key.id}
+                  >
                     {key.name ? key.name : key.title}
                   </SelectItem>
                 );
@@ -171,21 +171,25 @@ export default function CreateForm({ defaultValues, model }: any) {
           key={dict.name}
           name={dict.name}
           value={formData[dict.name]}
-          onValueChange={(e: any) => setFormData({ ...formData, [dict.name]: e })}
+          onValueChange={(e: any) =>
+            setFormData({ ...formData, [dict.name]: e })
+          }
         >
           <Label>{dict.name}</Label>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder={`${dict.name}`}>
-              {
-                formData[dict.name]
-              }
+              {formData[dict.name]}
             </SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
               {dict.values.map((key: any) => {
                 return (
-                  <SelectItem className="cursor-pointer" key={key.name} value={key.name}>
+                  <SelectItem
+                    className="cursor-pointer"
+                    key={key.name}
+                    value={key.name}
+                  >
                     {key.name}
                   </SelectItem>
                 );

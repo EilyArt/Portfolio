@@ -7,7 +7,7 @@ const prisma: any = withExclude(new PrismaClient());
 export const getAllModels = async (): Promise<any[]> => {
   try {
     const models = Object.getOwnPropertyNames(prisma).filter((str) =>
-      /^[A-Z]/.test(str)
+      /^[A-Z]/.test(str),
     );
     return models;
   } catch (error: any) {
@@ -28,7 +28,7 @@ export const getModelRecords = async (model: string) => {
 
 export const deleteRecordByID = async (
   model: string,
-  id: string
+  id: string,
 ): Promise<any[]> => {
   try {
     const models = await prisma[model].delete({ where: { id } });
@@ -96,7 +96,7 @@ export const getModelFields = async (modelName: string): Promise<any[]> => {
 
     const model = models.filter(
       (mod: any) =>
-        String(mod.name).toLowerCase() === String(modelName).toLowerCase()
+        String(mod.name).toLowerCase() === String(modelName).toLowerCase(),
     )[0].fields;
 
     // console.log(Prisma.dmmf.datamodel.enums);
@@ -105,7 +105,7 @@ export const getModelFields = async (modelName: string): Promise<any[]> => {
     for (const value of Object.values(model)) {
       if (value.kind === "enum") {
         const enums = await Prisma.dmmf.datamodel.enums.find(
-          (obj) => obj.name === value.type
+          (obj) => obj.name === value.type,
         );
         value.values = enums?.values;
       }
