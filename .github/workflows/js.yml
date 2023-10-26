@@ -19,10 +19,10 @@ jobs:
         node-version: '20'
 
     - name: Install Dependencies
-      run: npm install
+      run: cd dashboard && npm install
 
     - name: Run Prettier
-      run: npx prettier --check .
+      run: cd .. && npx prettier --check .
 
     - name: Check for Changes
       run: git diff --exit-code
