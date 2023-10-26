@@ -22,7 +22,7 @@ jobs:
       run: cd dashboard && npm install
 
     - name: Run Prettier
-      run: cd .. && npx prettier --check .
+      run: cd .. && npx prettier --check dashboard backend frontend
 
     - name: Check for Changes
       run: git diff --exit-code
