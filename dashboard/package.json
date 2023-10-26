@@ -30,6 +30,7 @@
     "lucide-react": "^0.279.0",
     "next": "latest",
     "next-themes": "^0.2.1",
+    "prettier": "^3.0.3",
     "react": "latest",
     "react-day-picker": "^8.8.2",
     "react-dom": "latest",
