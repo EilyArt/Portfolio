@@ -1,3 +1,12 @@
+---
+name: Feature request
+about: Suggest an idea for this project
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 ## Expected Behavior
 
 <!--- If you're describing a bug, tell us what should happen -->
