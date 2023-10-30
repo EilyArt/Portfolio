@@ -20,3 +20,4 @@ npm i && npm run dev
 
 cd dashboard
 npm i && npm run dev
+```

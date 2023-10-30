@@ -1,0 +1,23 @@
+name: Prettier Linting
+
+on:
+  push:
+    branches:
+      - "*"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          npm install
+          npm install -g prettier
+
+      - name: Run Prettier Check on Subdirectories
+        run: |
+          npx prettier --check .
