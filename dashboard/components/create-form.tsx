@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useToast } from "@/components/ui/use-toast";
+import { useRouter, usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -41,9 +42,12 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@radix-ui/react-label";
 import { SelectLabel } from "@radix-ui/react-select";
+import { creteRecord } from "@/utils/create";
 
 export default function CreateForm({ defaultValues, model }: any) {
   const { toast } = useToast();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const initialState = defaultValues.reduce((acc: any, item: any) => {
     acc[item.name] = item.kind === "object" ? [] : null;
@@ -85,26 +89,19 @@ export default function CreateForm({ defaultValues, model }: any) {
     setFormData({ ...formData, [key]: newArray });
   }
 
-  function onSubmit() {
-    // console.log(formData)
+  async function onSubmit() {
+    const res = await creteRecord(model, formData);
 
-    return fetch(`http://localhost:8000/admin/models/${model}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        toast({
-          title: "Scheduled: Catch up",
-          description: "Friday, February 10, 2023 at 5:57 PM",
-        });
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    toast({
+      title: res.ok ? "Success" : "Error",
+      description: res.statusText,
+    });
+
+    if (res.ok) {
+      const currentPath = pathname;
+      const newPath = currentPath.substring(0, currentPath.lastIndexOf("/"));
+      router.push(newPath);
+    }
   }
 
   return (
