@@ -85,8 +85,8 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         /> */}
         <Button variant="outline" className="mx-1">
-          <Link href={`${pathname}/addnew`} replace className="mx-1">
-            Add New
+          <Link href={`${pathname}/create`} replace className="mx-1">
+            Create
           </Link>
         </Button>
         <DropdownMenu>

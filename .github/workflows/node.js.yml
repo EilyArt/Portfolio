@@ -1,9 +1,6 @@
 name: Prettier Linting
 
-on:
-  push:
-    branches:
-      - "*"
+on: [push]
 
 jobs:
   lint:

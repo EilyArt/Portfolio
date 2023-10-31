@@ -1,24 +1,16 @@
 import React from "react";
-import { Separator } from "@/components/ui/separator";
 import ModeToggle from "@/components/ui/mode.toggle";
 import Link from "next/link";
-
-async function getData(): Promise<any[]> {
-  const data = await fetch(`http://localhost:8000/admin/models`, {
-    cache: "no-store",
-  });
-  return data.json();
-}
+import { fetchSideBar } from "@/utils/sidebar";
 
 export default async function SideBar() {
-  const data = await getData();
+  const data = await fetchSideBar();
 
   return (
     <aside className="bg-gray-800 w-max h-screen">
       <div className="p-4">
         <h1 className="text-2xl font-bold text-left text-white">Admin Panel</h1>
       </div>
-      {/* <Separator /> */}
       <ul className="p-3">
         {data?.map((model: any) => {
           return (

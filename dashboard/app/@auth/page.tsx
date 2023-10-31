@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const Login = () => {
+export default async function Login() {
   return (
     <div className="flex justify-center items-center h-screen">
       <Card className="w-[350px]">
@@ -44,6 +44,4 @@ const Login = () => {
       </Card>
     </div>
   );
-};
-
-export default Login;
+}
