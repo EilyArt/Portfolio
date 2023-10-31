@@ -16,12 +16,14 @@ enum Role {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  name     String
-  password String
-  role     Role   @default(USER)
-  posts    Post[]
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String
+  password  String
+  role      Role      @default(USER)
+  posts     Post[]
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model Post {
@@ -43,33 +45,40 @@ model Post {
 }
 
 model Category {
-  id    Int    @id @default(autoincrement())
-  name  String
-  posts Post[]
+  id        Int       @id @default(autoincrement())
+  name      String
+  posts     Post[]
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model Page {
   id        Int        @id @default(autoincrement())
   title     String
   metaDatas MetaData[]
+  createdAt DateTime?  @default(now())
+  updatedAt DateTime?  @updatedAt
 }
 
 model MetaData {
-  id      Int    @id @default(autoincrement())
-  name    String
-  content String
-  page    Page?  @relation(fields: [pageId], references: [id])
-  pageId  Int?
-  Post    Post?  @relation(fields: [postId], references: [id])
-  postId  Int?
+  id        Int       @id @default(autoincrement())
+  name      String
+  content   String
+  page      Page?     @relation(fields: [pageId], references: [id])
+  pageId    Int?
+  Post      Post?     @relation(fields: [postId], references: [id])
+  postId    Int?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model Visitor {
   id        Int       @id @default(autoincrement())
   ipAddress String    @unique
   userAgent String
-  timestamp DateTime? @default(now())
   post      Post[]
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 // model PostMeta {
