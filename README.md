@@ -21,3 +21,9 @@ npm i && npm run dev
 cd dashboard
 npm i && npm run dev
 ```
+
+create a .env file and pass the server url value as "NEXT_PUBLIC_API_URL". .env.template is a sample file for .env, edit it accordingly.
+
+## Deployment
+
+make sure to set the "NEXT_PUBLIC_API_URL" to the server url.

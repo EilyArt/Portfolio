@@ -6,9 +6,12 @@ type Payment = {
 };
 
 async function fetchRecords(model: string): Promise<Payment[]> {
-  const data = await fetch(`http://localhost:8000/admin/models/${model}`, {
-    cache: "no-cache",
-  });
+  const data = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}admin/models/${model}`,
+    {
+      cache: "no-cache",
+    },
+  );
   return data.json();
 }
 
