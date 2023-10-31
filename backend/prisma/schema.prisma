@@ -40,7 +40,7 @@ model Post {
   createdAt     DateTime?  @default(now())
   updatedAt     DateTime?  @updatedAt
   categories    Category[]
-  metaDatas     MetaData[]
+  metadatas     Metadata[]
   view          Visitor[]
 }
 
@@ -55,12 +55,12 @@ model Category {
 model Page {
   id        Int        @id @default(autoincrement())
   title     String
-  metaDatas MetaData[]
+  metadatas Metadata[]
   createdAt DateTime?  @default(now())
   updatedAt DateTime?  @updatedAt
 }
 
-model MetaData {
+model Metadata {
   id        Int       @id @default(autoincrement())
   name      String
   content   String
