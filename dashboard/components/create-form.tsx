@@ -136,7 +136,6 @@ export default function CreateForm({ defaultValues, model }: any) {
         <Select
           key={dict.name}
           name={dict.name}
-          value={formData[dict.name]}
           onValueChange={(e: any) => handle(dict.name, e)}
         >
           <Label>{dict.name}</Label>
