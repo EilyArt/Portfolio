@@ -13,4 +13,16 @@ async function getOptions(model: string): Promise<any[]> {
   return data.json();
 }
 
-export { fetchModelFields, getOptions };
+async function creteRecord(model: any, newRecord: any) {
+  const data = await fetch(`http://localhost:8000/admin/models/${model}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newRecord),
+  });
+
+  return data;
+}
+
+export { fetchModelFields, getOptions, creteRecord };
