@@ -25,7 +25,8 @@ export default async function Create({
   );
 
   return (
-    <section className=" overflow-y-auto">
+    <section className="w-2/3">
+      <h1 className="m-2 mb-4 text-2xl text-left capitalize">{params.model}</h1>
       <CreateForm defaultValues={newData} model={params.model} />
     </section>
   );

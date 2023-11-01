@@ -75,6 +75,10 @@
   }
 }
 
+:root {
+  font-size: 16px;
+}
+
 .ck-editor {
   color: black;
 }
