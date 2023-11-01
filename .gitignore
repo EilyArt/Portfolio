@@ -7,3 +7,5 @@ backup
 # frontend
 node_modules/
 .next
+
+.env
