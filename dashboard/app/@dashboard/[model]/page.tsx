@@ -6,7 +6,8 @@ export default async function Model({ params }: { params: { model: string } }) {
   const columns = await generateColumns(data);
 
   return (
-    <div className="">
+    <div className="w-screen">
+      <h1 className="m-2 mb-4 text-2xl text-left capitalize">{params.model}</h1>
       <DataTable columns={columns} data={data} />
     </div>
   );

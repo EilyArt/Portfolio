@@ -89,7 +89,8 @@ export default function CreateForm({ defaultValues, model }: any) {
     setFormData({ ...formData, [key]: newArray });
   }
 
-  async function onSubmit() {
+  async function onSubmit(e: any) {
+    e.preventDefault();
     const res = await creteRecord(model, formData);
 
     toast({
@@ -106,7 +107,7 @@ export default function CreateForm({ defaultValues, model }: any) {
 
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={(e) => onSubmit(e)}>
         {Object.keys(defaultValues).map((key: any) => {
           return (
             <FormField
@@ -123,9 +124,7 @@ export default function CreateForm({ defaultValues, model }: any) {
             />
           );
         })}
-        <Button type="button" onClick={onSubmit}>
-          Create
-        </Button>
+        <Button type="submit">Create</Button>
       </form>
     </Form>
   );
@@ -231,6 +230,7 @@ export default function CreateForm({ defaultValues, model }: any) {
             value={formData[dict.name] || ""}
             onChange={(e) => handleInputChange(dict.name, e.target.value)}
             placeholder={dict.name}
+            required={dict.isRequired}
           />
         </>
       );
