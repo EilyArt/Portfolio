@@ -17,10 +17,12 @@ async function fetchRecords(model: string): Promise<Payment[]> {
 
 async function generateColumns(data: object[]) {
   if (data && data.length > 0) {
-    return Object.keys(data[0]).map((key) => ({
+    const columns = Object.keys(data[0]).map((key) => ({
       accessorKey: key,
       header: key.charAt(0).toUpperCase() + key.slice(1),
     }));
+
+    return columns;
   } else {
     return [];
   }
